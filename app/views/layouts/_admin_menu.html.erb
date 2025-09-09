@@ -1,0 +1,30 @@
+<li class="col p-0">
+  <%= link_to admin_root_path,class: 'nav-link text-light text-center' do %>
+    <i class="fas fa-home"></i> トップ
+  <% end %>
+</li>
+<li class="col p-0">
+  <%=  link_to admin_users_path,class: 'nav-link text-light text-center' do %>
+    <i class="fas fa-user"></i> ユーザー管理
+  <% end %>
+</li>
+<li class="col p-0">
+  <%=  link_to admin_events_path ,class: 'nav-link text-light text-center' do %>
+    <i class="fas fa-dice"></i> イベント管理
+  <% end %>
+</li>
+<li class="col p-0">
+  <%=  link_to admin_comments_path ,class: 'nav-link text-light text-center' do %>
+    <i class="fas fa-comment-dots"></i> コメント管理
+  <% end %>
+</li>
+<li class="col p-0">
+  <%=  link_to admin_groups_path ,class: 'nav-link text-light text-center' do %>
+    <i class="fas fa-user-group"></i> グループ管理
+  <% end %>
+</li>
+<li class="col p-0">
+  <%= link_to destroy_admin_session_path, method: :delete,class: 'nav-link text-light text-center' do %>
+    <i class="fas fa-sign-out-alt"></i> ログアウト
+  <% end %>
+</li>
