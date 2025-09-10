@@ -14,7 +14,8 @@
   <body class="d-flex flex-column vh-100">
     <%= render 'layouts/header' %>
     <main class="mb-auto">
-    <div class="container shadow-lg rounded">
+    <div class="container py-3 shadow-lg rounded">
+      <%= render 'layouts/flash_message' %>
       <%= yield %>
     <div>
     </main>

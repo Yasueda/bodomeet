@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       end
       get :unsubcribe, to: "users#unsubcribe"
       patch :withdraw, to: "users#withdraw"
+      get :not_active, to: "users#not_active"
     end
     resources :users, only: [:index, :show]
 

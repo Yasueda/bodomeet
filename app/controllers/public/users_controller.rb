@@ -1,13 +1,19 @@
 class Public::UsersController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:not_active]
+  before_action :ensure_guest_user, only: [:withdraw]
 
   def my_page
   end
 
   def index
+    @users = User.all
   end
 
   def show
+    @user = User.find(params[:id])
+    if @user == current_user
+      redirect_to my_page_path
+    end
   end
 
   def edit
@@ -27,6 +33,13 @@ class Public::UsersController < ApplicationController
   end
 
   def withdraw
+    user = current_user
+    user.update(is_active: :false)
+    reset_session
+    redirect_to root_path, notice: "退会しました。"
+  end
+
+  def not_active
   end
 
   private
@@ -38,14 +51,14 @@ class Public::UsersController < ApplicationController
   def ensure_corrent_user
     user = User.find(params[:id])
     unless user == current_user
-      redirect_to my_page_path, notice: "this user cannot access"
+      redirect_to my_page_path, notice: "このユーザーはその操作を行えません。"
     end
   end
 
   def ensure_guest_user
-    user = User.find(params[:id])
-    if user.gurst_user?
-      redirect_to my_page_path, notice: "guest user cannot access"
+    user = current_user
+    if user.guest_user?
+      redirect_to my_page_path, alert: "ゲストユーザーはその操作を行えません。"
     end
   end
 end
