@@ -41,7 +41,7 @@ Rails.application.routes.draw do
     root to: "homes#top"
 
     scope :users do
-      get :destroy_all, to: "users#destroy_all", as: "users_destroy_all"
+      delete :destroy_all, to: "users#destroy_all", as: "users_destroy_all"
     end
     resources :users do
       member do
