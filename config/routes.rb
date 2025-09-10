@@ -20,7 +20,7 @@ Rails.application.routes.draw do
       get :my_page, to: "users#my_page"
       scope :information do
         get :edit, to: "users#edit", as: "edit_user"
-        patch root to: "users#update", as: "update_user"
+        patch :update, to: "users#update", as: "update_user"
       end
       get :unsubcribe, to: "users#unsubcribe"
       patch :withdraw, to: "users#withdraw"

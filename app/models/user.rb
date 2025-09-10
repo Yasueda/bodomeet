@@ -26,6 +26,10 @@ class User < ApplicationRecord
   validates :name, presence: true, length: {minimun: 2, maximum: 20}, uniqueness: true
   validates :introduction, length: {maximum: 200}
 
+  def get_user_image
+    (user_image.attached?) ? user_image : "no_user_image.png"
+  end
+
   GUEST_USER_EMAIL = "guest@example.com"
   def self.guest
     find_or_create_by!(email: GUEST_USER_EMAIL) do |user|

@@ -14,7 +14,9 @@
   <body class="d-flex flex-column vh-100">
     <%= render 'layouts/header' %>
     <main class="mb-auto">
+    <div class="container shadow-lg rounded">
       <%= yield %>
+    <div>
     </main>
     <%= render 'layouts/footer' %>
   </body>

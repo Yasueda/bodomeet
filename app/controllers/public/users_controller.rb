@@ -1,7 +1,5 @@
 class Public::UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :ensure_corrent_user, only: [:update, :edit]
-  before_action :ensure_guest_user, only: [:edit]
 
   def my_page
   end
@@ -13,9 +11,16 @@ class Public::UsersController < ApplicationController
   end
 
   def edit
+    @user = current_user
   end
 
   def update
+    @user = current_user
+    if @user.update(user_params)
+      redirect_to my_page_path
+    else
+      render :edit
+    end
   end
 
   def unsubcribe
@@ -25,6 +30,10 @@ class Public::UsersController < ApplicationController
   end
 
   private
+
+  def user_params
+    params.require(:user).permit(:name, :introduction, :user_image)
+  end
 
   def ensure_corrent_user
     user = User.find(params[:id])
