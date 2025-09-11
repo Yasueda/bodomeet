@@ -4,8 +4,8 @@ class CreateEvents < ActiveRecord::Migration[6.1]
       t.references :user, null: false, foreign_key: true
       t.string     :name, null: false
       t.text       :introduction
-      t.date       :date, null: false
-      t.date       :end_time, null: false
+      t.datetime   :date, null: false
+      t.datetime   :end_time, null: false
       t.string     :venue, null: false
       t.integer    :min_people, null: false
       t.integer    :max_people, null: false
