@@ -26,10 +26,18 @@ class User < ApplicationRecord
   validates :name, presence: true, length: {minimun: 2, maximum: 20}, uniqueness: true
   validates :introduction, length: {maximum: 200}
 
+  def get_user_image(width, height)
+    unless user_image.attached?
+      file_path = Rails.root.join('app/assets/images/no_user_image.png')
+      user_image.attach(io: File.open(file_path), filename: 'default-image.png', content_type: 'image/png')
+    end
+    user_image.variant(resize_to_limit: [width, height]).processed
+  end
+
   GUEST_USER_EMAIL = "guest@example.com"
   def self.guest
     find_or_create_by!(email: GUEST_USER_EMAIL) do |user|
-      user.password = SecureRandom.urlsafe_base64
+      user.password = ENV['GUEST_KEY']
       user.name = "ゲスト"
     end
   end

@@ -2,6 +2,7 @@
 
 class Public::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
+  before_action :is_active?, only: [:create]
 
   def guest_sign_in
     user = User.guest
@@ -33,5 +34,13 @@ class Public::SessionsController < Devise::SessionsController
 
   def after_sign_in_path_for(resource)
     events_path
+  end
+
+  def is_active?
+    user = User.find_by(name: params[:user][:name])
+    return if user.nil?
+    return unless user.valid_password?(params[:user][:password])
+    return if user.is_active
+    redirect_to not_active_path
   end
 end

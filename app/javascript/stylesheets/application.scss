@@ -1,1 +1,14 @@
 @use '~bootstrap/scss/bootstrap';
+
+.icon-image {
+  object-fit: cover;
+}
+
+.heading::after {
+  content: "";
+  display: block;
+  width: 80%;
+  height: 3px;
+  margin: 8px auto 0 0;
+  background-color: #EC715F;
+}
