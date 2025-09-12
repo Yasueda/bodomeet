@@ -85,9 +85,5 @@
       </div>
     <% end %>
 
-    <%= f.submit "作成", class:"btn btn-block btn-success mt-3" %>
-
-    <% if admin_signed_in? %>
-      <%= link_to "削除", admin_event_path(@event.id), method: :delete, class: "btn btn-block btn-danger mt-5", data: { confirm: "本当に削除しますか？" } %>
-    <% end %>
+    <%= f.submit "決定", class:"btn btn-block btn-success mt-3" %>
   <% end %>

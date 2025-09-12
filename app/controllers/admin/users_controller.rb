@@ -33,17 +33,13 @@ class Admin::UsersController < ApplicationController
   def destroy
     user = User.find(params[:id])
     user.destroy
-    redirect_to action: :index, notice: "ユーザーを削除しました。"
+    redirect_to action: :index, notice: "ユーザーを削除しました"
   end
 
   def destroy_all
-    users = User.all
-    users.each do |user|
-      if user.is_active == false
-        user.destroy
-      end
-    end
-    redirect_to action: :index, notice: "退会済みのユーザーを全て削除しました。"
+    users = User.where(is_active: false)
+    user.destroy_all
+    redirect_to action: :index, notice: "退会済ユーザーを全て削除しました"
   end
 
   private

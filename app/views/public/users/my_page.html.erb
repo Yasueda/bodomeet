@@ -1,6 +1,9 @@
 <div class="d-flex align-items-center">
-  <h2 class="heading col-lg-10 col-md-8">マイページ</h2>
-  <div class="ml-auto p-2 m-1"><%= link_to "編集", edit_user_path, class:"btn btn-sm btn-info" %></div>
+  <h2 class="heading col-lg-8 col-md-6">マイページ</h2>
+  <div class="ml-auto p-2 m-1">
+    <%= link_to "編集", edit_user_path, class:"btn btn-sm btn-info m-1" %>
+    <%= link_to "退会", unsubcribe_path, class: "btn btn-sm btn-danger m-1" %>
+  </div>
 </div>
 
 <div class="row no-gutters py-4">

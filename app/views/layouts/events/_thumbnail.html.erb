@@ -21,4 +21,7 @@
       </tr>
     </tbody>
   </table>
+  <% if admin_signed_in? %>
+    <%= render "admin/events/is_active", event: event %>
+  <% end %>
 </div>

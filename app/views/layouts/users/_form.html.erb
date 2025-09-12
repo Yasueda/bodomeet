@@ -34,9 +34,3 @@
   <% end %>
   <%= f.submit "更新", class: "btn btn-block btn-success mt-3" %>
 <% end %>
-
-<% if admin_signed_in? %>
-  <%= link_to "削除", admin_user_path(user.id), method: :delete, class: "btn btn-block btn-danger mt-5", data: { confirm: "本当に削除しますか？" } %>
-<% elsif user_signed_in? %>
-  <%= link_to "退会", unsubcribe_path, class: "btn btn-block btn-danger mt-5" %>
-<% end %>

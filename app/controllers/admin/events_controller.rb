@@ -31,9 +31,15 @@ class Admin::EventsController < ApplicationController
   end
 
   def destroy
+    event = Event.find(params[:id])
+    event.destroy
+    redirect_to action: :index, notice: "イベントを削除しました"
   end
 
   def destroy_all
+    event = Event.where(is_active: false)
+    event.destroy_all
+    redirect_to action: :index, notice: "無効イベントを全て削除しました"
   end
 
   private

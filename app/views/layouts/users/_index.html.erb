@@ -1,7 +1,7 @@
 <div class="d-flex align-items-center">
-  <h2 class="heading col-lg-10 col-md-8">ユーザー</h2>
+  <h2 class="heading col-lg-8 col-md-6">ユーザー</h2>
   <% if admin_signed_in? %>
-    <div class="ml-auto p-2 m-1"><%= link_to "全削除", admin_users_destroy_all_path, method: :delete, class: "btn btn-sm btn-danger", data: { confirm: "退会済みのユーザーを全て削除します。\r\n本当に削除しますか？" } %></div>
+    <div class="ml-auto p-2 m-1"><%= link_to "全削除", admin_users_destroy_all_path, method: :delete, class: "btn btn-sm btn-danger", data: { confirm: "退会済ユーザーを全て削除します。\r\n本当に削除しますか？" } %></div>
   <% end %>
 </div>
 

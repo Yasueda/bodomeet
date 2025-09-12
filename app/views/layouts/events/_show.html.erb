@@ -1,12 +1,14 @@
 <div class="d-flex align-items-center">
-  <h2 class="heading col-lg-10 col-md-8">イベント詳細</h2>
+  <h2 class="heading col-lg-8 col-md-6">イベント詳細</h2>
   <% if admin_signed_in? %>
     <div class="ml-auto p-2">
-      <%= link_to "編集", edit_admin_event_path(event.id), class: "btn btn-sm btn-success m-1" %>
+      <%= render "admin/events/is_active", event: event %>
+      <%= link_to "編集", edit_admin_event_path(event.id), class: "btn btn-sm btn-info m-1" %>
+      <%= link_to "削除", admin_event_path, method: :delete, class: "btn btn-sm btn-danger m-1", data: { confirm: '本当に削除しますか？' } %>
     </div>
   <% elsif event_owner? %>
     <div class="ml-auto p-2">
-      <%= link_to "編集", edit_event_path(event.id), class: "btn btn-sm btn-success m-1" %>
+      <%= link_to "編集", edit_event_path(event.id), class: "btn btn-sm btn-info m-1" %>
       <%= link_to "削除", event_path, method: :delete, class: "btn btn-sm btn-danger m-1", data: { confirm: '本当に削除しますか？' } %>
     </div>
   <% end %>
