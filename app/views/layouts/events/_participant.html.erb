@@ -1,0 +1,6 @@
+<% if event_owner? %>
+<% elsif participant_event?(event.id) %>
+  <%= link_to "参加取消", event_participant_path(event_id: event.id, id: current_user.id ), class: "btn btn-sm btn-danger" %>
+<% else %>
+  <%= link_to "参加する", event_participants_path(event_id: event.id), class: "btn btn-sm btn-success" %>
+<% end %>

@@ -1,0 +1,26 @@
+<div class="d-flex align-items-center">
+  <h2 class="heading col-lg-8 col-md-6">イベント</h2>
+  <% if admin_signed_in? %>
+    <div class="ml-auto p-2 m-1"><%= link_to "全削除", admin_events_destroy_all_path, method: :delete, class: "btn btn-sm btn-danger", data: { confirm: "無効イベントを全て削除します。\r\n本当に削除しますか？" } %></div>
+  <% elsif user_signed_in? %>
+    <div class="ml-auto p-2"><%= link_to "新規作成", new_event_path, class: "btn btn-sm btn-primary" %></div>
+  <% end %>
+</div>
+
+<div class="card-list-container row no-gutters mx-sm-auto">
+  <% events.each do |event| %>
+    <% if admin_signed_in? || (event.is_active && user_signed_in?) %>
+      <div class="col-lg-2 col-md-4 px-1 py-3">
+        <% if admin_signed_in? %>
+          <%= link_to admin_event_path(event.id) do %>
+            <%= render "layouts/events/thumbnail", event: event %>
+          <% end %>
+        <% elsif user_signed_in? %>
+          <%= link_to event_path(event.id) do %>
+            <%= render "layouts/events/thumbnail", event: event %>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

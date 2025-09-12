@@ -1,2 +1,6 @@
-<h1>Public::Events#new</h1>
-<p>Find me in app/views/public/events/new.html.erb</p>
+<div class="row no-gutters">
+  <div class="col-md-8 col-sm-10 mx-2 mx-sm-auto text-center shadow-lg rounded px-0 my-5">
+    <h5 class="test-dark bg-light py-4 mb-0">新規イベント作成</h5>
+    <%= render "layouts/events/form", event: @event, url_path: events_path %>
+  </div>
+</div>

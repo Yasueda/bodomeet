@@ -1,0 +1,75 @@
+<div class="d-flex align-items-center">
+  <h2 class="heading col-lg-8 col-md-6">イベント詳細</h2>
+  <% if admin_signed_in? %>
+    <div class="ml-auto p-2">
+      <%= render "admin/events/is_active", event: event %>
+      <%= link_to "編集", edit_admin_event_path(event.id), class: "btn btn-sm btn-info m-1" %>
+      <%= link_to "削除", admin_event_path, method: :delete, class: "btn btn-sm btn-danger m-1", data: { confirm: '本当に削除しますか？' } %>
+    </div>
+  <% elsif event_owner? %>
+    <div class="ml-auto p-2">
+      <%= link_to "編集", edit_event_path(event.id), class: "btn btn-sm btn-info m-1" %>
+      <%= link_to "削除", event_path, method: :delete, class: "btn btn-sm btn-danger m-1", data: { confirm: '本当に削除しますか？' } %>
+    </div>
+  <% end %>
+</div>
+
+<div class="d-flex justify-content-center">
+  <div class="card shadow-lg col-md-8 rounde p-3">
+    <div class="bg-light p-2">
+      <%= image_tag event.get_image, height: "380", class: "card-img-top cover-image" %>
+    </div>
+
+    <table class="table px-3">
+      <thead>
+        <tr>
+          <th colspan="2"><div class="h2 p-2 text-center"><%= event.name %></div></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="text-center"><i class="fas fa-calendar mx-auto"></i></td>
+          <td><%= event.date.strftime("%m月%d日 %H:%M") %> 開始 ～ <%= event.end_time.strftime("%H:%M") %> 終了予定</td>
+        </tr>
+        <tr>
+          <td class="text-center"><i class="fas fa-circle-user mx-auto"></i></td>
+          <td>
+            <span>参加人数 <%= event.participants.count %> 人 / 最大 <%= event.max_people %> 人（最低 <%= event.min_people %> 人）<span>
+            <% if user_signed_in? %>
+              <%= render "layouts/events/participant", event: event %>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-center"><i class="fas fa-circle-info mx-auto"></i></td>
+          <td><%= simple_format(event.introduction, sanitize: true) %></td>
+        </tr>
+        <tr>
+          <% if admin_signed_in? %>
+            <td class="text-center">
+              <%= link_to admin_user_path(event.user.id) do %>
+                <%= image_tag event.user.get_user_image(25, 25), size: "25x25", class: "rounded-circle bg-white border border-dark cover-image", alt: "ユーザーアイコン" %>
+              <% end %>
+            </td>
+            <td class="d-flex align-items-center">
+              <%= link_to admin_user_path(event.user.id) do %>
+                <%= @event.user.name %>
+              <% end %>
+            </td>
+          <% elsif user_signed_in? %>
+            <td class="text-center">
+              <%= link_to user_path(event.user.id) do %>
+                <%= image_tag event.user.get_user_image(25, 25), size: "25x25", class: "rounded-circle bg-white border border-dark cover-image", alt: "ユーザーアイコン" %>
+              <% end %>
+            </td>
+            <td class="d-flex align-items-center">
+              <%= link_to user_path(event.user.id) do %>
+                <%= @event.user.name %>
+              <% end %>
+            </td>
+          <% end %>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

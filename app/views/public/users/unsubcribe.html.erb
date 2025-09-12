@@ -1,4 +1,4 @@
-<h2 class="heading">退会確認画面</h2>
+<h2 class="heading col-lg-8 col-md-6">退会確認画面</h2>
 
 <div class="text-center py-5">
   <p>退会すると、会員登録情報や</p>
@@ -8,5 +8,5 @@
 
 <div class="d-flex justify-content-around col-md-5 col-sm-10 mx-auto py-5">
   <%= link_to "退会しない", my_page_path, class: "btn btn-primary col-5" %>
-  <%= link_to "退会する", withdraw_path, method: :patch,data: { confirm: '本当に退会しますか？' }, class: "btn btn-danger col-5" %>
+  <%= link_to "退会する", withdraw_path, method: :patch, data: { confirm: '本当に退会しますか？' }, class: "btn btn-danger col-5" %>
 </div>

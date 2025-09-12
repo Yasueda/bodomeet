@@ -67,8 +67,8 @@ ActiveRecord::Schema.define(version: 2025_09_07_125949) do
     t.integer "user_id", null: false
     t.string "name", null: false
     t.text "introduction"
-    t.date "date", null: false
-    t.date "end_time", null: false
+    t.datetime "date", null: false
+    t.datetime "end_time", null: false
     t.string "venue", null: false
     t.integer "min_people", null: false
     t.integer "max_people", null: false

@@ -192,11 +192,11 @@ ja:
       update: 更新に成功しました
       destroy: 削除に成功しました
 
-  User:
+  user:
     name: 名前
     email: メールアドレス
     introduction: 自己紹介
-  Event:
+  event:
     name: イベント名
     introduction: 説明
     date: 開催日時
@@ -204,9 +204,9 @@ ja:
     venue: 場所
     min_people: 最小人数
     max_people: 最大人数
-  Comment:
+  comment:
     content: コメント
-  Group:
+  group:
     name: グループ名
     introduction: 説明
   views:
