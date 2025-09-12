@@ -1,0 +1,42 @@
+<%= form_with model: user, url: url_path, method: action, local: true do |f| %>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend col-2 p-0">
+      <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-image mx-auto"></i></span>
+    </div>
+    <%= f.file_field :user_image, class: "form-control p-1 align-items-center", accept: "image/*" %>
+  </div>
+
+  <div class="input-group mb-3">
+    <div class="input-group-prepend col-2 p-0">
+      <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-user mx-auto"></i></span>
+    </div>
+    <%= f.text_field :name, autofocus: true, class: "form-control", placeholder: "ユーザー名" %>
+  </div>
+
+  <div class="input-group mb-3">
+    <div class="input-group-prepend col-2 p-0">
+    <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-circle-info mx-auto"></i></span>
+    </div>
+    <%= f.text_area :introduction, class: "form-control", placeholder: "紹介", size: "40x5" %>
+  </div>
+
+  <% if admin_signed_in? %>
+    <div class="input-group mb-3 d-flex justify-content-around">
+      <div>
+        <%= f.radio_button :is_active, :true, checked: user.is_active %>
+        <%= f.label :is_active, "有効", value: :true, class: "mr-3" %>
+      </div>
+      <div>
+        <%= f.radio_button :is_active, :false, checked: !user.is_active %>
+        <%= f.label :is_active, "退会", value: :false %>
+      </div>
+    </div>
+  <% end %>
+  <%= f.submit "更新", class: "btn btn-block btn-success mt-3" %>
+<% end %>
+
+<% if admin_signed_in? %>
+  <%= link_to "削除", admin_user_path(user.id), method: :delete, class: "btn btn-block btn-danger mt-5", data: { confirm: "本当に削除しますか？" } %>
+<% elsif user_signed_in? %>
+  <%= link_to "退会", unsubcribe_path, class: "btn btn-block btn-danger mt-5" %>
+<% end %>

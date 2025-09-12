@@ -20,7 +20,7 @@ end
 
 User.find_or_create_by!(name: "Tanaka", email: "tanaka@example.com") do |user|
   user.name = "Tanaka"
-  user.introduction = "Tanakaです。\r\n初心者です。\r\nとにかく興味があります。"
+  user.introduction = "Tanakaです。\r\n初心者です。\r\nとにかくボドゲに興味があります。"
   user.password = ENV['TANAKA_KEY']
 end
 

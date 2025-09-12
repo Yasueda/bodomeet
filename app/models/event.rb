@@ -22,6 +22,14 @@ class Event < ApplicationRecord
   validate  :check_people
   validate  :check_time
 
+  def get_image
+    unless event_image.attached?
+      file_path = Rails.root.join('app/assets/images/no_event_image.png')
+      event_image.attach(io: File.open(file_path), filename: 'default-event-image.png', content_type: 'image/png')
+    end
+    event_image
+  end
+
   private
 
   def check_people

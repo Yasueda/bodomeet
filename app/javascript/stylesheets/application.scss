@@ -1,6 +1,6 @@
 @use '~bootstrap/scss/bootstrap';
 
-.icon-image {
+.cover-image {
   object-fit: cover;
 }
 
@@ -11,4 +11,16 @@
   height: 3px;
   margin: 8px auto 0 0;
   background-color: #EC715F;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+td p {
+  margin: 0;
+}
+
+.card a {
+  text-decoration: none;
 }

@@ -1,0 +1,17 @@
+<div class="d-flex align-items-center">
+  <h2 class="heading col-lg-10 col-md-8"><%= user.name %> さんのページ</h2>
+  <% if admin_signed_in? %>
+    <div class="ml-auto p-2">
+      <%= link_to "編集", edit_admin_user_path(user.id), class: "btn btn-sm btn-success m-1" %>
+      <%= render "admin/users/is_active", user: user %>
+    </div>
+  <% end %>
+</div>
+
+<div class="row no-gutters py-4">
+  <%= render "layouts/users/info", user: user %>
+
+  <div class="col-md-8 pl-4">
+    <p>各種情報</p>
+  </div>
+</div>

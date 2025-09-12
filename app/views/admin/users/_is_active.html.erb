@@ -1,5 +1,5 @@
 <% if user.is_active %>
-  <%= link_to "有効中->退会化", active_switch_admin_user_path(user.id), class: "btn btn-sm m-2 btn-success" %>
+  <%= link_to "有効", active_switch_admin_user_path(user.id), class: "btn btn-sm m-1 btn-success" %>
 <% else %>
-  <%= link_to "退会中->有効化", active_switch_admin_user_path(user.id), class: "btn btn-sm m-2 btn-danger" %>
+  <%= link_to "退会", active_switch_admin_user_path(user.id), class: "btn btn-sm m-1 btn-danger" %>
 <% end %>

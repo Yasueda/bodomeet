@@ -1,0 +1,24 @@
+<div class="d-flex align-items-center">
+  <h2 class="heading col-lg-10 col-md-8">ユーザー</h2>
+  <% if admin_signed_in? %>
+    <div class="ml-auto p-2 m-1"><%= link_to "全削除", admin_users_destroy_all_path, method: :delete, class: "btn btn-sm btn-danger", data: { confirm: "退会済みのユーザーを全て削除します。\r\n本当に削除しますか？" } %></div>
+  <% end %>
+</div>
+
+<div class="card-list-container row no-gutters mx-sm-auto">
+  <% users.each do |user| %>
+    <% if admin_signed_in? || (user.is_active && user_signed_in?) %>
+      <div class="col-lg-1 col-md-2 col-sm-4 px-1 py-3">
+        <% if admin_signed_in? %>
+          <%= link_to admin_user_path(user.id) do %>
+            <%= render "layouts/users/thumbnail", user: user %>
+          <% end %>
+        <% elsif user_signed_in? %>
+          <%= link_to user_path(user.id) do %>
+            <%= render "layouts/users/thumbnail", user: user %>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

@@ -10,12 +10,13 @@ class Public::EventsController < ApplicationController
   end
 
   def show
+    @event = Event.find(params[:id])
   end
 
   def create
     @event = current_user.events.new(event_params)
     if @event.save
-      flash[:notice] = "新規イベントの作成に成功しました。"
+      flash[:notice] = "新規イベントを作成しました。"
       redirect_to event_path(@event.id)
     else
       render :new
@@ -23,12 +24,22 @@ class Public::EventsController < ApplicationController
   end
 
   def edit
+    @event = Event.find(params[:id])
   end
 
   def update
+    @event = Event.find(params[:id])
+    if @event.update(event_params)
+      redirect_to event_path(@event), notice: "更新しました"
+    else
+      render :edit
+    end
   end
 
   def destroy
+    event = Event.find(params[:id])
+    event.update(is_active: :false)
+    redirect_to action: :index, notice: "削除しました"
   end
 
   private
@@ -36,4 +47,5 @@ class Public::EventsController < ApplicationController
   def event_params
     params.require(:event).permit(:name, :introduction, :event_image, :date, :end_time, :venue, :min_people, :max_people)
   end
+
 end
