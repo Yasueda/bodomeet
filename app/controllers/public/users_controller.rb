@@ -1,6 +1,7 @@
 class Public::UsersController < ApplicationController
   before_action :authenticate_user!, except: [:not_active]
   before_action :ensure_guest_user, only: [:withdraw]
+  # before_action :ensure_correct_user, only: [:edit, :update, :destroy]
 
   def index
     @users = User.all
@@ -42,17 +43,18 @@ class Public::UsersController < ApplicationController
     params.require(:user).permit(:name, :introduction, :user_image)
   end
 
-  def ensure_corrent_user
-    user = User.find(params[:id])
-    unless user == current_user
-      redirect_to my_page_path, notice: "このユーザーはその操作を行えません。"
-    end
-  end
+  # 将来的にアクションを追加する時のユーザーアクセス制限用
+  # def ensure_correct_user
+  #   user = User.find(params[:id])
+  #   unless user == current_user
+  #     redirect_to user_path(user.id), notice: "このユーザーはその操作を行えません。"
+  #   end
+  # end
 
   def ensure_guest_user
     user = current_user
     if user.guest_user?
-      redirect_to my_page_path, alert: "ゲストユーザーはその操作を行えません。"
+      redirect_to user_path(user.id), alert: "ゲストユーザーはその操作を行えません。"
     end
   end
 end

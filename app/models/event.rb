@@ -12,7 +12,7 @@ class Event < ApplicationRecord
 
   has_one_attached :event_image
 
-  validates :name, presence: true, length: {minimun: 2, maximum: 20}, uniqueness: true
+  validates :name, presence: true, length: {maximum: 30}, uniqueness: true
   validates :introduction, length: {maximum: 200}
   validates :date, presence: true
   validates :end_time, presence: true
@@ -27,8 +27,8 @@ class Event < ApplicationRecord
 
   def get_image
     unless event_image.attached?
-      file_path = Rails.root.join('app/assets/images/no_event_image.png')
-      event_image.attach(io: File.open(file_path), filename: 'default-event-image.png', content_type: 'image/png')
+      file_path = Rails.root.join('app/assets/images/events/no_event_image.png')
+      event_image.attach(io: File.open(file_path), filename: 'event-image.jpg', content_type: 'image/jpg')
     end
     event_image
   end
