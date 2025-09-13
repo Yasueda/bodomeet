@@ -8,23 +8,23 @@ class User < ApplicationRecord
   has_many :events, dependent: :destroy
 
   has_many :participants, dependent: :destroy
-  has_many :participated_events, through: :participants
+  has_many :participated_events, through: :participants, source: :event
 
   has_many :comments, dependent: :destroy
-  has_many :commented_events, through: :comments
+  has_many :commented_events, through: :comments, source: :event
 
   has_many :notifications, dependent: :destroy
-  has_many :notified_events, through: :notifications
+  has_many :notified_events, through: :notifications, source: :event
 
   has_many :groups, dependent: :destroy
 
   has_many :members, dependent: :destroy
-  has_many :member_groups, through: :members
+  has_many :member_groups, through: :members, source: :group
 
   has_one_attached :user_image
 
-  validates :name, presence: true, length: {minimun: 2, maximum: 20}, uniqueness: true
-  validates :introduction, length: {maximum: 200}
+  validates :name, presence: true, length: {minimun: 2, maximum: 10}, uniqueness: true
+  validates :introduction, length: {maximum: 100}
 
   def get_user_image(width, height)
     unless user_image.attached?

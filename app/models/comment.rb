@@ -1,6 +1,6 @@
 class Comment < ApplicationRecord
-  belongs_to :commented_user, class_name: "User"
-  belongs_to :commented_event, class_name: "Event"
+  belongs_to :user
+  belongs_to :event
 
   validates :content, length: {maximum: 50}
 end

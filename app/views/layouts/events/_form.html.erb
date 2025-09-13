@@ -17,44 +17,44 @@
   <%= form_with model: event, url: url_path, local: true do |f| %>
     <div class="input-group mb-3">
       <div class="input-group-prepend col-2 p-0">
-        <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-image mx-auto"></i></span>
+        <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-image mx-auto"></i></span>
       </div>
       <%= f.file_field :event_image, class: "form-control p-1 align-items-center", accept: "image/*" %>
     </div>
 
     <div class="input-group mb-3">
       <div class="input-group-prepend col-2 p-0">
-        <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-dice-five mx-auto"></i></span>
+        <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-dice-five mx-auto"></i></span>
       </div>
       <%= f.text_field :name, autofocus: true, class: "form-control", placeholder: "イベント名" %>
     </div>
 
     <div class="input-group mb-3">
       <div class="input-group-prepend col-2 p-0">
-      <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-circle-info mx-auto"></i></span>
+      <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-circle-info mx-auto"></i></span>
       </div>
       <%= f.text_area :introduction, class: "form-control", placeholder: "内容", size: "40x5" %>
     </div>
 
     <div class="input-group mb-3">
       <div class="input-group-prepend col-2 p-0">
-        <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-calendar mx-auto"></i></span>
+        <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-calendar mx-auto"></i></span>
       </div>
       <%= f.datetime_field :date, class: "form-control" %>
       <span class="d-flex align-items-center">&nbsp;～&nbsp;</span>
-      <%= f.time_field :end_time, class: "form-control" %>
+      <%= f.time_field :end_time, step: 1800, class: "form-control" %>
     </div>
 
     <div class="input-group mb-3">
       <div class="input-group-prepend col-2 p-0">
-      <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-location-dot mx-auto"></i></span>
+      <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-location-dot mx-auto"></i></span>
       </div>
       <%= f.text_field :venue, autofocus: true, class: "form-control", placeholder: "開催場所" %>
     </div>
 
     <div class="input-group mb-3">
       <div class="input-group-prepend col-2 p-0">
-        <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-user-minus mx-auto"></i></span>
+        <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-user-minus mx-auto"></i></span>
       </div>
       <%= f.select :min_people, *[2..20], {prompt: "最低人数"}, {class: "form-control"} %>
       <div class="input-group-append">
@@ -64,7 +64,7 @@
 
     <div class="input-group mb-3">
       <div class="input-group-prepend col-2 p-0">
-        <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-user-plus mx-auto"></i></span>
+        <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-user-plus mx-auto"></i></span>
       </div>
       <%= f.select :max_people, *[2..20], {prompt: "最大人数"}, {class: "form-control"} %>
       <div class="input-group-append">

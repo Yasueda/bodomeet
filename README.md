@@ -38,7 +38,6 @@
 - フレームワーク：Ruby on Rails
 - JSライブラリ：jQuery
 - IDE：Visual Studio Code 1.98.2
-<!-- Cloud9 の記述がありましたが現IDEはVScodeではないでしょうか？ -->​
 
 ## 使用素材
 - 素材として以下を使用

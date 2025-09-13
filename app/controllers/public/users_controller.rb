@@ -2,18 +2,12 @@ class Public::UsersController < ApplicationController
   before_action :authenticate_user!, except: [:not_active]
   before_action :ensure_guest_user, only: [:withdraw]
 
-  def my_page
-  end
-
   def index
     @users = User.all
   end
 
   def show
     @user = User.find(params[:id])
-    if @user == current_user
-      redirect_to my_page_path
-    end
   end
 
   def edit
