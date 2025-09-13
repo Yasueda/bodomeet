@@ -1,5 +1,5 @@
 <div class="card shadow-lg rounde">
-  <div class="bg-light p-2">
+  <div class="bg-light">
     <%= image_tag event.get_image, size: "160x90", class: "card-img-top cover-image" %>
   </div>
   <div class="p-2 text-center"><%= event.name %></div>
@@ -17,7 +17,7 @@
       </tr>
       <tr>
         <td class="text-center"><i class="fas fa-circle-user mx-auto"></i></td>
-        <td><%= event.participants.count %> / <%= event.max_people %></td>
+        <td><%= event.participants.count %> / <%= event.max_people %> 人</td>
       </tr>
     </tbody>
   </table>

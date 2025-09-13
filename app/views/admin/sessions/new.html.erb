@@ -10,14 +10,14 @@
         <%= form_with model: @admin, url: admin_session_path, local: true do |f| %>
           <div class="input-group mb-3">
             <div class="input-group-prepend col-2 p-0">
-              <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-user mx-auto"></i></span>
+              <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-user mx-auto"></i></span>
             </div>
             <%= f.text_field :email, autofocus: true, class: "form-control", placeholder: "メールアドレス" %>
           </div>
 
           <div class="input-group mb-3">
             <div class="input-group-prepend col-2 p-0">
-            <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lock mx-auto"></i></span>
+            <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-lock mx-auto"></i></span>
             </div>
             <%= f.password_field :password, autocomplete: "off", class:"form-control", id:"inputPassword", placeholder:"パスワード" %>
           </div>

@@ -19,25 +19,25 @@
         <%= form_with model: @user, url: user_registration_path do |f| %>
           <div class="input-group mb-3">
             <div class="input-group-prepend col-2 p-0">
-              <span class="input-group-text w-100" aria-hidden="true"><i class="fa-solid fa-user mx-auto"></i></span>
+              <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-user mx-auto"></i></span>
             </div>
             <%= f.text_field :name, autofocus: true, placeholder: "ユーザー名", class: "form-control" %>
           </div>
           <div class="input-group mb-3">
             <div class="input-group-prepend col-2 p-0">
-              <span class="input-group-text w-100" aria-hidden="true"><i class="fa-solid fa-envelope mx-auto"></i></span>
+              <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-envelope mx-auto"></i></span>
             </div>
             <%= f.email_field :email, autofocus: true, placeholder: "メールアドレス", class: "form-control" %>
           </div>
           <div class="input-group mb-3">
             <div class="input-group-prepend col-2 p-0">
-              <span class="input-group-text w-100" aria-hidden="true"><i class="fa-solid fa-lock mx-auto"></i></span>
+              <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-lock mx-auto"></i></span>
             </div>
             <%= f.password_field :password, placeholder: "パスワード(#{@minimum_password_length}文字以上)", class: "form-control" %>
           </div>
           <div class="input-group mb-3">
             <div class="input-group-prepend col-2 p-0">
-              <span class="input-group-text w-100" aria-hidden="true"><i class="fa-solid fa-circle-check mx-auto"></i></span>
+              <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-circle-check mx-auto"></i></span>
             </div>
             <%= f.password_field :password_confirmation, placeholder: "パスワード確認", class: "form-control" %>
           </div>

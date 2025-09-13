@@ -2,13 +2,13 @@ class Event < ApplicationRecord
   belongs_to :user
 
   has_many :participants, dependent: :destroy
-  has_many :participated_users, through: :participants
+  has_many :participated_users, through: :participants, source: :user
 
   has_many :comments, dependent: :destroy
-  has_many :commented_users, through: :comments
+  has_many :commented_users, through: :comments, source: :user
 
   has_many :notifications, dependent: :destroy
-  has_many :notified_users, through: :notifications
+  has_many :notified_users, through: :notifications, source: :user
 
   has_one_attached :event_image
 
@@ -21,6 +21,9 @@ class Event < ApplicationRecord
   validates :max_people, presence: true
   validate  :check_people
   validate  :check_time
+
+  scope :asc_date_order, -> { order(date: :asc)}
+  scope :desc_date_order, -> { order(date: :desc) }
 
   def get_image
     unless event_image.attached?

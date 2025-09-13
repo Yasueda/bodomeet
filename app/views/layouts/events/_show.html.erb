@@ -16,58 +16,66 @@
 
 <div class="d-flex justify-content-center">
   <div class="card shadow-lg col-md-8 rounde p-3">
-    <div class="bg-light p-2">
+    <div class="bg-light">
       <%= image_tag event.get_image, height: "380", class: "card-img-top cover-image" %>
     </div>
 
     <table class="table px-3">
       <thead>
-        <tr>
+        <tr class="bg-light">
           <th colspan="2"><div class="h2 p-2 text-center"><%= event.name %></div></th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td class="text-center"><i class="fas fa-calendar mx-auto"></i></td>
+          <td class="text-center"><i class="fas fa-lg fa-calendar mx-auto"></i></td>
           <td><%= event.date.strftime("%m月%d日 %H:%M") %> 開始 ～ <%= event.end_time.strftime("%H:%M") %> 終了予定</td>
         </tr>
+        <tr> 
+          <td class="text-center"><i class="fas fa-lg fa-location-dot mx-auto"></i></td>
+          <td><%= event.venue %></td>
+        </tr>
         <tr>
-          <td class="text-center"><i class="fas fa-circle-user mx-auto"></i></td>
+          <td class="text-center"><i class="fas fa-lg fa-circle-user mx-auto"></i></td>
           <td>
-            <span>参加人数 <%= event.participants.count %> 人 / 最大 <%= event.max_people %> 人（最低 <%= event.min_people %> 人）<span>
-            <% if user_signed_in? %>
-              <%= render "layouts/events/participant", event: event %>
-            <% end %>
+            <div>
+              <span><%= event.participants.count %> / <%= event.max_people %> 人（最低 <%= event.min_people %> 人）<span>
+              <% if user_signed_in? %>
+                <%= render "layouts/events/participant", event: event %>
+              <% end %>
+            </div>
+            <div>
+              <% event.participated_users.each do |user| %>
+                <% if admin_signed_in? %>
+                  <%= link_to admin_user_path(user.id) do %>
+                    <%= render "layouts/events/participant_icon", user: user %>
+                  <% end %>
+                <% elsif user_signed_in? %>
+                  <%= link_to user_path(user.id) do %>
+                    <%= render "layouts/events/participant_icon", user:user %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </div>
           </td>
         </tr>
         <tr>
-          <td class="text-center"><i class="fas fa-circle-info mx-auto"></i></td>
+          <td class="text-center"><i class="fas fa-lg fa-circle-info mx-auto"></i></td>
           <td><%= simple_format(event.introduction, sanitize: true) %></td>
         </tr>
         <tr>
-          <% if admin_signed_in? %>
-            <td class="text-center">
-              <%= link_to admin_user_path(event.user.id) do %>
-                <%= image_tag event.user.get_user_image(25, 25), size: "25x25", class: "rounded-circle bg-white border border-dark cover-image", alt: "ユーザーアイコン" %>
+          <td class="text-center"><i class="fas fa-lg fa-lightbulb mx-auto"></i></td>
+          <td>
+            <% if admin_signed_in? %>
+              <%= link_to admin_user_path(event.user.id), class: "d-flex align-items-center" do %>
+                <%= render "layouts/events/owner_user", user: event.user %>
               <% end %>
-            </td>
-            <td class="d-flex align-items-center">
-              <%= link_to admin_user_path(event.user.id) do %>
-                <%= @event.user.name %>
+            <% elsif user_signed_in? %>
+              <%= link_to user_path(event.user.id), class: "d-flex align-items-center" do %>
+                <%= render "layouts/events/owner_user", user: event.user %>
               <% end %>
-            </td>
-          <% elsif user_signed_in? %>
-            <td class="text-center">
-              <%= link_to user_path(event.user.id) do %>
-                <%= image_tag event.user.get_user_image(25, 25), size: "25x25", class: "rounded-circle bg-white border border-dark cover-image", alt: "ユーザーアイコン" %>
-              <% end %>
-            </td>
-            <td class="d-flex align-items-center">
-              <%= link_to user_path(event.user.id) do %>
-                <%= @event.user.name %>
-              <% end %>
-            </td>
-          <% end %>
+            <% end %>
+          </td>
         </tr>
       </tbody>
     </table>
