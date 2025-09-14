@@ -18,7 +18,7 @@ class Public::UsersController < ApplicationController
   def update
     @user = current_user
     if @user.update(user_params)
-      redirect_to my_page_path, notice: "更新しました"
+      redirect_to user_path(current_user.id), notice: "更新しました"
     else
       render :edit
     end
@@ -31,7 +31,7 @@ class Public::UsersController < ApplicationController
     user = current_user
     user.update(is_active: :false)
     reset_session
-    redirect_to root_path, notice: "退会しました。"
+    redirect_to root_path, notice: "退会しました"
   end
 
   def not_active
@@ -43,18 +43,21 @@ class Public::UsersController < ApplicationController
     params.require(:user).permit(:name, :introduction, :user_image)
   end
 
-  # 将来的にアクションを追加する時のユーザーアクセス制限用
+  # ユーザーアクセス制限用
+  # edit, update, withdraw, などでcurrent_userを指定しており、
+  # routesでも:idを含まない指定をしているので現状では不要
+  #
   # def ensure_correct_user
   #   user = User.find(params[:id])
   #   unless user == current_user
-  #     redirect_to user_path(user.id), notice: "このユーザーはその操作を行えません。"
+  #     redirect_to request.referer, notice: "このユーザーはその操作を行えません"
   #   end
   # end
 
   def ensure_guest_user
     user = current_user
     if user.guest_user?
-      redirect_to user_path(user.id), alert: "ゲストユーザーはその操作を行えません。"
+      redirect_to request.referer, alert: "ゲストユーザーはその操作を行えません"
     end
   end
 end

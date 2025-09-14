@@ -39,6 +39,7 @@ class User < ApplicationRecord
     find_or_create_by!(email: GUEST_USER_EMAIL) do |user|
       user.password = ENV['GUEST_KEY']
       user.name = "ゲスト"
+      user.introduction = "ゲスト用ユーザーです。\r\n退会機能以外に制限はありません。"
     end
   end
 

@@ -40,7 +40,7 @@
       <div class="input-group-prepend col-2 p-0">
         <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-calendar mx-auto"></i></span>
       </div>
-      <%= f.datetime_field :date, class: "form-control" %>
+      <%= f.datetime_field :date, step: 1800, class: "form-control" %>
       <span class="d-flex align-items-center">&nbsp;～&nbsp;</span>
       <%= f.time_field :end_time, step: 1800, class: "form-control" %>
     </div>
