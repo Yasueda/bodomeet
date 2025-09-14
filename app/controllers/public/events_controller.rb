@@ -1,6 +1,7 @@
 class Public::EventsController < ApplicationController
   before_action :authenticate_user!
   before_action :ensure_currect_user, only: [:edit, :update, :destroy]
+  # before_action :ensure_guest_user, only: [:create, :edit, :update, :destroy]
   
   def new
     @event = Event.new
@@ -15,10 +16,9 @@ class Public::EventsController < ApplicationController
   end
 
   def create
-    byebug
     @event = current_user.events.new(event_params)
     if @event.save
-      flash[:notice] = "新規イベントを作成しました。"
+      flash[:notice] = "新規イベントを作成しました"
       redirect_to event_path(@event.id)
     else
       render :new
@@ -53,7 +53,15 @@ class Public::EventsController < ApplicationController
   def ensure_correct_user
     user = Event.find(params[:id]).user
     unless user == current_user
-      redirect_to events_path, notice: "このユーザーはその操作を行えません。"
+      redirect_to events_path, notice: "このユーザーはその操作を行えません"
     end
   end
+
+  # ゲストユーザーアクセス制限用
+  # def ensure_guest_user
+  #   user = current_user
+  #   if user.guest_user?
+  #     redirect_to request.referer, alert: "ゲストユーザーはその操作を行えません"
+  #   end
+  # end
 end
