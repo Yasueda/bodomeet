@@ -1,0 +1,28 @@
+<div class="row no-gutters">
+  <div class="col-md-5 col-sm-10 mx-2 mx-sm-auto text-center shadow-lg rounded px-0 my-5">
+    <h5 class="test-dark bg-light py-4 mb-0">ユーザー情報編集</h5>
+    <div class="form-body p-4">
+      <div class="mx-auto text-center">
+        <p>各項目を入力してください</p>
+      </div>
+
+      <% if user.errors.any? %>
+        <ul class="alert alert-danger text-left" role="alert">
+          <h6 class="alert-heading">
+            <%= user.errors.count %>件のエラーが発生しました
+          </h6>
+          <% user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      <% end %>
+
+      <% if admin_signed_in? %>
+        <%= render "layouts/users/form", user: user, url_path: admin_user_path, action: :patch %>
+      <% elsif user_signed_in? %>
+        <%= render "layouts/users/form", user: user, url_path: update_user_path, action: :patch %>
+      <% end %>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<div class="card shadow-lg rounde">
+  <div class="bg-light p-1">
+    <%= image_tag user.get_user_image(50, 50),size: "50x50", class: "d-block bg-white mx-auto rounded-circle border border-dark cover-image", alt: "ユーザーアイコン" %>
+  </div>
+  <div class="p-2 text-center small"><%= user.name %></div>
+  <% if admin_signed_in? %>
+    <%= render "admin/users/is_active", user: user %>
+  <% end %>
+</div>

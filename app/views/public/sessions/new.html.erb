@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="row no-gutters">
+    <div class="col-md-5 col-sm-10 mx-2 mx-sm-auto text-center shadow-lg rounded px-0 my-5">
+      <h5 class="test-dark bg-light py-4 mb-0">ユーザーログイン</h5>
+      <div class="form-body p-4">
+        <div class="mx-auto text-center">
+          <p>各項目を入力してください</p>
+        </div>
+
+        <%= form_with model: @user, url: user_session_path, local: true do |f| %>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend col-2 p-0">
+              <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-user mx-auto"></i></span>
+            </div>
+            <%= f.text_field :name, autofocus: true, class: "form-control", placeholder: "ユーザー名" %>
+          </div>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend col-2 p-0">
+            <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-lock mx-auto"></i></span>
+            </div>
+            <%= f.password_field :password, autocomplete: "off", class:"form-control", id:"inputPassword", placeholder:"パスワード" %>
+          </div>
+
+          <%= f.submit "サインイン", class:"btn btn-block btn-info mt-5" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

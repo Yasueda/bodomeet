@@ -1,0 +1,34 @@
+@use '~bootstrap/scss/bootstrap';
+
+.cover-image {
+  object-fit: cover;
+}
+
+.heading::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 3px;
+  margin: 8px auto 0 0;
+  background-color: #EC715F;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+.table th, .table td {
+  padding: 0.5rem;
+}
+
+.table tr:last-child td {
+  border-bottom: solid 1px #dee2e6;
+}
+
+td p {
+  margin: 0;
+}
+
+.height-90 {
+  height: 90px;
+}

@@ -6,11 +6,19 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script src=<%= ENV['FONTAWESOME_URL'] %> crossorigin="anonymous"></script>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="d-flex flex-column vh-100">
+    <%= render 'layouts/header' %>
+    <main class="mb-auto">
+    <div class="container py-3 shadow-lg rounded">
+      <%= render 'layouts/flash_message' %>
+      <%= yield %>
+    <div>
+    </main>
+    <%= render 'layouts/footer' %>
   </body>
 </html>

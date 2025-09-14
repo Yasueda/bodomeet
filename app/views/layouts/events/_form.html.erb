@@ -1,0 +1,89 @@
+<div class="form-body p-4">
+  <div class="mx-auto text-center">
+    <p>各項目を入力してください</p>
+  </div>
+
+  <% if event.errors.any? %>
+    <ul class="alert alert-danger text-left" role="alert">
+      <h6 class="alert-heading">
+        <%= event.errors.count %>件のエラーが発生しました
+      </h6>
+      <% event.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <%= form_with model: event, url: url_path, local: true do |f| %>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend col-2 p-0">
+        <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-image mx-auto"></i></span>
+      </div>
+      <%= f.file_field :event_image, class: "form-control p-1 align-items-center", accept: "image/*" %>
+    </div>
+
+    <div class="input-group mb-3">
+      <div class="input-group-prepend col-2 p-0">
+        <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-dice-five mx-auto"></i></span>
+      </div>
+      <%= f.text_field :name, autofocus: true, class: "form-control", placeholder: "イベント名" %>
+    </div>
+
+    <div class="input-group mb-3">
+      <div class="input-group-prepend col-2 p-0">
+      <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-circle-info mx-auto"></i></span>
+      </div>
+      <%= f.text_area :introduction, class: "form-control", placeholder: "内容", size: "40x5" %>
+    </div>
+
+    <div class="input-group mb-3">
+      <div class="input-group-prepend col-2 p-0">
+        <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-calendar mx-auto"></i></span>
+      </div>
+      <%= f.datetime_field :date, step: 1800, class: "form-control" %>
+      <span class="d-flex align-items-center">&nbsp;～&nbsp;</span>
+      <%= f.time_field :end_time, step: 1800, class: "form-control" %>
+    </div>
+
+    <div class="input-group mb-3">
+      <div class="input-group-prepend col-2 p-0">
+      <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-location-dot mx-auto"></i></span>
+      </div>
+      <%= f.text_field :venue, autofocus: true, class: "form-control", placeholder: "開催場所" %>
+    </div>
+
+    <div class="input-group mb-3">
+      <div class="input-group-prepend col-2 p-0">
+        <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-user-minus mx-auto"></i></span>
+      </div>
+      <%= f.select :min_people, *[2..20], {prompt: "最低人数"}, {class: "form-control"} %>
+      <div class="input-group-append">
+        <span class="input-group-text">人</span>
+      </div>
+    </div>
+
+    <div class="input-group mb-3">
+      <div class="input-group-prepend col-2 p-0">
+        <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-user-plus mx-auto"></i></span>
+      </div>
+      <%= f.select :max_people, *[2..20], {prompt: "最大人数"}, {class: "form-control"} %>
+      <div class="input-group-append">
+        <span class="input-group-text">人</span>
+      </div>
+    </div>
+
+    <% if admin_signed_in? %>
+      <div class="input-group mb-3 d-flex justify-content-around">
+        <div>
+          <%= f.radio_button :is_active, :true, checked: event.is_active %>
+          <%= f.label :is_active, "有効", value: :true, class: "mr-3" %>
+        </div>
+        <div>
+          <%= f.radio_button :is_active, :false, checked: !event.is_active %>
+          <%= f.label :is_active, "無効", value: :false %>
+        </div>
+      </div>
+    <% end %>
+
+    <%= f.submit "決定", class:"btn btn-block btn-success mt-3" %>
+  <% end %>

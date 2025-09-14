@@ -1,0 +1,20 @@
+<li class="col p-0">
+  <%= link_to user_path(current_user.id), class: 'nav-link text-light text-center' do %>
+    <i class="fas fa-lg fa-id-card"></i> マイページ
+  <% end %>
+</li>
+<li class="col p-0">
+  <%=  link_to users_path, class: 'nav-link text-light text-center' do %>
+    <i class="fas fa-lg fa-users"></i> ユーザー
+  <% end %>
+</li>
+<li class="col p-0">
+  <%=  link_to events_path ,class: 'nav-link text-light text-center' do %>
+    <i class="fas fa-lg fa-dice"></i> イベント
+  <% end %>
+</li>
+<li class="col p-0">
+  <%= link_to destroy_user_session_path, method: :delete,class: 'nav-link text-light text-center' do %>
+    <i class="fas fa-lg fa-sign-out-alt"></i> ログアウト
+  <% end %>
+</li>

@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="row no-gutters">
+    <div class="col-md-5 col-sm-10 mx-2 mx-sm-auto text-center shadow-lg rounded px-0 my-5">
+      <h5 class="text-dark bg-light py-4 mb-0">新規登録</h5>
+      <div class="form-body p-4">
+        <div class="mx-auto text-center">
+          <p>各項目を入力してください。</p>
+        </div>
+        <% if @user.errors.any? %>
+          <ul class="alert alert-danger text-left" role="alert">
+            <h6 class="alert-heading">
+              <%= @user.errors.count %>件のエラーが発生しました
+            </h6>
+            <% @user.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        <% end %>
+        <%= form_with model: @user, url: user_registration_path do |f| %>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend col-2 p-0">
+              <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-user mx-auto"></i></span>
+            </div>
+            <%= f.text_field :name, autofocus: true, placeholder: "ユーザー名", class: "form-control" %>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend col-2 p-0">
+              <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-envelope mx-auto"></i></span>
+            </div>
+            <%= f.email_field :email, autofocus: true, placeholder: "メールアドレス", class: "form-control" %>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend col-2 p-0">
+              <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-lock mx-auto"></i></span>
+            </div>
+            <%= f.password_field :password, placeholder: "パスワード(#{@minimum_password_length}文字以上)", class: "form-control" %>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend col-2 p-0">
+              <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-circle-check mx-auto"></i></span>
+            </div>
+            <%= f.password_field :password_confirmation, placeholder: "パスワード確認", class: "form-control" %>
+          </div>
+          <%= f.submit "新規登録", class: "btn btn-block btn-info mt-5" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
