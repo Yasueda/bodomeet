@@ -13,6 +13,8 @@
     <i class="fas fa-lg fa-dice"></i> イベント管理
   <% end %>
 </li>
+<%
+=begin %>
 <li class="col p-0">
   <%=  link_to admin_comments_path ,class: 'nav-link text-light text-center' do %>
     <i class="fas fa-lg fa-comment-dots"></i> コメント管理
@@ -23,6 +25,8 @@
     <i class="fas fa-lg fa-user-group"></i> グループ管理
   <% end %>
 </li>
+<%
+=end %>
 <li class="col p-0">
   <%= link_to destroy_admin_session_path, method: :delete,class: 'nav-link text-light text-center' do %>
     <i class="fas fa-lg fa-sign-out-alt"></i> ログアウト
