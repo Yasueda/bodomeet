@@ -43,6 +43,6 @@
 - 素材として以下を使用
   - [Font Awesome](https://fontawesome.com/)
   - [ぱくたそ](https://www.pakutaso.com/)
-  - [designevo](https://www.designevo.com/)
+  - [イラストAC](https://www.ac-illust.com/)
   - [ICOOON MONO](http://icooon-mono.com/)
 <!-- 使用素材に応じて編集 -->
