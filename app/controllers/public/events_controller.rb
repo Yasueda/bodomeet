@@ -1,6 +1,6 @@
 class Public::EventsController < ApplicationController
   before_action :authenticate_user!
-  before_action :ensure_currect_user, only: [:edit, :update, :destroy]
+  before_action :ensure_correct_user, only: [:edit, :update, :destroy]
   # before_action :ensure_guest_user, only: [:create, :edit, :update, :destroy]
   
   def new
@@ -41,7 +41,7 @@ class Public::EventsController < ApplicationController
   def destroy
     event = Event.find(params[:id])
     event.update(is_active: :false)
-    redirect_to action: :index, notice: "削除しました"
+    redirect_to user_path(current_user.id), notice: "削除しました"
   end
 
   private

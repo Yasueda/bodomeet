@@ -36,6 +36,10 @@ class Public::SessionsController < Devise::SessionsController
     events_path
   end
 
+  def after_sign_out_path_for(resource)
+    about_path
+  end
+
   def is_active?
     user = User.find_by(name: params[:user][:name])
     return if user.nil?
