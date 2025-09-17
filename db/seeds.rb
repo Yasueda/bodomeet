@@ -17,56 +17,56 @@ users = [
     email:        "suzuki@example.com",
     introduction: "Suzukiと申します。\r\n頭を使わないボドゲが好きです。\r\nでも色んなボドゲをやってみたいです。\r\nよろしくお願いします。",
     password:     ENV['SUZUKI_KEY'],
-    user_image:   ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/users/battery_icon.png")),filename: 'icon-image.jpg',content_type: 'image/jpg')
+    user_image:   ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/users/battery_icon.jpeg")),filename: 'icon-image.jpeg',content_type: 'image/jpeg')
   },
   {
     name:         "Tanaka",
     email:        "tanaka@example.com",
     introduction: "Tanakaです。\r\n初心者です。\r\nとにかくボドゲに興味があります。",
     password:     ENV['TANAKA_KEY'],
-    user_image:   ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/users/car_icon.png")),filename: 'icon-image.jpg',content_type: 'image/jpg')
+    user_image:   ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/users/car_icon.jpeg")),filename: 'icon-image.jpeg',content_type: 'image/jpeg')
   },
   {
     name:         "Yoshida",
     email:        "yoshida@example.com",
     introduction: "TRPG大好きマン。\r\nクトゥルフとパラノイアがメイン。\r\nプレイヤーメイン。",
     password:     ENV['YOSHIDA_KEY'],
-    user_image:   ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/users/angling_icon.png")),filename: 'icon-image.jpg',content_type: 'image/jpg')
+    user_image:   ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/users/angling_icon.jpeg")),filename: 'icon-image.jpeg',content_type: 'image/jpg')
   },
   {
     name:         "ハルト",
     email:        "haruto@example.com",
     introduction: "なんでもやります。\r\n普通のボドゲでもTRPGでもなんでもござれ。\r\nエンジョイ勢。",
     password:     ENV['HARUTO_KEY'],
-    user_image:   ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/users/toilet_icon.png")),filename: 'icon-image.jpg',content_type: 'image/jpg')
+    user_image:   ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/users/toilet_icon.jpeg")),filename: 'icon-image.jpeg',content_type: 'image/jpeg')
   },
   {
     name:         "つむぎ",
     email:        "tumugi@example.com",
     introduction: "カードゲーム系が好きです。\r\nハトクラとかふるよにをよくやります。\r\n布教したいのでイベントでは初心者大歓迎です!!",
     password:     ENV['TUMUGI_KEY'],
-    user_image:   ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/users/palm_icon.png")),filename: 'icon-image.jpg',content_type: 'image/jpg')
+    user_image:   ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/users/palm_icon.jpeg")),filename: 'icon-image.jpeg',content_type: 'image/jpeg')
   },
   {
     name:         "コハル",
     email:        "koharu@example.com",
     introduction: "人狼専門ガチ勢。\r\nネットでもやってます。\r\n1000回以上やってます。",
     password:     ENV['KOHARU_KEY'],
-    user_image:   ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/users/cherryblossom_icon.png")),filename: 'icon-image.jpg',content_type: 'image/jpg')
+    user_image:   ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/users/cherryblossom_icon.jpeg")),filename: 'icon-image.jpeg',content_type: 'image/jpeg')
   },
   {
     name:         "陽詩",
     email:        "hinata@example.com",
     introduction: "ひなたと読みます。\r\nマダミスが好きです。\r\nイベントに参加していただいた方には私がプレイ済みのマダミス差し上げます。",
     password:     ENV['HINATA_KEY'],
-    user_image:   ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/users/sunrise_icon.png")),filename: 'icon-image.jpg',content_type: 'image/jpg')
+    user_image:   ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/users/sunrise_icon.jpeg")),filename: 'icon-image.jpeg',content_type: 'image/jpeg')
   },
   {
     name:         "木木",
     email:        "hayashi@example.com",
     introduction: "ハヤシです...\r\nとりあえず登録してみたとです...\r\nハヤシです...",
     password:     ENV['HAYASHI_KEY'],
-    user_image:   ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/users/trees_icon.png")),filename: 'icon-image.jpg',content_type: 'image/jpg')
+    user_image:   ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/users/trees_icon.jpeg")),filename: 'icon-image.jpeg',content_type: 'image/jpeg')
   }
 ]
 
@@ -87,7 +87,7 @@ events = [
     venue:        "東京都小金井市本町XX-XX-XX",
     min_people:   "6",
     max_people:   "12",
-    event_image:  ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/events/tcg.png")),filename: 'event-image.jpg',content_type: 'image/jpg')
+    event_image:  ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/events/tcg.png")),filename: 'event-image.png',content_type: 'image/png')
   },
   {
     user:         User.find_by(name: "コハル"),
@@ -98,7 +98,7 @@ events = [
     venue:        "東京都渋谷区桜丘町XX-XX",
     min_people:   "12",
     max_people:   "20",
-    event_image:  ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/events/werewolf.png")),filename: 'event-image.jpg',content_type: 'image/jpg')    
+    event_image:  ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/events/werewolf.png")),filename: 'event-image.png',content_type: 'image/png')
   }
 ]
 
