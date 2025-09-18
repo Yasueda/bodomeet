@@ -22,6 +22,8 @@ class User < ApplicationRecord
   has_many :member_groups, through: :members, source: :group
 
   has_one_attached :user_image
+  validates :user_image, content_type: {in:[:jpg, :jpeg], message: "はjpg, jpegいずれかの形式にして下さい"},
+  size: { between: 1.kilobyte..4.megabytes , message: '画像容量が大きすぎます、4MB以下にして下さい' }
 
   validates :name, presence: true, length: {minimun: 2, maximum: 10}, uniqueness: true
   validates :introduction, length: {maximum: 100}

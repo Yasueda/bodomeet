@@ -1,10 +1,11 @@
 <%= form_with model: user, url: url_path, method: action, local: true do |f| %>
-  <div class="input-group mb-3">
+  <div class="input-group">
     <div class="input-group-prepend col-2 p-0">
       <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-image mx-auto"></i></span>
     </div>
     <%= f.file_field :user_image, class: "form-control p-1 align-items-center", accept: "image/*" %>
   </div>
+  <div class="small text-danger text-right mb-3">※画像はjpg, jpegいずれかの形式にして下さい</div>
 
   <div class="input-group mb-3">
     <div class="input-group-prepend col-2 p-0">
@@ -15,7 +16,7 @@
 
   <div class="input-group mb-3">
     <div class="input-group-prepend col-2 p-0">
-    <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-circle-info mx-auto"></i></span>
+      <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-circle-info mx-auto"></i></span>
     </div>
     <%= f.text_area :introduction, class: "form-control", placeholder: "紹介", size: "40x5" %>
   </div>

@@ -29,7 +29,7 @@
       <tbody>
         <tr>
           <td class="text-center"><i class="fas fa-lg fa-calendar mx-auto"></i></td>
-          <td><%= event.date.strftime("%m月%d日 %H:%M") %> 開始 ～ <%= event.end_time.strftime("%H:%M") %> 終了予定</td>
+          <td><%= event.date.strftime("%m月%d日") %> <%= event.start_time.strftime("%H:%M") %> 開始 ～ <%= event.end_time.strftime("%H:%M") %> 終了予定</td>
         </tr>
         <tr> 
           <td class="text-center"><i class="fas fa-lg fa-location-dot mx-auto"></i></td>

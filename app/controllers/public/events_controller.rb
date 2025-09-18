@@ -8,7 +8,7 @@ class Public::EventsController < ApplicationController
   end
 
   def index
-    @events = Event.all
+    @events = Event.where(is_active: true).asc_datetime_order
   end
 
   def show
@@ -44,10 +44,27 @@ class Public::EventsController < ApplicationController
     redirect_to user_path(current_user.id), notice: "削除しました"
   end
 
+  def search
+    if params[:keyword].empty?
+      redirect_to request.referer
+    else
+      keywords = params[:keyword].split(/[[:blank:]]+/)
+      @events = Event.where(is_active: true)
+      keywords.each do |keyword|
+        next if keyword == ""
+        @events = @events.search(keyword)
+      end
+      unless @events.empty?
+        @events = @events.asc_datetime_order
+      end
+      render :index
+    end
+  end
+
   private
 
   def event_params
-    params.require(:event).permit(:name, :introduction, :event_image, :date, :end_time, :venue, :min_people, :max_people)
+    params.require(:event).permit(:name, :introduction, :event_image, :date, :start_time, :end_time, :venue, :min_people, :max_people)
   end
 
   def ensure_correct_user

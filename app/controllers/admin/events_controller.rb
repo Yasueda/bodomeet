@@ -1,5 +1,6 @@
 class Admin::EventsController < ApplicationController
   before_action :authenticate_admin!
+
   def index
     @events = Event.all
   end
@@ -40,6 +41,23 @@ class Admin::EventsController < ApplicationController
     event = Event.where(is_active: false)
     event.destroy_all
     redirect_to action: :index, notice: "無効イベントを全て削除しました"
+  end
+
+  def search
+    if params[:keyword].empty?
+      redirect_to request.referer
+    else
+      keywords = params[:keyword].split(/[[:blank:]]+/)
+      @events = Event.all
+      keywords.each do |keyword|
+        next if keyword == ""
+        @events = @events.search(keyword)
+      end
+      unless @events.empty?
+        @events = @events.asc_datetime_order
+      end
+      render :index
+    end
   end
 
   private

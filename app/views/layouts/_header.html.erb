@@ -4,19 +4,11 @@
       <div class="d-flex align-items-center">
         <a class="navbar-brand" href="/"><div>ぼとみぃと</div></a>
         <% if admin_signed_in? %>
-<%
-=begin %>
-          <div class="bg-light ml-auto px-2">検索ボックス予定</div>
-<%
-=end %>
+          <div class="ml-auto"><%= render "layouts/search" %></div>
         <% end %>
         <% if user_signed_in? %>
           <div class="mx-auto text-light">よをこそ <%= current_user.name %> さん</div>
-<%
-=begin %>
-          <div class="bg-light px-2">検索ボックス予定</div>
-<%
-=end %>
+          <div class="ml-auto"><%= render "layouts/search" %></div>
         <% end %>
       </div>
 

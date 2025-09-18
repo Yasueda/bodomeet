@@ -4,7 +4,7 @@ class Public::UsersController < ApplicationController
   # before_action :ensure_correct_user, only: [:edit, :update, :destroy]
 
   def index
-    @users = User.all
+    @users = User.where(is_active: true)
   end
 
   def show

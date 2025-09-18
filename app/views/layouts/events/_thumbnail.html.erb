@@ -13,7 +13,7 @@
     <tbody>
       <tr>
         <td class="text-center"><i class="fas fa-calendar mx-auto"></i></td>
-        <td><%= event.date.strftime("%m/%d %H:%M") %></td>
+        <td><%= event.date.strftime("%m月%d日") %> <%= event.start_time.strftime("%H:%M") %></td>
       </tr>
       <tr>
         <td class="text-center"><i class="fas fa-circle-user mx-auto"></i></td>
