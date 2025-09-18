@@ -67,7 +67,8 @@ ActiveRecord::Schema.define(version: 2025_09_07_125949) do
     t.integer "user_id", null: false
     t.string "name", null: false
     t.text "introduction"
-    t.datetime "date", null: false
+    t.date "date", null: false
+    t.time "start_time", null: false
     t.time "end_time", null: false
     t.string "venue", null: false
     t.integer "min_people", null: false
@@ -76,8 +77,7 @@ ActiveRecord::Schema.define(version: 2025_09_07_125949) do
     t.boolean "is_active", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["date", "venue"], name: "index_events_on_date_and_venue"
-    t.index ["name"], name: "index_events_on_name", unique: true
+    t.index ["name", "date", "start_time", "venue"], name: "index_events_on_name_and_date_and_start_time_and_venue"
     t.index ["user_id"], name: "index_events_on_user_id"
   end
 
