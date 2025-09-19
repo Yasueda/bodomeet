@@ -13,6 +13,8 @@ class Public::EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    @comment = Comment.new
+    @comments = @event.comments.where(is_active: true)
   end
 
   def create

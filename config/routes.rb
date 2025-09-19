@@ -57,7 +57,7 @@ Rails.application.routes.draw do
         get :active_switch
       end
       collection do
-        get :destroy_all
+        delete :destroy_all
         get :search
       end
     end
@@ -69,7 +69,7 @@ Rails.application.routes.draw do
         get :active_switch
       end
       collection do
-        get :destroy_all
+        delete :destroy_all
       end
     end
 
@@ -78,7 +78,7 @@ Rails.application.routes.draw do
         get :active_switch
       end
       collection do
-        get :destroy_all
+        delete :destroy_all
       end
     end
   end
