@@ -6,7 +6,7 @@
       <%= link_to "編集", edit_admin_event_path(event.id), class: "btn btn-sm btn-info m-1" %>
       <%= link_to "削除", admin_event_path, method: :delete, class: "btn btn-sm btn-danger m-1", data: { confirm: '本当に削除しますか？' } %>
     </div>
-  <% elsif event_owner? %>
+  <% elsif event_owner?(event, current_user.id) %>
     <div class="ml-auto p-2">
       <%= link_to "編集", edit_event_path(event.id), class: "btn btn-sm btn-info m-1" %>
       <%= link_to "削除", event_path, method: :delete, class: "btn btn-sm btn-danger m-1", data: { confirm: '本当に削除しますか？' } %>
@@ -79,5 +79,41 @@
         </tr>
       </tbody>
     </table>
+
+
+  <h4 class="mt-3">コメント</h4>
+  <% if user_signed_in? %>
+    <%= form_with model: [event, comment], local: true, class: "px-1" do |f| %>
+      <div class="input-group ">
+        <%= f.text_field :content, class: "form-control", placeholder: "コメント" %>
+        <div class="input-group-append" aria-hidden="true">
+          <%= button_tag type: "submit", class: "btn btn-success" do %>
+            <i class="fas fa-lg fa-pen"></i>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    <div class="text-right small text-secondary">※コメントは100文字以内</div>
+  <% end %>
+
+  <% if comments.exists? %>
+    <table class="table px-3 mt-3">
+      <tbody>
+        <% comments.each do |comment| %>
+          <tr>
+            <td class="col-1"><%= render "layouts/events/participant_icon", user: comment.user %></td>
+            <td class="col-9"><%= comment.content %></td>
+            <td class="col-1">
+              <% if comment_owner?(comment, current_user.id) %>
+                <%= link_to "削除", event_comment_path(event, comment), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger" %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+
   </div>
 </div>
+

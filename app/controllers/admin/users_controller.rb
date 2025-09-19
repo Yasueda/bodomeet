@@ -6,6 +6,8 @@ class Admin::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @events = @user.events
+    @participated_events = @user.participated_events
   end
 
   def edit
@@ -38,7 +40,7 @@ class Admin::UsersController < ApplicationController
 
   def destroy_all
     users = User.where(is_active: false)
-    user.destroy_all
+    users.destroy_all
     redirect_to action: :index, notice: "退会済ユーザーを全て削除しました"
   end
 

@@ -9,6 +9,8 @@ class Public::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @events = @user.events.where(is_active: true)
+    @participated_events = @user.participated_events.where(is_active: true)
   end
 
   def edit

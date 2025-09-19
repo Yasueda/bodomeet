@@ -38,8 +38,8 @@ class Admin::EventsController < ApplicationController
   end
 
   def destroy_all
-    event = Event.where(is_active: false)
-    event.destroy_all
+    events = Event.where(is_active: false)
+    events.destroy_all
     redirect_to action: :index, notice: "無効イベントを全て削除しました"
   end
 

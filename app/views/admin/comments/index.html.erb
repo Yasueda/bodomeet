@@ -1,2 +1,32 @@
-<h1>Admin::Comments#index</h1>
-<p>Find me in app/views/admin/comments/index.html.erb</p>
+<div class="d-flex align-items-center">
+  <h2 class="heading col-lg-8 col-md-6">コメント（全<%= @comments.count %>件）</h2>
+  <% if admin_signed_in? %>
+    <div class="ml-auto p-2 m-1"><%= link_to "全削除", destroy_all_admin_comments_path, method: :delete, class: "btn btn-sm btn-danger", data: { confirm: "無効コメントを全て削除します。\r\n本当に削除しますか？" } %></div>
+  <% end %>
+</div>
+
+<div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="col-2">イベント</th>
+        <th class="col-2">ユーザー</th>
+        <th class="col-6">コメント</th>
+        <th class="col-2"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @comments.each do |comment| %>
+        <tr>
+          <td><%= comment.event.name %></td>
+          <td><%= comment.user.name %></td>
+          <td><%= comment.content %></td>
+          <td>
+            <%= render "admin/comments/is_active", comment: comment %>
+            <%= link_to "削除", admin_comment_path(comment), method: :delete, class: "btn btn-sm m-1 btn-danger", data: { confirm: "本当に削除しますか？" } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
