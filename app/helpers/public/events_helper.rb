@@ -1,5 +1,5 @@
 module Public::EventsHelper
-  def event_owner?
-    Event.find(params[:id]).user_id == current_user.id
+  def event_owner?(event, id)
+    event.user_id == id
   end
 end

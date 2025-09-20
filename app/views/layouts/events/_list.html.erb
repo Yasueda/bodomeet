@@ -1,0 +1,19 @@
+<% if events.present? %>
+  <div class="card-list-container row no-gutters mx-sm-auto">
+    <% events.each do |event| %>
+      <div class="col-lg-2 col-md-4 px-1 py-3">
+        <% if admin_signed_in? %>
+          <%= link_to admin_event_path(event.id) do %>
+            <%= render "layouts/events/thumbnail", event: event %>
+          <% end %>
+        <% elsif user_signed_in? %>
+          <%= link_to event_path(event.id) do %>
+            <%= render "layouts/events/thumbnail", event: event %>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div>イベントはありません</div>
+<% end %>

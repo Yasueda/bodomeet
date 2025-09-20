@@ -82,23 +82,25 @@ events = [
     user:         User.find_by(name: "つむぎ"),
     name:         "【初心者歓迎】第１回 ハトクラ＆ふるよにメインTCG会",
     introduction: "初心者歓迎!! 場代は主催者持ち!!\r\n「ハートオブクラウン」と「桜散る代に決闘を」をメインでやります!!\r\n初心者にも一から教えますので気軽にご参加下さい!!\r\n途中抜けOKです!!",
-    date:         "2025-10-15T13:00",
+    date:         "2025-10-15",
+    start_time:   "13:00",
     end_time:     "18:00",
     venue:        "東京都小金井市本町XX-XX-XX",
     min_people:   "6",
     max_people:   "12",
-    event_image:  ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/events/tcg.png")),filename: 'event-image.png',content_type: 'image/png')
+    event_image:  ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/events/tcg.jpg")),filename: 'event-image.jpg',content_type: 'image/jpg')
   },
   {
     user:         User.find_by(name: "コハル"),
-    name:         "人狼やる？やる！ 第1村",
+    name:         "人狼やる？やる！ 第１村",
     introduction: "初心者お断り。経験者でも100村以上経験推奨。\r\n結構ガチでやりたいので申し訳ありませんが初心者はお断りします。\r\n場代も割り勘でお願いします。（場代払ってでもガチでやりたい人向け）\r\n朝から夕方まで、昼はごちそうします。",
-    date:         "2025-9-30T10:00",
+    date:         "2025-9-30",
+    start_time:   "10:00",
     end_time:     "18:00",
     venue:        "東京都渋谷区桜丘町XX-XX",
     min_people:   "12",
     max_people:   "20",
-    event_image:  ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/events/werewolf.png")),filename: 'event-image.png',content_type: 'image/png')
+    event_image:  ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/events/werewolf.jpg")),filename: 'event-image.jpg',content_type: 'image/jpg')
   }
 ]
 

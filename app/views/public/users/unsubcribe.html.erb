@@ -8,5 +8,5 @@
 
 <div class="d-flex justify-content-around col-md-5 col-sm-10 mx-auto py-5">
   <%= link_to "退会しない", user_path(current_user.id), class: "btn btn-primary col-5" %>
-  <%= link_to "退会する", withdraw_path, method: :patch, data: { confirm: '本当に退会しますか？' }, class: "btn btn-danger col-5" %>
+  <%= link_to "退会する", withdraw_users_path, method: :patch, data: { confirm: '本当に退会しますか？' }, class: "btn btn-danger col-5" %>
 </div>

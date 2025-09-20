@@ -2,7 +2,7 @@
   <div class="bg-light">
     <%= image_tag event.get_image, size: "160x90", class: "card-img-top cover-image" %>
   </div>
-  <div class="p-2 text-center d-flex align-items-center justify-content-center height-90"><%= event.name %></div>
+  <div class="p-2 text-center d-flex align-items-center justify-content-center height-90 bg-light"><%= event.name %></div>
   <table class="mx-2">
     <thead>
       <tr>
@@ -12,12 +12,16 @@
     </thead>
     <tbody>
       <tr>
-        <td class="text-center"><i class="fas fa-calendar mx-auto"></i></td>
-        <td><%= event.date.strftime("%m/%d %H:%M") %></td>
+        <td class="text-center"><i class="fas fa-calendar mx-auto" aria-hidden="true"></i></td>
+        <td class="text-right"><%= event.date.strftime("%m月%d日") %> <%= event.start_time.strftime("%H:%M") %></td>
       </tr>
       <tr>
-        <td class="text-center"><i class="fas fa-circle-user mx-auto"></i></td>
-        <td><%= event.participants.count %> / <%= event.max_people %> 人</td>
+        <td class="text-center"><i class="fas fa-circle-user mx-auto" aria-hidden="true"></i></td>
+        <td class="text-right"><%= event.participants.count %> / <%= event.max_people %> 人</td>
+      </tr>
+      <tr>
+        <td class="text-center"><i class="fas fa-comment mx-auto" aria-hidden="true"></i></td>
+        <td class="text-right"><%= event.comments.count %>件</td>
       </tr>
     </tbody>
   </table>

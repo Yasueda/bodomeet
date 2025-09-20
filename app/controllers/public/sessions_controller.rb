@@ -45,6 +45,6 @@ class Public::SessionsController < Devise::SessionsController
     return if user.nil?
     return unless user.valid_password?(params[:user][:password])
     return if user.is_active
-    redirect_to not_active_path
+    redirect_to not_active_users_path
   end
 end

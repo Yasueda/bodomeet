@@ -8,11 +8,13 @@ class Public::EventsController < ApplicationController
   end
 
   def index
-    @events = Event.all
+    @events = Event.where(is_active: true).asc_datetime_order
   end
 
   def show
     @event = Event.find(params[:id])
+    @comment = Comment.new
+    @comments = @event.comments.where(is_active: true)
   end
 
   def create
@@ -41,13 +43,13 @@ class Public::EventsController < ApplicationController
   def destroy
     event = Event.find(params[:id])
     event.update(is_active: :false)
-    redirect_to user_path(current_user.id), notice: "削除しました"
+    redirect_to events_path, notice: "削除しました"
   end
 
   private
 
   def event_params
-    params.require(:event).permit(:name, :introduction, :event_image, :date, :end_time, :venue, :min_people, :max_people)
+    params.require(:event).permit(:name, :introduction, :event_image, :date, :start_time, :end_time, :venue, :min_people, :max_people)
   end
 
   def ensure_correct_user

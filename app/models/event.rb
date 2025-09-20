@@ -11,26 +11,42 @@ class Event < ApplicationRecord
   has_many :notified_users, through: :notifications, source: :user
 
   has_one_attached :event_image
+  validates :event_image, content_type: {in:[:jpg, :jpeg], message: "はjpg, jpegいずれかの形式にして下さい"},
+  size: { between: 1.kilobyte..4.megabytes , message: '画像容量が大きすぎます、4MB以下にして下さい' }
 
-  validates :name, presence: true, length: {maximum: 30}, uniqueness: true
+  validates :name, presence: true, length: {maximum: 30}, uniqueness: { scope: :is_active }
   validates :introduction, length: {maximum: 200}
   validates :date, presence: true
+  validates :start_time, presence: true
   validates :end_time, presence: true
   validates :venue, presence: true
   validates :min_people, presence: true
   validates :max_people, presence: true
   validate  :check_people
+  validate  :check_date
   validate  :check_time
 
   scope :asc_date_order, -> { order(date: :asc)}
   scope :desc_date_order, -> { order(date: :desc) }
 
+  scope :asc_datetime_order, -> { sort{ |a, b| a.get_datetime <=> b.get_datetime } }
+  scope :desc_datetime_order, -> { sort{ |a, b| b.get_datetime <=> a.get_datetime } }
+
   def get_image
     unless event_image.attached?
-      file_path = Rails.root.join('app/assets/images/events/no_event_image.png')
-      event_image.attach(io: File.open(file_path), filename: 'event-image.png', content_type: 'image/png')
+      file_path = Rails.root.join('app/assets/images/events/no_event_image.jpg')
+      event_image.attach(io: File.open(file_path), filename: 'event-image.jpg', content_type: 'image/jpg')
     end
     event_image
+  end
+
+  def get_datetime
+    date +  start_time.seconds_since_midnight.seconds
+  end
+
+  def self.search(keyword)
+    keyword = "%" + self.sanitize_sql_like(keyword) + "%"
+    where(["name LIKE? OR introduction LIKE?", keyword, keyword])
   end
 
   private
@@ -40,10 +56,13 @@ class Event < ApplicationRecord
     errors.add(:check_people, "を正しく入力してください") if min_people > max_people
   end
 
-  def check_time
-    return if date.nil? || end_time.nil?
+  def check_date
+    return if date.nil?
     errors.add(:check_ago, "後以降の日時を入力してください") if date < Time.current.since(1.days)
-    errors.add(:check_time, "を正しく入力してください") if date.strftime("%H:%M") > end_time.strftime("%H:%M")
   end
 
+  def check_time
+    return if start_time.nil? || end_time.nil?
+    errors.add(:check_time, "を正しく入力してください") if start_time > end_time
+  end
 end

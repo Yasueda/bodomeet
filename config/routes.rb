@@ -15,22 +15,26 @@ Rails.application.routes.draw do
   scope module: :public do
     root to: "homes#top"
     get :about, to: "homes#about"
+    get :search, to: "searches#search"
 
-    scope :users do
-      # get :my_page, to: "users#my_page"
-      scope :information do
-        get :edit, to: "users#edit", as: "edit_user"
-        patch :update, to: "users#update", as: "update_user"
+    resources :users, only: [:index, :show] do
+      collection do
+        scope :information do
+          get :edit
+          patch "/", to: "users#update", as: "update"
+        end
+        get :unsubcribe
+        patch :withdraw
+        get :not_active
       end
-      get :unsubcribe, to: "users#unsubcribe"
-      patch :withdraw, to: "users#withdraw"
-      get :not_active, to: "users#not_active"
     end
-    resources :users, only: [:index, :show]
 
     resources :events do
       resources :participants, only: [:create, :destroy]
       resources :comments, only: [:create, :edit, :update, :destroy]
+      collection do
+        get :search
+      end
     end
     resources :groups do
       resources :members, only: [:create, :destroy]
@@ -39,42 +43,44 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root to: "homes#top"
+    get :search, to: "searches#search"
 
-    scope :users do
-      delete :destroy_all, to: "users#destroy_all", as: "users_destroy_all"
-    end
     resources :users do
       member do
         get :active_switch
       end
+      collection do
+        delete :destroy_all
+      end
     end
 
-    scope :events do
-      get :destroy_all, to: "events#destroy_all", as: "events_destroy_all"
-    end
     resources :events do
       member do
         get :active_switch
+      end
+      collection do
+        delete :destroy_all
+        get :search
       end
     end
 
     resources :participants, only: :destroy
 
-    scope :comments do
-      get :destroy_all, to: "comments#destroy_all", as: "comments_destroy_all"
-    end
     resources :comments, only: [:index, :destroy] do
       member do
         get :active_switch
       end
+      collection do
+        delete :destroy_all
+      end
     end
 
-    scope :groups do
-      get :destroy_all, to: "groups#destroy_all", as: "groups_destroy_all"
-    end
     resources :groups, only: [:index, :show, :destroy] do
       member do
         get :active_switch
+      end
+      collection do
+        delete :destroy_all
       end
     end
   end

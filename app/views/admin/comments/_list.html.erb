@@ -1,0 +1,37 @@
+<% if comments.present? %>
+  <div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="col-2">イベント</th>
+          <th class="col-2">ユーザー</th>
+          <th class="col-6">コメント</th>
+          <th class="col-2"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% comments.each do |comment| %>
+          <tr>
+            <td>
+              <%= link_to admin_event_path(comment.event) do %>
+                <%= comment.event.name %>
+              <% end %>
+            </td>
+            <td>
+              <%= link_to admin_user_path(comment.user) do %>
+                <%= comment.user.name %>
+              <% end %>
+            </td>
+            <td><%= comment.content %></td>
+            <td>
+              <%= render "admin/comments/is_active", comment: comment %>
+              <%= link_to "削除", admin_comment_path(comment), method: :delete, class: "btn btn-sm m-1 btn-danger", data: { confirm: "本当に削除しますか？" } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div>コメントはありません</div>
+<% end %>

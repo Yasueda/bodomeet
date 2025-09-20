@@ -12,7 +12,7 @@
             <%= user.errors.count %>件のエラーが発生しました
           </h6>
           <% user.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
+            <li class="mr-2"><%= message %></li>
           <% end %>
         </ul>
       <% end %>
@@ -20,7 +20,7 @@
       <% if admin_signed_in? %>
         <%= render "layouts/users/form", user: user, url_path: admin_user_path, action: :patch %>
       <% elsif user_signed_in? %>
-        <%= render "layouts/users/form", user: user, url_path: update_user_path, action: :patch %>
+        <%= render "layouts/users/form", user: user, url_path: update_users_path, action: :patch %>
       <% end %>
 
     </div>
