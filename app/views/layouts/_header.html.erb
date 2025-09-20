@@ -4,11 +4,11 @@
       <div class="d-flex align-items-center">
         <a class="navbar-brand" href="/"><div>ぼとみぃと</div></a>
         <% if admin_signed_in? %>
-          <div class="ml-auto"><%= render "layouts/search" %></div>
+          <div class="ml-auto"><%= render "layouts/searches/search_box" %></div>
         <% end %>
         <% if user_signed_in? %>
           <div class="mx-auto text-light">よをこそ <%= current_user.name %> さん</div>
-          <div class="ml-auto"><%= render "layouts/search" %></div>
+          <div class="ml-auto"><%= render "layouts/searches/search_box" %></div>
         <% end %>
       </div>
 

@@ -43,24 +43,7 @@ class Public::EventsController < ApplicationController
   def destroy
     event = Event.find(params[:id])
     event.update(is_active: :false)
-    redirect_to user_path(current_user.id), notice: "削除しました"
-  end
-
-  def search
-    if params[:keyword].empty?
-      redirect_to request.referer
-    else
-      keywords = params[:keyword].split(/[[:blank:]]+/)
-      @events = Event.where(is_active: true)
-      keywords.each do |keyword|
-        next if keyword == ""
-        @events = @events.search(keyword)
-      end
-      unless @events.empty?
-        @events = @events.asc_datetime_order
-      end
-      render :index
-    end
+    redirect_to events_path, notice: "削除しました"
   end
 
   private

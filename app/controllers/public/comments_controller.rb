@@ -5,6 +5,7 @@ class Public::CommentsController < ApplicationController
     comment = current_user.comments.new(comment_params)
     comment.event_id = params[:event_id]
     comment.save
+    redirect_to request.referer
   end
 
   def destroy

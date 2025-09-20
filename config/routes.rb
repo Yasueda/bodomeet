@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   scope module: :public do
     root to: "homes#top"
     get :about, to: "homes#about"
+    get :search, to: "searches#search"
 
     resources :users, only: [:index, :show] do
       collection do
@@ -42,6 +43,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root to: "homes#top"
+    get :search, to: "searches#search"
 
     resources :users do
       member do

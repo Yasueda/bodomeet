@@ -88,7 +88,7 @@ events = [
     venue:        "東京都小金井市本町XX-XX-XX",
     min_people:   "6",
     max_people:   "12",
-    event_image:  ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/events/tcg.png")),filename: 'event-image.png',content_type: 'image/png')
+    event_image:  ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/events/tcg.jpg")),filename: 'event-image.jpg',content_type: 'image/jpg')
   },
   {
     user:         User.find_by(name: "コハル"),
@@ -100,7 +100,7 @@ events = [
     venue:        "東京都渋谷区桜丘町XX-XX",
     min_people:   "12",
     max_people:   "20",
-    event_image:  ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/events/werewolf.png")),filename: 'event-image.png',content_type: 'image/png')
+    event_image:  ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("app/assets/images/events/werewolf.jpg")),filename: 'event-image.jpg',content_type: 'image/jpg')
   }
 ]
 

@@ -1,9 +1,0 @@
-<% if admin_signed_in? %>
-  <%= form_with url: search_admin_events_path, local: true, method: :get, class: "my-1" do |f| %>
-    <%= render "layouts/search_form", f: f %>
-  <% end %>
-<% elsif user_signed_in? %>
-  <%= form_with url: search_events_path, local: true, method: :get, class: "my-1" do |f| %>
-    <%= render "layouts/search_form", f: f %>
-  <% end %>
-<% end %>
