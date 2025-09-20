@@ -21,7 +21,7 @@ Rails.application.routes.draw do
       collection do
         scope :information do
           get :edit
-          patch :update
+          patch "/", to: "users#update", as: "update"
         end
         get :unsubcribe
         patch :withdraw

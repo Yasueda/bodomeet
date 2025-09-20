@@ -1,0 +1,46 @@
+<% if events.exists? %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th colspan="2" class="col-5">イベント名</th>
+        <th class="col-2">開催日時</th>
+        <th class="col-2">参加人数</th>
+        <th class="col-2"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% events.asc_datetime_order.each do |event| %>
+        <tr>
+          <td>
+            <%= image_tag event.get_image, size: "80x45", class: "cover-image bg-light", alt: "イベント画像" %>
+          </td>
+          <td>
+            <% if admin_signed_in? %>
+              <%= link_to event.name, admin_event_path(event.id) %>
+            <% else %>
+              <%= link_to event.name, event_path(event.id) %>
+            <% end %>
+          </td>
+          <td><%= event.date.strftime("%y/%m/%d %H:%M") %></td>
+          <td><%= event.participants.count %> / <%= event.max_people %> 人</td>
+          <td class="text-center">
+            <% if admin_signed_in? %>
+              <%= render "admin/events/is_active", event: event %>
+              <%= link_to "編集", edit_admin_event_path(event.id), class: "btn btn-sm btn-info m-1" %>
+              <%= link_to "削除", admin_event_path, method: :delete, class: "btn btn-sm btn-danger m-1", data: { confirm: '本当に削除しますか？' } %>
+            <% elsif user_signed_in? %>
+              <% if event_owner?(event, current_user.id) %>
+                <%= link_to "編集", edit_event_path(event.id), class: "btn btn-sm btn-info m-1" %>
+                <%= link_to "削除", event_path, method: :delete, class: "btn btn-sm btn-danger m-1", data: { confirm: '本当に削除しますか？' } %>
+              <% else %>
+                <%= render "layouts/events/participant", event: event %>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div>イベントはありません</div>
+<% end %>

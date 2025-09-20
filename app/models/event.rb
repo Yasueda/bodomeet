@@ -34,8 +34,8 @@ class Event < ApplicationRecord
 
   def get_image
     unless event_image.attached?
-      file_path = Rails.root.join('app/assets/images/events/no_event_image.jpeg')
-      event_image.attach(io: File.open(file_path), filename: 'event-image.jpeg', content_type: 'image/jpeg')
+      file_path = Rails.root.join('app/assets/images/events/no_event_image.jpg')
+      event_image.attach(io: File.open(file_path), filename: 'event-image.jpg', content_type: 'image/jpg')
     end
     event_image
   end

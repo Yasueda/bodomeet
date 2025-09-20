@@ -20,7 +20,7 @@
       <% if admin_signed_in? %>
         <%= render "layouts/users/form", user: user, url_path: admin_user_path, action: :patch %>
       <% elsif user_signed_in? %>
-        <%= render "layouts/users/form", user: user, url_path: users_path, action: :patch %>
+        <%= render "layouts/users/form", user: user, url_path: update_users_path, action: :patch %>
       <% end %>
 
     </div>

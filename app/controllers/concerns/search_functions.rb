@@ -22,6 +22,7 @@ module SearchFunctions
         searches.asc_datetime_order
       end
     end
-  end
 
+    return searches
+  end
 end
