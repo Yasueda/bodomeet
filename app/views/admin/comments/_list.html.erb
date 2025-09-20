@@ -1,0 +1,25 @@
+<div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="col-2">イベント</th>
+        <th class="col-2">ユーザー</th>
+        <th class="col-6">コメント</th>
+        <th class="col-2"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% comments.each do |comment| %>
+        <tr>
+          <td><%= comment.event.name %></td>
+          <td><%= comment.user.name %></td>
+          <td><%= comment.content %></td>
+          <td>
+            <%= render "admin/comments/is_active", comment: comment %>
+            <%= link_to "削除", admin_comment_path(comment), method: :delete, class: "btn btn-sm m-1 btn-danger", data: { confirm: "本当に削除しますか？" } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
