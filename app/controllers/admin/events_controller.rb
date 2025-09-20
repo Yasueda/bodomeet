@@ -2,7 +2,7 @@ class Admin::EventsController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-    @events = Event.all
+    @events = Event.all.asc_datetime_order
   end
 
   def show

@@ -96,15 +96,18 @@
     <div class="text-right small text-secondary">※コメントは100文字以内</div>
   <% end %>
 
-  <% if comments.exists? %>
+  <% if comments.present? %>
     <table class="table px-3 mt-3">
       <tbody>
         <% comments.each do |comment| %>
           <tr>
             <td class="col-1"><%= render "layouts/events/participant_icon", user: comment.user %></td>
             <td class="col-9"><%= comment.content %></td>
-            <td class="col-1">
-              <% if comment_owner?(comment, current_user.id) %>
+            <td class="col-2">
+              <% if admin_signed_in? %>
+                <%= render "admin/comments/is_active", comment: comment %>
+                <%= link_to "削除", admin_comment_path(comment), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-sm m-1 btn-danger" %>
+              <% elsif user_signed_in? && comment_owner?(comment, current_user.id) %>
                 <%= link_to "削除", event_comment_path(event, comment), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger" %>
               <% end %>
             </td>
