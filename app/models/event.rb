@@ -32,13 +32,22 @@ class Event < ApplicationRecord
   scope :asc_datetime_order, -> { sort{ |a, b| a.get_datetime <=> b.get_datetime } }
   scope :desc_datetime_order, -> { sort{ |a, b| b.get_datetime <=> a.get_datetime } }
 
-  def get_image
+  def get_event_image
     unless event_image.attached?
       file_path = Rails.root.join('app/assets/images/events/no_event_image.jpg')
-      event_image.attach(io: File.open(file_path), filename: 'event-image.jpg', content_type: 'image/jpg')
+      event_image.attach(io: File.open(file_path), filename: 'event-image.jpeg', content_type: 'image/jpeg')
     end
     event_image
   end
+
+  # 画像をデータベースではなくHTMLを用いて表示する場合
+  # def get_event_image
+  #   if event_image.attached?
+  #     event_image
+  #   else
+  #     'events/no_event_image.jpg'
+  #   end
+  # end
 
   def get_datetime
     date +  start_time.seconds_since_midnight.seconds
@@ -63,6 +72,6 @@ class Event < ApplicationRecord
 
   def check_time
     return if start_time.nil? || end_time.nil?
-    errors.add(:check_time, "を正しく入力してください") if start_time > end_time
+    errors.add(:check_time, "を正しく入力してください") if start_time.seconds_since_midnight > end_time.seconds_since_midnight
   end
 end

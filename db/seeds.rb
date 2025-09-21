@@ -5,10 +5,13 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+puts "seedの登録を開始します"
 
 Admin.find_or_create_by!(email: "admin@example.com") do |admin|
   admin.password = ENV['ADMIN_KEY']
 end
+
+puts "Admin を登録しました"
 
 # Seed用ユーザー
 users = [
@@ -76,6 +79,8 @@ users.each do |user|
   end
 end
 
+puts "User を登録しました"
+
 #Seed用イベント
 events = [
   {
@@ -107,3 +112,7 @@ events = [
 events.each do |event|
   Event.create!(event)
 end
+
+puts "Enent を登録しました"
+
+puts "正常にseedが全て登録されました"

@@ -42,7 +42,7 @@ class Public::EventsController < ApplicationController
 
   def destroy
     event = Event.find(params[:id])
-    event.update(is_active: :false)
+    event.update(is_active: false)
     redirect_to events_path, notice: "削除しました"
   end
 
