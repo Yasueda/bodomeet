@@ -13,6 +13,9 @@ class Public::SearchesController < ApplicationController
       when Event.name
         @searches = Event.where(is_active: true)
         @table = Event.name
+      when Group.name
+        @searches = Group.where(is_active: true)
+        @table = Group.name
       else
         @table = nil
       end

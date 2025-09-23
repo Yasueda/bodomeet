@@ -1,0 +1,55 @@
+<div class="d-flex align-items-center">
+  <h2 class="heading col-lg-8 col-md-6">
+    <%= group.name %>
+  </h2>
+  <div class="ml-auto p-2 m-1">
+    <% if admin_signed_in? %>
+      <%= render "admin/groups/is_active", user: user %>
+      <%= link_to "編集", edit_admin_group_path(user.id), class: "btn btn-sm btn-info m-1" %>
+      <%= link_to "削除", admin_group_path(user.id), method: :delete, class: "btn btn-sm btn-danger m-1", data: { confirm: "本当に削除しますか？" } %>
+    <% elsif user_signed_in? && current_id?(group.user_id) %>
+      <%= link_to "編集", edit_group_path, class:"btn btn-sm btn-info m-1" %>
+      <%= link_to "削除", group_path(group.id), method: :delete, class: "btn btn-sm btn-danger m-1", data: { confirm: "本当に削除しますか？" } %>
+    <% else %>
+      <%= render "layouts/groups/be_member", group: group %>
+    <% end %>
+  </div>
+</div>
+
+<div class="d-flex justify-content-center">
+  <table class="table px-3">
+    <tbody>
+      <tr>
+        <td class="col-md-2 col-4" rowspan="<%= group.members.count + 1 %>">メンバー</td>
+        <td class="col-md-10 col-8">
+          <% if admin_signed_in? %>
+            <%= link_to admin_user_path(group.user.id) do %>
+              <%= render "layouts/groups/leader", user: group.user %>（リーダー）
+            <% end %>
+          <% elsif user_signed_in? %>
+            <%= link_to user_path(group.user.id) do %>
+              <%= render "layouts/groups/leader", user: group.user %>（リーダー）
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+      <% if group.users.present? %>
+        <% group.users.each do |user| %>
+          <tr>
+            <td>
+              <% if admin_signed_in? %>
+                <%= link_to admin_user_path(group.user.id) do %>
+                  <%= render "layouts/groups/member", user: user %>
+                <% end %>
+              <% elsif user_signed_in? %>
+                <%= link_to user_path(group.user.id) do %>
+                  <%= render "layouts/groups/member", user: user %>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

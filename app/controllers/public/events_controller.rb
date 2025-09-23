@@ -2,6 +2,7 @@ class Public::EventsController < ApplicationController
   before_action :authenticate_user!
   before_action :ensure_correct_user, only: [:edit, :update, :destroy]
   # before_action :ensure_guest_user, only: [:create, :edit, :update, :destroy]
+  before_action :ensure_is_active, only: [:show, :edit, :update, :destroy]
   
   def new
     @event = Event.new
@@ -55,7 +56,14 @@ class Public::EventsController < ApplicationController
   def ensure_correct_user
     user = Event.find(params[:id]).user
     unless user == current_user
-      redirect_to events_path, notice: "このユーザーはその操作を行えません"
+      redirect_to events_path, alert: "このユーザーはその操作を行えません"
+    end
+  end
+
+  def ensure_is_active
+    event = Event.find(params[:id])
+    unless event.is_active
+      redirect_to events_path, alert: "そのイベントは削除されています"
     end
   end
 

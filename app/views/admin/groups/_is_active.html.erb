@@ -1,0 +1,5 @@
+<% if group.is_active %>
+  <%= link_to "有効", active_switch_admin_group_path(group.id), class: "btn btn-sm m-1 btn-success" %>
+<% else %>
+  <%= link_to "無効", active_switch_admin_group_path(group.id), class: "btn btn-sm m-1 btn-danger" %>
+<% end %>

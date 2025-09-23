@@ -1,7 +1,7 @@
 class Admin::UsersController < ApplicationController
   before_action :authenticate_admin!
   def index
-    @users = User.all
+    @users = User.all.order(name: :asc)
   end
 
   def show
@@ -35,18 +35,18 @@ class Admin::UsersController < ApplicationController
   def destroy
     user = User.find(params[:id])
     user.destroy
-    redirect_to action: :index, notice: "ユーザーを削除しました"
+    redirect_to admin_users_path, notice: "ユーザーを削除しました"
   end
 
   def destroy_all
     users = User.where(is_active: false)
     users.destroy_all
-    redirect_to action: :index, notice: "退会済ユーザーを全て削除しました"
+    redirect_to admin_users_path, notice: "退会済ユーザーを全て削除しました"
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:name, :introduction, :user_image, :is_active)
+    params.require(:user).permit(:name, :email, :introduction, :user_image, :is_active)
   end
 end

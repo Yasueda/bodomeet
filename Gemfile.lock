@@ -99,9 +99,12 @@ GEM
       dotenv (= 3.1.8)
       railties (>= 6.1)
     erubi (1.13.1)
+    faker (3.5.2)
+      i18n (>= 1.8.11, < 2)
     ffi (1.17.2)
     ffi (1.17.2-arm64-darwin)
     ffi (1.17.2-x86_64-darwin)
+    gimei (1.5.1)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.7)
@@ -292,6 +295,8 @@ DEPENDENCIES
   capybara (>= 3.26)
   devise
   dotenv-rails
+  faker
+  gimei
   image_processing (~> 1.2)
   jbuilder (~> 2.7)
   jquery-rails
