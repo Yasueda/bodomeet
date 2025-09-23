@@ -1,0 +1,11 @@
+<div class="row no-gutters">
+  <div class="col-md-8 col-sm-10 mx-2 mx-sm-auto text-center shadow-lg rounded px-0 my-5">
+    <h5 class="test-dark bg-light py-4 mb-0">グループ編集</h5>
+
+    <% if admin_signed_in? %>
+      <%= render "layouts/groups/form", group: group, url_path: admin_group_path %>
+    <% elsif user_signed_in? %>
+      <%= render "layouts/groups/form", group: group, url_path: group_path %>
+    <% end %>
+  </div>
+</div>

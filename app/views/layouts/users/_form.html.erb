@@ -16,6 +16,13 @@
 
   <div class="input-group mb-3">
     <div class="input-group-prepend col-2 p-0">
+      <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-envelope mx-auto"></i></span>
+    </div>
+    <%= f.text_field :email, autofocus: true, class: "form-control", placeholder: "メールアドレス" %>
+  </div>
+
+  <div class="input-group mb-3">
+    <div class="input-group-prepend col-2 p-0">
       <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-circle-info mx-auto"></i></span>
     </div>
     <%= f.text_area :introduction, class: "form-control", placeholder: "紹介", size: "40x5" %>

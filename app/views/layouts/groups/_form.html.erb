@@ -1,0 +1,35 @@
+<div class="form-body p-4">
+  <div class="mx-auto text-center">
+    <p>各項目を入力してください</p>
+  </div>
+
+  <% if group.errors.any? %>
+    <ul class="alert alert-danger text-left" role="alert">
+      <h6 class="alert-heading">
+        <%= group.errors.count %>件のエラーが発生しました
+      </h6>
+      <% group.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <%= form_with model: group, local: true do |f| %>
+
+    <div class="input-group mb-3">
+      <div class="input-group-prepend col-2 p-0">
+        <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-people-group mx-auto"></i></span>
+      </div>
+      <%= f.text_field :name, autofocus: true, class: "form-control", placeholder: "グループ名" %>
+    </div>
+
+    <div class="input-group mb-3">
+      <div class="input-group-prepend col-2 p-0">
+      <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-circle-info mx-auto"></i></span>
+      </div>
+      <%= f.text_area :introduction, class: "form-control", placeholder: "内容", size: "40x5" %>
+    </div>
+
+    <%= f.submit class:"btn btn-block btn-success mt-3" %>
+  <% end %>
+</div>

@@ -2,9 +2,10 @@ class Public::UsersController < ApplicationController
   before_action :authenticate_user!, except: [:not_active]
   before_action :ensure_guest_user, only: [:withdraw]
   # before_action :ensure_correct_user, only: [:edit, :update, :destroy]
+  before_action :ensure_is_active, only: [:show]
 
   def index
-    @users = User.where(is_active: true)
+    @users = User.where(is_active: true).order(name: :asc)
   end
 
   def show
@@ -42,7 +43,7 @@ class Public::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :introduction, :user_image)
+    params.require(:user).permit(:name, :email, :introduction, :user_image)
   end
 
   # ユーザーアクセス制限用
@@ -60,6 +61,13 @@ class Public::UsersController < ApplicationController
     user = current_user
     if user.guest_user?
       redirect_to request.referer, alert: "ゲストユーザーはその操作を行えません"
+    end
+  end
+
+  def ensure_is_active
+    user = User.find(params[:id])
+    unless user.is_active
+      redirect_to users_path, alert: "そのユーザーは退会しています"
     end
   end
 end

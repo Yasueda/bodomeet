@@ -53,9 +53,8 @@ class Event < ApplicationRecord
     date +  start_time.seconds_since_midnight.seconds
   end
 
-  def self.search(keyword)
-    keyword = "%" + self.sanitize_sql_like(keyword) + "%"
-    where(["name LIKE? OR introduction LIKE?", keyword, keyword])
+  def since_event?
+    get_datetime > Time.current.since(1.days)
   end
 
   private

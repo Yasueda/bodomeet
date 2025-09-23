@@ -16,12 +16,12 @@ class Admin::CommentsController < ApplicationController
   def destroy
     comment = Comment.find(params[:id])
     comment.destroy
-    redirect_to action: :index, notice: "コメントを削除しました"
+    redirect_to admin_comments_path, notice: "コメントを削除しました"
   end
 
   def destroy_all
     comments = Comment.where(is_active: false)
     comments.destroy_all
-    redirect_to action: :index, notice: "無効コメントを全て削除しました"
+    redirect_to admin_comments_path, notice: "無効コメントを全て削除しました"
   end
 end

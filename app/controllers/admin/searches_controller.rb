@@ -16,6 +16,9 @@ class Admin::SearchesController < ApplicationController
       when Comment.name
         @searches = Comment.all
         @table = Comment.name
+      when Group.name
+        @searches = Group.all
+        @table = Group.name
       else
         @table = nil
       end

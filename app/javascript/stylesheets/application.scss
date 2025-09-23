@@ -32,3 +32,20 @@ td p {
 .height-90 {
   height: 90px;
 }
+
+.card {
+  position: relative;
+}
+
+.favorite {
+  position: absolute;
+}
+
+.on-favorite {
+  color: #FFD43B;
+}
+
+.off-favorite {
+  color: #c8c8c8;
+}
+
