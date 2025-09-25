@@ -32,7 +32,15 @@ class Public::UsersController < ApplicationController
 
   def withdraw
     user = current_user
-    user.update(is_active: :false)
+    user.update(is_active: false)
+    events = user.events.get_since
+    events.each do |event|
+      event.update(is_active: false)
+    end
+    groups = user.groups
+    groups.each do |group|
+      group.update(is_active: false)
+    end
     reset_session
     redirect_to new_user_registration_path, notice: "退会しました"
   end

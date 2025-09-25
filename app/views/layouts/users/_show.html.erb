@@ -8,7 +8,9 @@
   </h2>
   <% if admin_signed_in? %>
     <div class="ml-auto p-2">
-      <%= render "admin/users/is_active", user: user %>
+      <span id="user<%= user.id %>_active_switch">
+        <%= render "admin/users/is_active", user: user %>
+      </span>
       <%= link_to "編集", edit_admin_user_path(user.id), class: "btn btn-sm btn-info m-1" %>
       <%= link_to "削除", admin_user_path(user.id), method: :delete, class: "btn btn-sm btn-danger m-1", data: { confirm: "本当に削除しますか？" } %>
     </div>
@@ -30,9 +32,19 @@
         <div class="ml-auto p-2"><%= link_to "新規作成", new_event_path, class: "btn btn-sm btn-primary m-1" %></div>
       <% end %>
     </div>
-    <%= render "layouts/users/event_list", events: events, user: current_user %>
+    <%= render "layouts/users/event_list", events: events.get_since %>
 
     <h3 class="heading col-8 p-0 mt-5">参加イベント</h3>
-    <%= render "layouts/users/event_list", events: participated_events, user: current_user %>
+    <%= render "layouts/users/event_list", events: participated_events.get_since %>
+
+    <details>
+      <summary>過去イベント</summary>
+      <div class="pl-2">
+        <h6 class="col-8 heading p-0">主催イベント</h4>
+        <%= render "layouts/users/event_list", events: events.get_ago %>
+        <h6 class="col-8 heading p-0">参加イベント</h4>
+        <%= render "layouts/users/event_list", events: participated_events.get_ago %>
+      </div>
+    </details>
   </div>
 </div>

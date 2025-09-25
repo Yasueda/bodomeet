@@ -1,5 +1,50 @@
 <div class="d-flex align-items-center">
-  <h2 class="heading col-lg-8 col-md-6">イベント（全<%= events.count %>件）</h2>
+  <div class="heading col-lg-8 col-md-6">
+    <span class="h2">イベント（<%= events.count %>）</span>
+    <span class="h4">
+      <% unless @month.nil? %>
+        <% if admin_signed_in? %>
+          <%= link_to admin_events_path(month: @month.prev_month) do %>
+            <i class="fas fa-sm fa-circle-chevron-left"></i>
+          <% end %>
+          <%= @month.strftime('%Y年%m月') %>
+          <%= link_to admin_events_path(month: @month.next_month) do %>
+            <i class="fas fa-sm fa-circle-chevron-right"></i>
+          <% end %>
+        <% elsif user_signed_in? %>
+          <%= link_to events_path(month: @month.prev_month) do %>
+            <i class="fas fa-sm fa-circle-chevron-left"></i>
+          <% end %>
+          <%= @month.strftime('%Y年%m月') %>
+          <%= link_to events_path(month: @month.next_month) do %>
+            <i class="fas fa-sm fa-circle-chevron-right"></i>
+          <% end %>
+        <% end %>
+      <% end %>
+    </span>
+    <% unless @month == Time.zone.today %>
+      <% if admin_signed_in? %>
+        <%= link_to admin_events_path(month: Time.current) do %>
+          <span> [当月] </span>
+        <% end %>
+      <% elsif user_signed_in? %>
+        <%= link_to events_path(month: Time.current) do %>
+          <span> [当月] </span>
+        <% end %>
+      <% end %>
+    <% end %>
+    <% unless @month.nil? %>
+      <% if admin_signed_in? %>
+        <%= link_to admin_events_path(month: nil) do %>
+          <span> [全表示] </span>
+        <% end %>
+      <% elsif user_signed_in? %>
+        <%= link_to events_path(month: nil) do %>
+          <span> [全表示] </span>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
   <% if admin_signed_in? %>
     <div class="ml-auto p-2 m-1"><%= link_to "全削除", destroy_all_admin_events_path, method: :delete, class: "btn btn-sm btn-danger", data: { confirm: "無効イベントを全て削除します。\r\n本当に削除しますか？" } %></div>
   <% elsif user_signed_in? %>

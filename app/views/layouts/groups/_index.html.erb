@@ -1,5 +1,5 @@
 <div class="d-flex align-items-center">
-  <h2 class="heading col-lg-8 col-md-6">グループ（全<%= groups.count %>個）</h2>
+  <h2 class="heading col-lg-8 col-md-6">グループ（<%= groups.count %>）</h2>
   <% if admin_signed_in? %>
     <div class="ml-auto p-2 m-1"><%= link_to "全削除", destroy_all_admin_groups_path, method: :delete, class: "btn btn-sm btn-danger", data: { confirm: "退会済ユーザーを全て削除します。\r\n本当に削除しますか？" } %></div>
   <% elsif user_signed_in? %>
@@ -9,4 +9,6 @@
   <% end %>
 </div>
 
-<%= render "layouts/groups/list", groups: groups %>
+<div class="col">
+  <%= render "layouts/groups/list", groups: groups %>
+</div>

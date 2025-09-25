@@ -9,7 +9,13 @@ class Public::EventsController < ApplicationController
   end
 
   def index
-    @events = Event.where(is_active: true).asc_datetime_order
+    @events = Event.where(is_active: true)
+    @month = params[:month] ? Date.parse(params[:month]) : nil
+    if @month == nil
+      @events = @events.asc_datetime_order
+    else
+      @events = @events.where(date: @month.all_month).asc_datetime_order
+    end
   end
 
   def show
@@ -30,6 +36,9 @@ class Public::EventsController < ApplicationController
 
   def edit
     @event = Event.find(params[:id])
+    unless @event.since_event?
+      redirect_to request.referer, alert: "過去のイベントは編集できません"
+    end
   end
 
   def update

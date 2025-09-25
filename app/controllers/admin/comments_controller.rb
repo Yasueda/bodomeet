@@ -1,16 +1,12 @@
 class Admin::CommentsController < ApplicationController
   before_action :authenticate_admin!
   def index
-    @comments = Comment.all
+    @comments = Comment.all.order(created_at: :desc)
   end
 
   def active_switch
-    comment = Comment.find(params[:id])
-    if comment.update(is_active: !comment.is_active)
-      redirect_to request.referer
-    else
-      redirect_to admin_root_path
-    end
+    @comment = Comment.find(params[:id])
+    @comment.update(is_active: !@comment.is_active)
   end
 
   def destroy

@@ -2,7 +2,13 @@ class Admin::EventsController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-    @events = Event.all.asc_datetime_order
+    @events = Event.all
+    @month = params[:month] ? Date.parse(params[:month]) : nil
+    if @month == nil
+      @events = @events.asc_datetime_order
+    else
+      @events = @events.where(date: @month.all_month).asc_datetime_order
+    end
   end
 
   def show
@@ -23,12 +29,8 @@ class Admin::EventsController < ApplicationController
   end
 
   def active_switch
-    event = Event.find(params[:id])
-    if event.update(is_active: !event.is_active)
-      redirect_to request.referer
-    else
-      redirect_to admin_root_path
-    end
+    @event = Event.find(params[:id])
+    @event.update_column(:is_active, !@event.is_active)
   end
 
   def destroy

@@ -1,4 +1,9 @@
 <div class="card shadow-lg rounde">
+  <% if admin_signed_in? %>
+    <object id="event<%= event.id %>_active_switch" class="text-center left-top">
+      <%= render "admin/events/is_active", event: event %>
+    </object>
+  <% end %>
   <div class="bg-light">
     <%= image_tag event.get_event_image, size: "160x90", class: "card-img-top cover-image" %>
   </div>
@@ -25,7 +30,4 @@
       </tr>
     </tbody>
   </table>
-  <% if admin_signed_in? %>
-    <%= render "admin/events/is_active", event: event %>
-  <% end %>
 </div>

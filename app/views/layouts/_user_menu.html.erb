@@ -9,7 +9,7 @@
   <% end %>
 </li>
 <li class="col p-0">
-  <%=  link_to events_path ,class: 'nav-link text-light text-center' do %>
+  <%=  link_to events_path(month: Time.zone.today) ,class: 'nav-link text-light text-center' do %>
     <i class="fas fa-lg fa-dice"></i> イベント
   <% end %>
 </li>
