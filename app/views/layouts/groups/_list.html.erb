@@ -12,7 +12,13 @@
       <tbody>
         <% groups.each do |group| %>
           <tr>
-            <td><%= link_to group.name, group_path(group.id) %></td>
+            <td>
+              <% if admin_signed_in? %>
+                <%= link_to group.name, admin_group_path(group.id) %>
+              <% elsif user_signed_in? %>
+                <%= link_to group.name, group_path(group.id) %>
+              <% end %>
+            </td>
             <td>
               <% if admin_signed_in? %>
                 <%= link_to admin_user_path(group.user.id) do %>
@@ -39,7 +45,9 @@
             </td>
             <td>
               <% if admin_signed_in? %>
-                <%= render "admin/groups/is_active", group: group %>
+                <span id="group<%= group.id %>_active_switch">
+                  <%= render "admin/groups/is_active", group: group %>
+                </span>
                 <%= link_to "削除", admin_group_path(group.id), method: :delete, class: "btn btn-sm btn-danger m-1" , data: { confirm: "本当に削除しますか？" } %>
               <% elsif user_signed_in? %>
                 <% if current_id?(group.user_id) %>

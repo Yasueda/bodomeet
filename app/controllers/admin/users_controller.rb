@@ -24,11 +24,16 @@ class Admin::UsersController < ApplicationController
   end
 
   def active_switch
-    user = User.find(params[:id])
-    if user.update(is_active: !user.is_active)
-      redirect_to request.referer
-    else
-      redirect_to admin_root_path
+    @user = User.find(params[:id])
+    if @user.update(is_active: !@user.is_active)
+      events = @user.events.get_since
+      events.each do |event|
+        event.update(is_active: false)
+      end
+      groups = @user.groups
+      groups.each do |group|
+        group.update(is_active: false)
+      end
     end
   end
 

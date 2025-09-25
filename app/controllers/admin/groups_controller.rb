@@ -9,12 +9,8 @@ class Admin::GroupsController < ApplicationController
   end
 
   def active_switch
-    group = Group.find(params[:id])
-    if group.update(is_active: !group.is_active)
-      redirect_to request.referer
-    else
-      redirect_to admin_root_path
-    end
+    @group = Group.find(params[:id])
+    @group.update(is_active: !@group.is_active)
   end
 
   def destroy

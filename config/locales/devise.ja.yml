@@ -38,7 +38,7 @@ ja:
         min_people: 最低人数
         max_people: 最大人数
         check_people: 人数の大小関係
-        check_ago: 24時間
+        check_since: 24時間後以降
         check_time: 終了時間
     models:
       user: ユーザー

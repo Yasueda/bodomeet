@@ -25,12 +25,16 @@
           <td><%= event.participants.count %> / <%= event.max_people %> 人</td>
           <td class="text-center">
             <% if admin_signed_in? %>
-              <%= render "admin/events/is_active", event: event %>
+              <span id="event<%= event.id %>_active_switch">
+                <%= render "admin/events/is_active", event: event %>
+              </span>
               <%= link_to "編集", edit_admin_event_path(event.id), class: "btn btn-sm btn-info m-1" %>
               <%= link_to "削除", admin_event_path, method: :delete, class: "btn btn-sm btn-danger m-1", data: { confirm: '本当に削除しますか？' } %>
             <% elsif user_signed_in? %>
               <% if current_id?(event.user_id) %>
-                <%= link_to "編集", edit_event_path(event.id), class: "btn btn-sm btn-info m-1" %>
+                <% if event.since_event? %>
+                  <%= link_to "編集", edit_event_path(event.id), class: "btn btn-sm btn-info m-1" %>
+                <% end %>
                 <%= link_to "削除", event_path, method: :delete, class: "btn btn-sm btn-danger m-1", data: { confirm: '本当に削除しますか？' } %>
               <% else %>
                 <%= render "layouts/events/participant", event: event %>

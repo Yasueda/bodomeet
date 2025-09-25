@@ -32,6 +32,10 @@ class Event < ApplicationRecord
   scope :asc_datetime_order, -> { sort{ |a, b| a.get_datetime <=> b.get_datetime } }
   scope :desc_datetime_order, -> { sort{ |a, b| b.get_datetime <=> a.get_datetime } }
 
+  scope :get_ago, -> { where("date < ?", Time.zone.today) }
+  scope :get_since, -> { where("date >= ?", Time.zone.today) }
+
+
   def get_event_image
     unless event_image.attached?
       file_path = Rails.root.join('app/assets/images/events/no_event_image.jpg')
@@ -66,7 +70,7 @@ class Event < ApplicationRecord
 
   def check_date
     return if date.nil?
-    errors.add(:check_ago, "後以降の日時を入力してください") if date < Time.current.since(1.days)
+    errors.add(:check_since, "の日時を入力してください") if date < Time.current.since(1.days)
   end
 
   def check_time
