@@ -1,4 +1,4 @@
-<% if events.exists? %>
+<% if events.present? %>
   <table class="table">
     <thead>
       <tr>
@@ -9,7 +9,7 @@
       </tr>
     </thead>
     <tbody>
-      <% events.asc_datetime_order.each do |event| %>
+      <% events.each do |event| %>
         <tr>
           <td>
             <%= image_tag event.get_event_image, size: "80x45", class: "cover-image bg-light", alt: "イベント画像" %>
@@ -29,13 +29,13 @@
                 <%= render "admin/events/is_active", event: event %>
               </span>
               <%= link_to "編集", edit_admin_event_path(event.id), class: "btn btn-sm btn-info m-1" %>
-              <%= link_to "削除", admin_event_path, method: :delete, class: "btn btn-sm btn-danger m-1", data: { confirm: '本当に削除しますか？' } %>
+              <%= link_to "削除", admin_event_path(event.id), method: :delete, class: "btn btn-sm btn-danger m-1", data: { confirm: '本当に削除しますか？' } %>
             <% elsif user_signed_in? %>
               <% if current_id?(event.user_id) %>
                 <% if event.since_event? %>
                   <%= link_to "編集", edit_event_path(event.id), class: "btn btn-sm btn-info m-1" %>
                 <% end %>
-                <%= link_to "削除", event_path, method: :delete, class: "btn btn-sm btn-danger m-1", data: { confirm: '本当に削除しますか？' } %>
+                <%= link_to "削除", event_path(event.id), method: :delete, class: "btn btn-sm btn-danger m-1", data: { confirm: '本当に削除しますか？' } %>
               <% else %>
                 <%= render "layouts/events/participant", event: event %>
               <% end %>
@@ -45,6 +45,7 @@
       <% end %>
     </tbody>
   </table>
+  <div class="d-flex justify-content-center"><%#= paginate events %></div>
 <% else %>
-  <div>イベントはありません</div>
+  <div class="col">イベントはありません</div>
 <% end %>

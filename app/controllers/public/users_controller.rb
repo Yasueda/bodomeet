@@ -6,12 +6,30 @@ class Public::UsersController < ApplicationController
 
   def index
     @users = User.where(is_active: true).order(name: :asc)
+    @users = Kaminari.paginate_array(@users).page(params[:page]).per(@users_per)
   end
 
   def show
     @user = User.find(params[:id])
     @events = @user.events.where(is_active: true)
     @participated_events = @user.participated_events.where(is_active: true)
+
+    @since_events = @events.get_since.asc_datetime_order.first(@user_show_events_per)
+    @ago_events = @events.get_ago.desc_datetime_order.first(@user_show_events_per)
+    @since_participated_events = @participated_events.get_since.asc_datetime_order.first(@user_show_events_per)
+    @ago_participated_events = @participated_events.get_ago.desc_datetime_order.first(@user_show_events_per)
+
+    @calendar_events = @events + @participated_events
+
+    # @since_events = Kaminari.paginate_array(@since_events).page(params[:page]).per(@user_show_events_per)
+    # @ago_events = Kaminari.paginate_array(@ago_events).page(params[:page]).per(@user_show_events_per)
+    # @since_participated_events = Kaminari.paginate_array(@since_participated_events).page(params[:page]).per(@user_show_events_per)
+    # @ago_participated_events = Kaminari.paginate_array(@ago_participated_events).page(params[:page]).per(@user_show_events_per)
+
+    respond_to do |format|
+      format.html
+      format.json { render 'calendar' }
+    end
   end
 
   def edit

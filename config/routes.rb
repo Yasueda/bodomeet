@@ -27,6 +27,9 @@ Rails.application.routes.draw do
         patch :withdraw
         get :not_active
       end
+      member do
+        get :calender_json, to: "users#show", defaults: { format: 'json' }
+      end
     end
 
     resources :events do

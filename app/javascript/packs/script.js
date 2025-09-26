@@ -1,8 +1,8 @@
 $(function(){
-  $('.over-secondary').mouseover(function(){
+  $('.nav-link').on("mouseover",function(){
     $(this).addClass('bg-secondary');
   });
-  $('.over-secondary').mouseout(function(){
+  $('.nav-link').on("mouseout",function(){
     $(this).removeClass('bg-secondary');
   });
 });

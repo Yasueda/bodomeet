@@ -2,6 +2,7 @@ class Admin::CommentsController < ApplicationController
   before_action :authenticate_admin!
   def index
     @comments = Comment.all.order(created_at: :desc)
+    @comments = Kaminari.paginate_array(@comments).page(params[:page]).per(@comments_per)
   end
 
   def active_switch

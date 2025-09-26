@@ -2,6 +2,7 @@ class Admin::GroupsController < ApplicationController
   before_action :authenticate_admin!
   def index
     @groups = Group.all
+    @groups = Kaminari.paginate_array(@groups).page(params[:page]).per(@groups_per)
   end
 
   def show

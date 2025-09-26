@@ -26,24 +26,31 @@
   <%= render "layouts/users/info", user: user %>
 
   <div class="col-md-8 pl-4">
+    <% if user_signed_in? && current_id?(user.id) %>
+      <div id="calendar" data-user-id="<%= user.id %>" class="my-4"></div>
+    <% end %>
+
     <div class="d-flex align-items-center">
-      <h3 class="heading col-8 p-0">主催イベント</h3>
+      <h3 class="heading col-8 p-0">主催イベント（直近 <%= @user_show_events_per %> 件）</h3>
       <% if user_signed_in? && current_id?(user.id) %>
         <div class="ml-auto p-2"><%= link_to "新規作成", new_event_path, class: "btn btn-sm btn-primary m-1" %></div>
       <% end %>
     </div>
-    <%= render "layouts/users/event_list", events: events.get_since %>
+    <%= render "layouts/users/event_list", events: since_events %>
 
-    <h3 class="heading col-8 p-0 mt-5">参加イベント</h3>
-    <%= render "layouts/users/event_list", events: participated_events.get_since %>
+    <h3 class="heading col-8 p-0 mt-5">
+      参加イベント（直近 <%= @user_show_events_per %> 件）
+      
+    </h3>
+    <%= render "layouts/users/event_list", events: since_participated_events %>
 
-    <details>
+    <details class="mt-3">
       <summary>過去イベント</summary>
       <div class="pl-2">
-        <h6 class="col-8 heading p-0">主催イベント</h4>
-        <%= render "layouts/users/event_list", events: events.get_ago %>
-        <h6 class="col-8 heading p-0">参加イベント</h4>
-        <%= render "layouts/users/event_list", events: participated_events.get_ago %>
+        <h6 class="col-8 heading p-0">主催イベント（直近 <%= @user_show_events_per %> 件）</h4>
+        <%= render "layouts/users/event_list", events: ago_events %>
+        <h6 class="col-8 heading p-0">参加イベント（直近 <%= @user_show_events_per %> 件）</h4>
+        <%= render "layouts/users/event_list", events: ago_participated_events %>
       </div>
     </details>
   </div>

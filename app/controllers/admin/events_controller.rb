@@ -9,6 +9,7 @@ class Admin::EventsController < ApplicationController
     else
       @events = @events.where(date: @month.all_month).asc_datetime_order
     end
+    @events = Kaminari.paginate_array(@events).page(params[:page]).per(@events_per)
   end
 
   def show
