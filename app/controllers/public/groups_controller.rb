@@ -9,6 +9,7 @@ class Public::GroupsController < ApplicationController
 
   def index
     @groups = Group.where(is_active: true)
+    @groups = Kaminari.paginate_array(@groups).page(params[:page]).per(@groups_per)
   end
 
   def show

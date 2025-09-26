@@ -2,12 +2,18 @@ class Admin::UsersController < ApplicationController
   before_action :authenticate_admin!
   def index
     @users = User.all.order(name: :asc)
+    @users = Kaminari.paginate_array(@users).page(params[:page]).per(@users_per)
   end
 
   def show
     @user = User.find(params[:id])
     @events = @user.events
     @participated_events = @user.participated_events
+
+    @since_events = @events.get_since.asc_datetime_order.first(@user_show_events_per)
+    @ago_events = @events.get_ago.desc_datetime_order.first(@user_show_events_per)
+    @since_participated_events = @participated_events.get_since.asc_datetime_order.first(@user_show_events_per)
+    @ago_participated_events = @participated_events.get_ago.desc_datetime_order.first(@user_show_events_per)
   end
 
   def edit
