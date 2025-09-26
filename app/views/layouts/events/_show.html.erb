@@ -89,15 +89,19 @@
   <% if user_signed_in? %>
     <%= form_with model: [event, comment], local: true, class: "px-1" do |f| %>
       <div class="input-group ">
-        <%= f.text_field :content, class: "form-control", placeholder: "コメント" %>
+        <% unless comment.errors[:content].any? %>
+          <%= f.text_field :content, class: "form-control", placeholder: "※コメントは100文字以内" %>
+        <% else %>
+          <%= f.text_field :content, class: "form-control is-invalid", placeholder: "※コメントは100文字以内" %>
+        <% end %>
         <div class="input-group-append" aria-hidden="true">
           <%= button_tag type: "submit", class: "btn btn-success" do %>
             <i class="fas fa-lg fa-pen"></i>
           <% end %>
         </div>
       </div>
+      <%= render "layouts/error_message", object: f.object, attribute: :content %>
     <% end %>
-    <div class="text-right small text-secondary">※コメントは100文字以内</div>
   <% end %>
 
   <% if comments.present? %>

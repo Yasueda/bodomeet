@@ -47,20 +47,13 @@ td p {
   position: absolute;
 }
 
-.navbar-brand {
-  transition: .3s;
-}
-
-.navbar-brand:hover {
-  letter-spacing: .3rem;
-}
-
 .nav-link {
   transition: .3s;
 }
 
 .nav-link:hover {
-  letter-spacing: .3rem;
+  background-color: #212529;
+  letter-spacing: .1rem;
 }
 
 .on-favorite {

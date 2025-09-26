@@ -101,16 +101,6 @@ ActiveRecord::Schema.define(version: 2025_09_07_125949) do
     t.index ["user_id"], name: "index_members_on_user_id"
   end
 
-  create_table "notifications", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "event_id", null: false
-    t.boolean "is_check", default: false, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["event_id"], name: "index_notifications_on_event_id"
-    t.index ["user_id"], name: "index_notifications_on_user_id"
-  end
-
   create_table "participants", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "event_id", null: false
@@ -144,8 +134,6 @@ ActiveRecord::Schema.define(version: 2025_09_07_125949) do
   add_foreign_key "groups", "users"
   add_foreign_key "members", "groups"
   add_foreign_key "members", "users"
-  add_foreign_key "notifications", "events"
-  add_foreign_key "notifications", "users"
   add_foreign_key "participants", "events"
   add_foreign_key "participants", "users"
 end

@@ -1,0 +1,5 @@
+<% if object.errors[attribute].any? %>
+  <div class="small text-danger text-right">
+    ※<%= I18n.t("#{object.class.name}.#{attribute}") %><%= object.errors[attribute].first %>
+  </div>
+<% end %>
