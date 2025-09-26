@@ -2,10 +2,15 @@ class Public::CommentsController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    comment = current_user.comments.new(comment_params)
-    comment.event_id = params[:event_id]
-    comment.save
-    redirect_to request.referer
+    @comment = current_user.comments.new(comment_params)
+    @comment.event_id = params[:event_id]
+    if @comment.save
+      redirect_to event_path(params[:event_id])
+    else
+      @event = Event.find(params[:event_id])
+      @comments = @event.comments.where(is_active: true)
+      render "public/events/show"
+    end
   end
 
   def destroy

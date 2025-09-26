@@ -7,9 +7,6 @@ class Event < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :commented_users, through: :comments, source: :user
 
-  has_many :notifications, dependent: :destroy
-  has_many :notified_users, through: :notifications, source: :user
-
   has_one_attached :event_image
   validates :event_image, content_type: {in:[:jpg, :jpeg], message: "はjpg, jpegいずれかの形式にして下さい"},
   size: { between: 1.kilobyte..4.megabytes , message: '画像容量が大きすぎます、4MB以下にして下さい' }
@@ -23,7 +20,7 @@ class Event < ApplicationRecord
   validates :min_people, presence: true
   validates :max_people, presence: true
   validate  :check_people
-  validate  :check_date
+  validate  :check_since_date
   validate  :check_time
 
   scope :asc_date_order, -> { order(date: :asc)}
@@ -68,9 +65,9 @@ class Event < ApplicationRecord
     errors.add(:check_people, "を正しく入力してください") if min_people > max_people
   end
 
-  def check_date
+  def check_since_date
     return if date.nil?
-    errors.add(:check_since, "の日時を入力してください") if date < Time.current.since(1.days)
+    errors.add(:check_since_date, "の日時を入力してください") if date < Time.current.since(1.days)
   end
 
   def check_time
