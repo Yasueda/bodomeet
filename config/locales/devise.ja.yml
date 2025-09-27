@@ -2,7 +2,6 @@ ja:
   activerecord:
     attributes:
       user:
-        user_image: ユーザー画像
         name: ユーザー名
         confirmation_sent_at: パスワード確認送信時刻
         confirmation_token: パスワード確認用トークン
@@ -27,19 +26,6 @@ ja:
         unconfirmed_email: 未確認Eメール
         unlock_token: ロック解除用トークン
         updated_at: 更新日
-      event:
-        event_image: イベント画像
-        name: イベント名
-        introduction: 説明
-        date: 開催日
-        start_time: 開始時刻
-        end_time: 終了時刻
-        venue: 開催場所
-        min_people: 最低人数
-        max_people: 最大人数
-        check_people: 人数の大小関係
-        check_ago: 24時間
-        check_time: 終了時間
     models:
       user: ユーザー
   devise:

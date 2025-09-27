@@ -2,13 +2,21 @@ class Public::EventsController < ApplicationController
   before_action :authenticate_user!
   before_action :ensure_correct_user, only: [:edit, :update, :destroy]
   # before_action :ensure_guest_user, only: [:create, :edit, :update, :destroy]
+  before_action :ensure_is_active, only: [:show, :edit, :update, :destroy]
   
   def new
     @event = Event.new
   end
 
   def index
-    @events = Event.where(is_active: true).asc_datetime_order
+    @events = Event.where(is_active: true)
+    @month = params[:month] ? Date.parse(params[:month]) : nil
+    if @month == nil
+      @events = @events.asc_datetime_order
+    else
+      @events = @events.where(date: @month.all_month).asc_datetime_order
+    end
+    @events = Kaminari.paginate_array(@events).page(params[:page]).per(@events_per)
   end
 
   def show
@@ -29,6 +37,9 @@ class Public::EventsController < ApplicationController
 
   def edit
     @event = Event.find(params[:id])
+    unless @event.since_event?
+      redirect_to request.referer, alert: "過去のイベントは編集できません"
+    end
   end
 
   def update
@@ -55,7 +66,14 @@ class Public::EventsController < ApplicationController
   def ensure_correct_user
     user = Event.find(params[:id]).user
     unless user == current_user
-      redirect_to events_path, notice: "このユーザーはその操作を行えません"
+      redirect_to events_path, alert: "このユーザーはその操作を行えません"
+    end
+  end
+
+  def ensure_is_active
+    event = Event.find(params[:id])
+    unless event.is_active
+      redirect_to events_path, alert: "そのイベントは削除されています"
     end
   end
 

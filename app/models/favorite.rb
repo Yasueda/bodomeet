@@ -1,4 +1,4 @@
-class Notification < ApplicationRecord
+class Favorite < ApplicationRecord
   belongs_to :user
   belongs_to :event
 end

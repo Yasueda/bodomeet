@@ -60,6 +60,9 @@ gem 'devise'
 gem 'jquery-rails'
 gem 'dotenv-rails'
 gem 'kaminari','~> 1.2.1'
+gem 'bootstrap4-kaminari-views'
+gem 'faker'
+gem 'gimei'
 
 group :production do
   gem 'mysql2'

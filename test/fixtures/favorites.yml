@@ -3,9 +3,7 @@
 one:
   user: one
   event: one
-  is_check: false
 
 two:
   user: two
   event: two
-  is_check: false

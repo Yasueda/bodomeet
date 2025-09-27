@@ -1,0 +1,42 @@
+<div class="form-body p-4">
+  <div class="mx-auto text-center">
+    <p>各項目を入力してください</p>
+  </div>
+
+  <% if group.errors.any? %>
+    <ul class="alert alert-danger text-left" role="alert">
+      <h6 class="alert-heading">
+        入力情報に誤りがあります
+      </h6>
+    </ul>
+  <% end %>
+
+  <%= form_with model: group, local: true do |f| %>
+
+    <div class="input-group">
+      <div class="input-group-prepend col-2 p-0">
+        <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-people-group mx-auto"></i></span>
+      </div>
+      <% unless group.errors[:name].any? %>
+        <%= f.text_field :name, autofocus: true, class: "form-control", placeholder: "グループ名" %>
+      <% else %>
+        <%= f.text_field :name, autofocus: true, class: "form-control is-invalid", placeholder: "グループ名" %>
+      <% end %>
+    </div>
+    <%= render "layouts/error_message", object: f.object, attribute: :name %>
+
+    <div class="input-group mt-3">
+      <div class="input-group-prepend col-2 p-0">
+      <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-circle-info mx-auto"></i></span>
+      </div>
+      <% unless group.errors[:introduction].any? %>
+        <%= f.text_area :introduction, class: "form-control", placeholder: "説明", size: "40x5" %>
+      <% else %>
+        <%= f.text_area :introduction, class: "form-control is-invalid", placeholder: "説明", size: "40x5" %>
+      <% end %>
+    </div>
+    <%= render "layouts/error_message", object: f.object, attribute: :introduction %>
+
+    <%= f.submit class:"btn btn-block btn-success mt-3" %>
+  <% end %>
+</div>

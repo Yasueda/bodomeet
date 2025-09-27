@@ -6,76 +6,121 @@
   <% if event.errors.any? %>
     <ul class="alert alert-danger text-left" role="alert">
       <h6 class="alert-heading">
-        <%= event.errors.count %>件のエラーが発生しました
+        入力情報に誤りがあります
       </h6>
-      <% event.errors.full_messages.each do |message| %>
-        <li class="ml-2"><%= message %></li>
-      <% end %>
     </ul>
   <% end %>
 
   <%= form_with model: event, url: url_path, local: true do |f| %>
-    <div class="input-group mb">
+    <div class="input-group">
       <div class="input-group-prepend col-2 p-0">
         <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-image mx-auto"></i></span>
       </div>
-      <%= f.file_field :event_image, class: "form-control p-1 align-items-center", accept: "image/*" %>
+      <% unless event.errors[:event_image].any? %>
+        <%= f.file_field :event_image, class: "form-control p-1 align-items-center", accept: "image/*" %>
+      <% else %>
+        <%= f.file_field :event_image, class: "form-control p-1 align-items-center is-invalid", accept: "image/*" %>
+      <% end %>
     </div>
-    <div class="small text-danger text-right mb-3">※画像はjpg, jpegいずれかの形式にして下さい</div>
+    <% if event.errors[:event_image].any? %>
+      <%= render "layouts/error_message", object: f.object, attribute: :event_image %>
+    <% else %>
+      <div class="small text-secondary text-right">※画像はjpg, jpegいずれかの形式にして下さい</div>
+    <% end %>
 
-    <div class="input-group mb-3">
+    <div class="input-group mt-3">
       <div class="input-group-prepend col-2 p-0">
         <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-dice-five mx-auto"></i></span>
       </div>
-      <%= f.text_field :name, autofocus: true, class: "form-control", placeholder: "イベント名" %>
+      <% unless event.errors[:name].any? %>
+        <%= f.text_field :name, autofocus: true, class: "form-control", placeholder: "イベント名" %>
+      <% else %>
+        <%= f.text_field :name, autofocus: true, class: "form-control is-invalid", placeholder: "イベント名" %>
+      <% end %>
     </div>
+    <%= render "layouts/error_message", object: f.object, attribute: :name %>
 
-    <div class="input-group mb-3">
+
+    <div class="input-group mt-3">
       <div class="input-group-prepend col-2 p-0">
       <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-circle-info mx-auto"></i></span>
       </div>
-      <%= f.text_area :introduction, class: "form-control", placeholder: "内容", size: "40x5" %>
+      <% unless event.errors[:introduction].any? %>
+        <%= f.text_area :introduction, class: "form-control", placeholder: "説明", size: "40x5" %>
+      <% else %>
+        <%= f.text_area :introduction, class: "form-control is-invalid", placeholder: "説明", size: "40x5" %>
+      <% end %>
     </div>
+    <%= render "layouts/error_message", object: f.object, attribute: :introduction %>
 
-    <div class="input-group mb-3">
+    <div class="input-group mt-3">
       <div class="input-group-prepend col-2 p-0">
         <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-calendar mx-auto"></i></span>
       </div>
-      <%= f.date_field :date, class: "form-control" %>
-      <%= f.time_field :start_time, step: 1800, class: "form-control" %>
-      <span class="d-flex align-items-center">&nbsp;～&nbsp;</span>
-      <%= f.time_field :end_time, step: 1800, class: "form-control" %>
+      <% unless event.errors[:date].any? || event.errors[:start_time].any? || event.errors[:end_time].any? || event.errors[:check_since_date].any? || event.errors[:check_time].any? %>
+        <%= f.date_field :date, class: "form-control" %>
+        <%= f.time_field :start_time, step: 1800, class: "form-control" %>
+        <span class="d-flex align-items-center">&nbsp;～&nbsp;</span>
+        <%= f.time_field :end_time, step: 1800, class: "form-control" %>
+      <% else %>
+        <%= f.date_field :date, class: "form-control is-invalid" %>
+        <%= f.time_field :start_time, step: 1800, class: "form-control is-invalid" %>
+        <span class="d-flex align-items-center">&nbsp;～&nbsp;</span>
+        <%= f.time_field :end_time, step: 1800, class: "form-control is-invalid" %>
+      <% end %>
     </div>
+    <%= render "layouts/error_message", object: f.object, attribute: :date %>
+    <%= render "layouts/error_message", object: f.object, attribute: :start_time %>
+    <%= render "layouts/error_message", object: f.object, attribute: :end_time %>
+    <%= render "layouts/error_message", object: f.object, attribute: :check_since_date %>
+    <%= render "layouts/error_message", object: f.object, attribute: :check_time %>
 
-    <div class="input-group mb-3">
+    <div class="input-group mt-3">
       <div class="input-group-prepend col-2 p-0">
         <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-location-dot mx-auto"></i></span>
       </div>
-      <%= f.text_field :venue, autofocus: true, class: "form-control", placeholder: "開催場所" %>
+      <% unless event.errors[:venue].any? %>
+        <%= f.text_field :venue, autofocus: true, class: "form-control", placeholder: "開催場所" %>
+      <% else %>
+        <%= f.text_field :venue, autofocus: true, class: "form-control is-invalid", placeholder: "開催場所" %>
+      <% end %>
     </div>
+    <%= render "layouts/error_message", object: f.object, attribute: :venue %>
 
-    <div class="input-group mb-3">
+    <div class="input-group mt-3">
       <div class="input-group-prepend col-2 p-0">
         <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-user-minus mx-auto"></i></span>
       </div>
-      <%= f.select :min_people, *[2..20], {prompt: "最低人数"}, {class: "form-control"} %>
+      <% unless event.errors[:min_people].any? || event.errors[:check_people].any? %>
+        <%= f.select :min_people, *[2..20], {prompt: "最低人数"}, {class: "form-control"} %>
+      <% else %>
+        <%= f.select :min_people, *[2..20], {prompt: "最低人数"}, {class: "form-control is-invalid"} %>
+      <% end %>
       <div class="input-group-append">
         <span class="input-group-text">人</span>
       </div>
     </div>
+    <%= render "layouts/error_message", object: f.object, attribute: :min_people %>
+    <%= render "layouts/error_message", object: f.object, attribute: :check_people %>
 
-    <div class="input-group mb-3">
+    <div class="input-group mt-3">
       <div class="input-group-prepend col-2 p-0">
         <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-user-plus mx-auto"></i></span>
       </div>
-      <%= f.select :max_people, *[2..20], {prompt: "最大人数"}, {class: "form-control"} %>
+      <% unless event.errors[:max_people].any? || event.errors[:check_people].any? %>
+        <%= f.select :max_people, *[2..20], {prompt: "最大人数"}, {class: "form-control"} %>
+      <% else %>
+        <%= f.select :max_people, *[2..20], {prompt: "最大人数"}, {class: "form-control is-invalid"} %>
+      <% end %>
       <div class="input-group-append">
         <span class="input-group-text">人</span>
       </div>
     </div>
+    <%= render "layouts/error_message", object: f.object, attribute: :max_people %>
+    <%= render "layouts/error_message", object: f.object, attribute: :check_people %>
 
     <% if admin_signed_in? %>
-      <div class="input-group mb-3 d-flex justify-content-around">
+      <div class="input-group mb-t d-flex justify-content-around">
         <div>
           <%= f.radio_button :is_active, :true, checked: event.is_active %>
           <%= f.label :is_active, "有効", value: :true, class: "mr-3" %>

@@ -2,9 +2,9 @@
     <%= f.search_field :keyword, class: "form-control", placeholder: "検索ワード" %>
   <div class="input-group-append">
     <% if admin_signed_in? %>
-      <%= f.select :table, [["ユーザー", User.name], ["イベント", Event.name], ["コメント", Comment.name]], selected: params[:table] %>
+      <%= f.select :table, [["ユーザー", User.name], ["イベント", Event.name], ["コメント", Comment.name], ["グループ", Group.name]], selected: params[:table] %>
     <% elsif user_signed_in? %>
-      <%= f.select :table, [["ユーザー", User.name], ["イベント", Event.name]], selected: params[:table] %>
+      <%= f.select :table, [["ユーザー", User.name], ["イベント", Event.name], ["グループ", Group.name]], selected: params[:table] %>
     <% end %>
     <%= button_tag type: "submit", class: "btn btn-secondary" do %>
       <i class="fas fa-lg fa-magnifying-glass" aria-hidden="true"></i>

@@ -1,0 +1,11 @@
+<% unless current_id?(event.user_id) %>
+  <% unless favorite_event?(event.id) %>
+    <%= link_to event_favorites_path(event_id: event.id), method: :post, remote: true do %>
+      <i class="far fa-lg fa-star mx-auto off-favorite"></i>
+    <% end %>
+  <% else %>
+    <%= link_to event_favorite_path(event_id: event.id, id: current_user.id ), method: :delete, remote: true do %>
+      <i class="fas fa-lg fa-star mx-auto on-favorite"></i>
+    <% end %>
+  <% end %>
+<% end %>

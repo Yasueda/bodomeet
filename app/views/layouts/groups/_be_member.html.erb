@@ -1,0 +1,7 @@
+<% unless current_id?(group.user_id) %>
+  <% unless member_group?(group.id) %>
+    <%= link_to "参加する", group_members_path(group_id: group.id), method: :post, class: "btn btn-sm btn-success" %>
+  <% else %>
+    <%= link_to "参加取消", group_member_path(group_id: group.id, id: current_user.id ), method: :delete, class: "btn btn-sm btn-danger" %>
+  <% end %>
+<% end %>

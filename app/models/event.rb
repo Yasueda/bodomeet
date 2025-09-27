@@ -4,11 +4,11 @@ class Event < ApplicationRecord
   has_many :participants, dependent: :destroy
   has_many :participated_users, through: :participants, source: :user
 
+  has_many :favorites, dependent: :destroy
+  has_many :favorite_users, through: :favorites, source: :user
+
   has_many :comments, dependent: :destroy
   has_many :commented_users, through: :comments, source: :user
-
-  has_many :notifications, dependent: :destroy
-  has_many :notified_users, through: :notifications, source: :user
 
   has_one_attached :event_image
   validates :event_image, content_type: {in:[:jpg, :jpeg], message: "はjpg, jpegいずれかの形式にして下さい"},
@@ -23,7 +23,7 @@ class Event < ApplicationRecord
   validates :min_people, presence: true
   validates :max_people, presence: true
   validate  :check_people
-  validate  :check_date
+  validate  :check_since_date
   validate  :check_time
 
   scope :asc_date_order, -> { order(date: :asc)}
@@ -32,30 +32,33 @@ class Event < ApplicationRecord
   scope :asc_datetime_order, -> { sort{ |a, b| a.get_datetime <=> b.get_datetime } }
   scope :desc_datetime_order, -> { sort{ |a, b| b.get_datetime <=> a.get_datetime } }
 
-  def get_event_image
-    unless event_image.attached?
-      file_path = Rails.root.join('app/assets/images/events/no_event_image.jpg')
-      event_image.attach(io: File.open(file_path), filename: 'event-image.jpeg', content_type: 'image/jpeg')
-    end
-    event_image
-  end
+  scope :get_ago, -> { where("date < ?", Time.zone.today) }
+  scope :get_since, -> { where("date >= ?", Time.zone.today) }
+
+
+  # def get_event_image
+  #   unless event_image.attached?
+  #     file_path = Rails.root.join('app/assets/images/events/no_event_image.jpg')
+  #     event_image.attach(io: File.open(file_path), filename: 'event-image.jpeg', content_type: 'image/jpeg')
+  #   end
+  #   event_image
+  # end
 
   # 画像をデータベースではなくHTMLを用いて表示する場合
-  # def get_event_image
-  #   if event_image.attached?
-  #     event_image
-  #   else
-  #     'events/no_event_image.jpg'
-  #   end
-  # end
+  def get_event_image
+    if event_image.attached?
+      event_image
+    else
+      'events/no_event_image.jpg'
+    end
+  end
 
   def get_datetime
     date +  start_time.seconds_since_midnight.seconds
   end
 
-  def self.search(keyword)
-    keyword = "%" + self.sanitize_sql_like(keyword) + "%"
-    where(["name LIKE? OR introduction LIKE?", keyword, keyword])
+  def since_event?
+    get_datetime > Time.current.since(1.days)
   end
 
   private
@@ -65,9 +68,9 @@ class Event < ApplicationRecord
     errors.add(:check_people, "を正しく入力してください") if min_people > max_people
   end
 
-  def check_date
+  def check_since_date
     return if date.nil?
-    errors.add(:check_ago, "後以降の日時を入力してください") if date < Time.current.since(1.days)
+    errors.add(:check_since_date, "の日時を入力してください") if date < Time.current.since(1.days)
   end
 
   def check_time

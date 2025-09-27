@@ -180,6 +180,7 @@ ja:
       long: "%Y/%m/%d %H:%M"
       short: "%m/%d %H:%M"
     pm: 午後
+
   alert:
     messages:
       save: 登録に失敗しました
@@ -192,21 +193,29 @@ ja:
       update: 更新に成功しました
       destroy: 削除に成功しました
 
-  user:
-    name: 名前
+  User:
+    name: ユーザー名
     email: メールアドレス
     introduction: 自己紹介
-  event:
+    password: パスワード
+    password_confirmation: パスワード（確認用）
+    user_image: 画像
+  Event:
     name: イベント名
     introduction: 説明
-    date: 開催日時
+    date: 開催日
+    start_time: 開始時刻
     end_time: 終了時刻
     venue: 場所
     min_people: 最小人数
     max_people: 最大人数
-  comment:
+    check_since_date: 24時間後以降
+    check_time: 開始時間と終了時間
+    check_people: 最小人数と最大人数
+    event_image: 画像
+  Comment:
     content: コメント
-  group:
+  Group:
     name: グループ名
     introduction: 説明
   views:

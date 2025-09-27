@@ -9,38 +9,59 @@
         <% if @user.errors.any? %>
           <ul class="alert alert-danger text-left" role="alert">
             <h6 class="alert-heading">
-              <%= @user.errors.count %>件のエラーが発生しました
+              入力情報に誤りがあります
             </h6>
-            <% @user.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
           </ul>
         <% end %>
         <%= form_with model: @user, url: user_registration_path do |f| %>
-          <div class="input-group mb-3">
+          <div class="input-group">
             <div class="input-group-prepend col-2 p-0">
               <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-user mx-auto"></i></span>
             </div>
-            <%= f.text_field :name, autofocus: true, placeholder: "ユーザー名", class: "form-control" %>
+            <% unless @user.errors[:name].any? %>
+              <%= f.text_field :name, autofocus: true, placeholder: "ユーザー名", class: "form-control" %>
+            <% else %>
+              <%= f.text_field :name, autofocus: true, placeholder: "ユーザー名", class: "form-control is-invalid" %>
+            <% end %>
           </div>
-          <div class="input-group mb-3">
+          <%= render "layouts/error_message", object: f.object, attribute: :name %>
+
+          <div class="input-group mt-3">
             <div class="input-group-prepend col-2 p-0">
               <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-envelope mx-auto"></i></span>
             </div>
-            <%= f.email_field :email, autofocus: true, placeholder: "メールアドレス", class: "form-control" %>
+            <% unless @user.errors[:password].any? %>
+              <%= f.email_field :email, autofocus: true, placeholder: "メールアドレス", class: "form-control" %>
+            <% else %>
+              <%= f.email_field :email, autofocus: true, placeholder: "メールアドレス", class: "form-control is-invalid" %>
+            <% end %>
           </div>
-          <div class="input-group mb-3">
+          <%= render "layouts/error_message", object: f.object, attribute: :email %>
+
+          <div class="input-group mt-3">
             <div class="input-group-prepend col-2 p-0">
               <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-lock mx-auto"></i></span>
             </div>
-            <%= f.password_field :password, placeholder: "パスワード(#{@minimum_password_length}文字以上)", class: "form-control" %>
+            <% unless @user.errors[:password].any? %>
+              <%= f.password_field :password, placeholder: "パスワード(#{@minimum_password_length}文字以上)", class: "form-control" %>
+            <% else %>
+              <%= f.password_field :password, placeholder: "パスワード(#{@minimum_password_length}文字以上)", class: "form-control is-invalid" %>
+            <% end %>
           </div>
-          <div class="input-group mb-3">
+          <%= render "layouts/error_message", object: f.object, attribute: :password %>
+
+          <div class="input-group mt-3">
             <div class="input-group-prepend col-2 p-0">
               <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-circle-check mx-auto"></i></span>
             </div>
-            <%= f.password_field :password_confirmation, placeholder: "パスワード確認", class: "form-control" %>
+            <% unless @user.errors[:password_confirmation].any? %>
+              <%= f.password_field :password_confirmation, placeholder: "パスワード確認", class: "form-control" %>
+            <% else %>
+              <%= f.password_field :password_confirmation, placeholder: "パスワード確認", class: "form-control is-invalid" %>
+            <% end %>
           </div>
+          <%= render "layouts/error_message", object: f.object, attribute: :password_confirmation %>
+
           <%= f.submit "新規登録", class: "btn btn-block btn-info mt-5" %>
         <% end %>
       </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_09_07_125949) do
+ActiveRecord::Schema.define(version: 2025_09_26_165639) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -81,6 +81,15 @@ ActiveRecord::Schema.define(version: 2025_09_07_125949) do
     t.index ["user_id"], name: "index_events_on_user_id"
   end
 
+  create_table "favorites", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "event_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["event_id"], name: "index_favorites_on_event_id"
+    t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
   create_table "groups", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "name", null: false
@@ -99,16 +108,6 @@ ActiveRecord::Schema.define(version: 2025_09_07_125949) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["group_id"], name: "index_members_on_group_id"
     t.index ["user_id"], name: "index_members_on_user_id"
-  end
-
-  create_table "notifications", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "event_id", null: false
-    t.boolean "is_check", default: false, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["event_id"], name: "index_notifications_on_event_id"
-    t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "participants", force: :cascade do |t|
@@ -141,11 +140,11 @@ ActiveRecord::Schema.define(version: 2025_09_07_125949) do
   add_foreign_key "comments", "events"
   add_foreign_key "comments", "users"
   add_foreign_key "events", "users"
+  add_foreign_key "favorites", "events"
+  add_foreign_key "favorites", "users"
   add_foreign_key "groups", "users"
   add_foreign_key "members", "groups"
   add_foreign_key "members", "users"
-  add_foreign_key "notifications", "events"
-  add_foreign_key "notifications", "users"
   add_foreign_key "participants", "events"
   add_foreign_key "participants", "users"
 end

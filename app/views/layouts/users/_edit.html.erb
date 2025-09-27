@@ -9,11 +9,8 @@
       <% if user.errors.any? %>
         <ul class="alert alert-danger text-left" role="alert">
           <h6 class="alert-heading">
-            <%= user.errors.count %>件のエラーが発生しました
+            入植情報に誤りがあります
           </h6>
-          <% user.errors.full_messages.each do |message| %>
-            <li class="mr-2"><%= message %></li>
-          <% end %>
         </ul>
       <% end %>
 

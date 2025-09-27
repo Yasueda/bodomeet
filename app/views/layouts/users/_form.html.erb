@@ -3,26 +3,56 @@
     <div class="input-group-prepend col-2 p-0">
       <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-image mx-auto"></i></span>
     </div>
-    <%= f.file_field :user_image, class: "form-control p-1 align-items-center", accept: "image/*" %>
+    <% unless user.errors[:user_image].any? %>
+      <%= f.file_field :user_image, class: "form-control p-1 align-items-center", accept: "image/*" %>
+    <% else %>
+      <%= f.file_field :user_image, class: "form-control p-1 align-items-center is-invalid", accept: "image/*" %>
+    <% end %>
   </div>
-  <div class="small text-danger text-right mb-3">※画像はjpg, jpegいずれかの形式にして下さい</div>
+  <% if user.errors[:user_image].any? %>
+    <%= render "layouts/error_message", object: f.object, attribute: :user_image %>
+  <% else %>
+    <div class="small text-secondary text-right">※画像はjpg, jpegいずれかの形式にして下さい</div>
+  <% end %>
 
-  <div class="input-group mb-3">
+  <div class="input-group mt-3">
     <div class="input-group-prepend col-2 p-0">
       <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-user mx-auto"></i></span>
     </div>
-    <%= f.text_field :name, autofocus: true, class: "form-control", placeholder: "ユーザー名" %>
+    <% unless user.errors[:name].any? %>
+      <%= f.text_field :name, autofocus: true, class: "form-control", placeholder: "ユーザー名" %>
+    <% else %>
+      <%= f.text_field :name, autofocus: true, class: "form-control is-invalid", placeholder: "ユーザー名" %>
+    <% end %>
   </div>
+  <%= render "layouts/error_message", object: f.object, attribute: :name %>
 
-  <div class="input-group mb-3">
+  <div class="input-group mt-3">
+    <div class="input-group-prepend col-2 p-0">
+      <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-envelope mx-auto"></i></span>
+    </div>
+    <% unless user.errors[:email].any? %>
+      <%= f.text_field :email, autofocus: true, class: "form-control", placeholder: "メールアドレス" %>
+    <% else %>
+      <%= f.text_field :email, autofocus: true, class: "form-control is-invalid", placeholder: "メールアドレス" %>
+    <% end %>
+  </div>
+  <%= render "layouts/error_message", object: f.object, attribute: :email %>
+
+  <div class="input-group mt-3">
     <div class="input-group-prepend col-2 p-0">
       <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-circle-info mx-auto"></i></span>
     </div>
-    <%= f.text_area :introduction, class: "form-control", placeholder: "紹介", size: "40x5" %>
+    <% unless user.errors[:introduction].any? %>
+      <%= f.text_area :introduction, class: "form-control", placeholder: "自己紹介", size: "40x5" %>
+    <% else %>
+      <%= f.text_area :introduction, class: "form-control is-invalid", placeholder: "自己紹介", size: "40x5" %>
+    <% end %>
   </div>
+  <%= render "layouts/error_message", object: f.object, attribute: :introduction %>
 
   <% if admin_signed_in? %>
-    <div class="input-group mb-3 d-flex justify-content-around">
+    <div class="input-group mt-3 d-flex justify-content-around">
       <div>
         <%= f.radio_button :is_active, :true, checked: user.is_active %>
         <%= f.label :is_active, "有効", value: :true, class: "mr-3" %>

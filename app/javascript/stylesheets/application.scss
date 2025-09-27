@@ -13,6 +13,12 @@
   background-color: #EC715F;
 }
 
+.orverflow-hidden {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .table td {
   vertical-align: middle;
 }
@@ -32,3 +38,29 @@ td p {
 .height-90 {
   height: 90px;
 }
+
+.card {
+  position: relative;
+}
+
+.left-top {
+  position: absolute;
+}
+
+.nav-link {
+  transition: .3s;
+}
+
+.nav-link:hover {
+  background-color: #212529;
+  letter-spacing: .1rem;
+}
+
+.on-favorite {
+  color: #FFD43B;
+}
+
+.off-favorite {
+  color: #c8c8c8;
+}
+

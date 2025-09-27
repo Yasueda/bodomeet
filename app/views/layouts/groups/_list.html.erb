@@ -1,0 +1,68 @@
+<% if groups.present? %>
+  <div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="col-2">グループ名</th>
+          <th class="col-2">リーダー</th>
+          <th class="col-6">メンバー</th>
+          <th class="col-2"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% groups.each do |group| %>
+          <tr>
+            <td>
+              <% if admin_signed_in? %>
+                <%= link_to group.name, admin_group_path(group.id) %>
+              <% elsif user_signed_in? %>
+                <%= link_to group.name, group_path(group.id) %>
+              <% end %>
+            </td>
+            <td>
+              <% if admin_signed_in? %>
+                <%= link_to admin_user_path(group.user.id) do %>
+                  <%= render "layouts/groups/leader", user: group.user %>
+                <% end %>
+              <% elsif user_signed_in? %>
+                <%= link_to user_path(group.user.id) do %>
+                  <%= render "layouts/groups/leader", user: group.user %>
+                <% end %>
+              <% end %>
+            </td>
+            <td>
+              <% group.users.each do |user| %>
+                <% if admin_signed_in? %>
+                  <%= link_to admin_user_path(user.id) do %>
+                    <%= render "layouts/groups/member", user: user %>
+                  <% end %>
+                <% elsif user_signed_in? %>
+                  <%= link_to user_path(user.id) do %>
+                    <%= render "layouts/groups/member", user: user %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </td>
+            <td>
+              <% if admin_signed_in? %>
+                <span id="group<%= group.id %>_active_switch">
+                  <%= render "admin/groups/is_active", group: group %>
+                </span>
+                <%= link_to "削除", admin_group_path(group.id), method: :delete, class: "btn btn-sm btn-danger m-1" , data: { confirm: "本当に削除しますか？" } %>
+              <% elsif user_signed_in? %>
+                <% if current_id?(group.user_id) %>
+                  <%= link_to "編集", edit_group_path(group.id), class: "btn btn-sm btn-success m-1" %>
+                  <%= link_to "削除", group_path(group.id), method: :delete, class: "btn btn-sm btn-danger m-1" , data: { confirm: "本当に削除しますか？" } %>
+                <% end %>
+                <%= render "layouts/groups/be_member", group: group %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="d-flex justify-content-center"><%= paginate groups %></div>
+<% else %>
+  <div class="col">グループはありません</div>
+<% end %>

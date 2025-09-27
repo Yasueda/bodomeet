@@ -2,15 +2,34 @@ class Public::UsersController < ApplicationController
   before_action :authenticate_user!, except: [:not_active]
   before_action :ensure_guest_user, only: [:withdraw]
   # before_action :ensure_correct_user, only: [:edit, :update, :destroy]
+  before_action :ensure_is_active, only: [:show]
 
   def index
-    @users = User.where(is_active: true)
+    @users = User.where(is_active: true).order(name: :asc)
+    @users = Kaminari.paginate_array(@users).page(params[:page]).per(@users_per)
   end
 
   def show
     @user = User.find(params[:id])
     @events = @user.events.where(is_active: true)
     @participated_events = @user.participated_events.where(is_active: true)
+
+    @since_events = @events.get_since.asc_datetime_order.first(@user_show_events_per)
+    @ago_events = @events.get_ago.desc_datetime_order.first(@user_show_events_per)
+    @since_participated_events = @participated_events.get_since.asc_datetime_order.first(@user_show_events_per)
+    @ago_participated_events = @participated_events.get_ago.desc_datetime_order.first(@user_show_events_per)
+
+    @calendar_events = @events + @participated_events
+
+    # @since_events = Kaminari.paginate_array(@since_events).page(params[:page]).per(@user_show_events_per)
+    # @ago_events = Kaminari.paginate_array(@ago_events).page(params[:page]).per(@user_show_events_per)
+    # @since_participated_events = Kaminari.paginate_array(@since_participated_events).page(params[:page]).per(@user_show_events_per)
+    # @ago_participated_events = Kaminari.paginate_array(@ago_participated_events).page(params[:page]).per(@user_show_events_per)
+
+    respond_to do |format|
+      format.html
+      format.json { render 'calendar' }
+    end
   end
 
   def edit
@@ -31,7 +50,15 @@ class Public::UsersController < ApplicationController
 
   def withdraw
     user = current_user
-    user.update(is_active: :false)
+    user.update(is_active: false)
+    events = user.events.get_since
+    events.each do |event|
+      event.update(is_active: false)
+    end
+    groups = user.groups
+    groups.each do |group|
+      group.update(is_active: false)
+    end
     reset_session
     redirect_to new_user_registration_path, notice: "退会しました"
   end
@@ -42,7 +69,7 @@ class Public::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :introduction, :user_image)
+    params.require(:user).permit(:name, :email, :introduction, :user_image)
   end
 
   # ユーザーアクセス制限用
@@ -60,6 +87,13 @@ class Public::UsersController < ApplicationController
     user = current_user
     if user.guest_user?
       redirect_to request.referer, alert: "ゲストユーザーはその操作を行えません"
+    end
+  end
+
+  def ensure_is_active
+    user = User.find(params[:id])
+    unless user.is_active
+      redirect_to users_path, alert: "そのユーザーは退会しています"
     end
   end
 end

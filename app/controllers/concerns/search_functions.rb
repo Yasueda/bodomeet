@@ -7,19 +7,31 @@ module SearchFunctions
       next if keyword == ""
       keyword = "%" + searches.sanitize_sql_like(keyword) + "%"
       case table
-      when User.name || Event.name
+      when User.name
+        searches = searches.where(["name LIKE? OR introduction LIKE?", keyword, keyword])
+      when Event.name
         searches = searches.where(["name LIKE? OR introduction LIKE?", keyword, keyword])
       when Comment.name
         searches = searches.where("content LIKE?", keyword)
+      when Group.name
+        searches = searches.where(["name LIKE? OR introduction LIKE?", keyword, keyword])
       end
     end
 
     unless searches.empty?
       case table
-      when User.name || Comment.name
-        searches.order(cerate_at: :desc)
+      when User.name
+        searches = searches.order(name: :asc)
+        searches = Kaminari.paginate_array(searches).page(params[:page]).per(@users_per)
       when Event.name
-        searches.asc_datetime_order
+        searches = searches.asc_datetime_order
+        searches = Kaminari.paginate_array(searches).page(params[:page]).per(@events_per)
+      when Comment.name
+        searches.order(create_at: :desc)
+        searches = Kaminari.paginate_array(searches).page(params[:page]).per(@comments_per)
+      when Group.name
+        searches.order(name: :asc)
+        searches = Kaminari.paginate_array(searches).page(params[:page]).per(@groups_per)
       end
     end
 
