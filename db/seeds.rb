@@ -118,7 +118,7 @@ user = {
   name:         "dummy_user",
   email:        "dummy_user@example.email",
   introduction: Faker::Lorem.paragraph(sentence_count: 5),
-  password:     "dummy_user",
+  password:     "dummy_user"
 }
 unless User.find_by(name: user[:name], email: user[:email])
   user = User.new(user)
