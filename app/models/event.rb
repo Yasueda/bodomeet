@@ -4,6 +4,9 @@ class Event < ApplicationRecord
   has_many :participants, dependent: :destroy
   has_many :participated_users, through: :participants, source: :user
 
+  has_many :favorites, dependent: :destroy
+  has_many :favorite_users, through: :favorites, source: :user
+
   has_many :comments, dependent: :destroy
   has_many :commented_users, through: :comments, source: :user
 
@@ -33,22 +36,22 @@ class Event < ApplicationRecord
   scope :get_since, -> { where("date >= ?", Time.zone.today) }
 
 
-  def get_event_image
-    unless event_image.attached?
-      file_path = Rails.root.join('app/assets/images/events/no_event_image.jpg')
-      event_image.attach(io: File.open(file_path), filename: 'event-image.jpeg', content_type: 'image/jpeg')
-    end
-    event_image
-  end
+  # def get_event_image
+  #   unless event_image.attached?
+  #     file_path = Rails.root.join('app/assets/images/events/no_event_image.jpg')
+  #     event_image.attach(io: File.open(file_path), filename: 'event-image.jpeg', content_type: 'image/jpeg')
+  #   end
+  #   event_image
+  # end
 
   # 画像をデータベースではなくHTMLを用いて表示する場合
-  # def get_event_image
-  #   if event_image.attached?
-  #     event_image
-  #   else
-  #     'events/no_event_image.jpg'
-  #   end
-  # end
+  def get_event_image
+    if event_image.attached?
+      event_image
+    else
+      'events/no_event_image.jpg'
+    end
+  end
 
   def get_datetime
     date +  start_time.seconds_since_midnight.seconds

@@ -10,6 +10,9 @@ class User < ApplicationRecord
   has_many :participants, dependent: :destroy
   has_many :participated_events, through: :participants, source: :event
 
+  has_many :favorites, dependent: :destroy
+  has_many :favorite_events, through: :favorites, source: :event
+
   has_many :comments, dependent: :destroy
   has_many :commented_events, through: :comments, source: :event
 

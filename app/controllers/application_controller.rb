@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   def set_paginate_per
     @users_per = 60
-    @events_per = 24
+    @events_per = 18
     @comments_per = 10
     @groups_per = 8
     @user_show_events_per = 5

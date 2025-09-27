@@ -1,4 +1,4 @@
-# BodoMeet（ぼどみ～と）
+# BodoMeet（ぼどみぃと）
 ## サイト概要
 ### サイトテーマ
 ボードゲーム好きな人達が、ボードゲームをするためにリアルで集まること目的としたコミュ二ティサイト
@@ -27,10 +27,14 @@
 - ふと何かしらのボードゲームをしたくなった時（参加側）
 ​
 ## 設計書
-「後ほど作成予定」
-<!-- 【補足説明】 -->
-<!-- - テーマ提出時点では不要です。 -->
-<!-- - 当項目には「後ほど作成予定」と記載しましょう。 -->
+### [各種設計書](./app/assets/design_document/)
+ - [UIFrows](./app/assets/design_document/UIFlows)
+ - [ER図](./app/assets/design_document/Entity_Relationship_Diagram)
+ - [テーブル定義書](./app/assets/design_document/Database_Schema_Document.xlsx)
+ - [アプリケーション詳細設計書](./app/assets/design_document/Application_Detail_Design.xlsx)
+
+ > UIFlowsとER図は [draw.io](https://www.draw.io/) にて作成  
+ > テーブル定義書とアプリケーション詳細設計書は [Googleスプレッドシート](https://docs.google.com/spreadsheets/) にて作成
 ​
 ## 開発環境
 - OS：Linux(CentOS)
@@ -42,7 +46,5 @@
 ## 使用素材
 - 素材として以下を使用
   - [Font Awesome](https://fontawesome.com/)
-  - [ぱくたそ](https://www.pakutaso.com/)
   - [イラストAC](https://www.ac-illust.com/)
   - [ICOOON MONO](http://icooon-mono.com/)
-<!-- 使用素材に応じて編集 -->

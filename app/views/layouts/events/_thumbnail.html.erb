@@ -3,6 +3,10 @@
     <object id="event<%= event.id %>_active_switch" class="text-center left-top">
       <%= render "admin/events/is_active", event: event %>
     </object>
+  <% elsif user_signed_in? && !current_id?(event.user_id) %>
+    <object id="event<%= event.id %>_favorite" class="left-top h5">
+      <%= render "layouts/events/favorite", event: event %>
+    </object>
   <% end %>
   <div class="bg-light">
     <%= image_tag event.get_event_image, size: "160x90", class: "card-img-top cover-image" %>
@@ -24,10 +28,14 @@
         <td class="text-center"><i class="fas fa-circle-user mx-auto" aria-hidden="true"></i></td>
         <td class="text-right"><%= event.participants.count %> / <%= event.max_people %> 人</td>
       </tr>
-      <tr>
-        <td class="text-center"><i class="fas fa-comment mx-auto" aria-hidden="true"></i></td>
-        <td class="text-right"><%= event.comments.count %>件</td>
-      </tr>
+        <tr>
+          <td class="text-center"><i class="fas fa-comment mx-auto" aria-hidden="true"></i></td>
+          <%if admin_signed_in? %>
+            <td class="text-right"><%= event.comments.count %>件</td>
+          <% elsif user_signed_in? %>
+            <td class="text-right"><%= event.comments.where(is_active: true).count %>件</td>
+          <% end %>
+        </tr>
     </tbody>
   </table>
 </div>

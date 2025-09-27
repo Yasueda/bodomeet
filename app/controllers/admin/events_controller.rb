@@ -46,23 +46,6 @@ class Admin::EventsController < ApplicationController
     redirect_to admin_events_path, notice: "無効イベントを全て削除しました"
   end
 
-  def search
-    if params[:keyword].empty?
-      redirect_to request.referer
-    else
-      keywords = params[:keyword].split(/[[:blank:]]+/)
-      @events = Event.all
-      keywords.each do |keyword|
-        next if keyword == ""
-        @events = @events.search(keyword)
-      end
-      unless @events.empty?
-        @events = @events.asc_datetime_order
-      end
-      render :index
-    end
-  end
-
   private
 
   def event_params
