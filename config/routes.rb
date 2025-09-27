@@ -34,10 +34,8 @@ Rails.application.routes.draw do
 
     resources :events do
       resources :participants, only: [:create, :destroy]
-      resources :comments, only: [:create, :edit, :update, :destroy]
-      collection do
-        get :search
-      end
+      resources :favorites, only: [:create, :destroy]
+      resources :comments, only: [:create, :destroy]
     end
     resources :groups do
       resources :members, only: [:create, :destroy]
@@ -48,9 +46,9 @@ Rails.application.routes.draw do
     root to: "homes#top"
     get :search, to: "searches#search"
 
-    resources :users do
+    resources :users, only: [:index, :show, :edit, :update, :destroy] do
       member do
-        get :active_switch
+        patch :active_switch
       end
       collection do
         delete :destroy_all
@@ -59,11 +57,10 @@ Rails.application.routes.draw do
 
     resources :events do
       member do
-        get :active_switch
+        patch :active_switch
       end
       collection do
         delete :destroy_all
-        get :search
       end
     end
 
@@ -71,16 +68,16 @@ Rails.application.routes.draw do
 
     resources :comments, only: [:index, :destroy] do
       member do
-        get :active_switch
+        patch :active_switch
       end
       collection do
         delete :destroy_all
       end
     end
 
-    resources :groups, only: [:index, :show, :edit, :destroy] do
+    resources :groups, only: [:index, :show, :destroy] do
       member do
-        get :active_switch
+        patch :active_switch
       end
       collection do
         delete :destroy_all

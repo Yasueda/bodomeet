@@ -5,21 +5,29 @@
       <span id="event<%= event.id %>_active_switch" %>
         <%= render "admin/events/is_active", event: event %>
       </span>
-      <%= link_to "編集", edit_admin_event_path(event.id), class: "btn btn-sm btn-info m-1" %>
-      <%= link_to "削除", admin_event_path, method: :delete, class: "btn btn-sm btn-danger m-1", data: { confirm: '本当に削除しますか？' } %>
+      <% if event.since_event? %>
+        <%= link_to "編集", edit_admin_event_path(event.id), class: "btn btn-sm btn-info m-1" %>
+      <% end %>
+      <%= link_to "削除", admin_event_path(event.id), method: :delete, class: "btn btn-sm btn-danger m-1", data: { confirm: '本当に削除しますか？' } %>
     </div>
   <% elsif current_id?(event.user_id) %>
     <div class="ml-auto p-2">
       <% if event.since_event? %>
         <%= link_to "編集", edit_event_path(event.id), class: "btn btn-sm btn-info m-1" %>
       <% end %>
-      <%= link_to "削除", event_path, method: :delete, class: "btn btn-sm btn-danger m-1", data: { confirm: '本当に削除しますか？' } %>
+      <%= link_to "削除", event_path(event.id), method: :delete, class: "btn btn-sm btn-danger m-1", data: { confirm: '本当に削除しますか？' } %>
     </div>
   <% end %>
 </div>
 
 <div class="d-flex justify-content-center">
   <div class="card shadow-lg col-md-8 rounde p-3">
+    <%if user_signed_in? %>
+      <div id="event<%= event.id %>_favorite" class="left-top display-4">
+        <%= render "layouts/events/favorite", event: event %>
+      </div>
+    <% end %>
+
     <div class="bg-light">
       <%= image_tag event.get_event_image, height: "380", class: "card-img-top cover-image" %>
     </div>

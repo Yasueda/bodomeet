@@ -4,7 +4,7 @@ class Admin::SearchesController < ApplicationController
 
   def search
     if params[:keyword].empty? || params[:table].nil?
-      redirect_to request.referer
+      redirect_to request.referer, alert: "検索ワードを入力してください"
     else
       case params[:table]
       when User.name
