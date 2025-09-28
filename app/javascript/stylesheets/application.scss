@@ -45,6 +45,8 @@ td p {
 
 .left-top {
   position: absolute;
+  top: 2%;
+  left: 2%;
 }
 
 .nav-link {
@@ -64,3 +66,10 @@ td p {
   color: #c8c8c8;
 }
 
+.on-follow {
+  color: #ff8787;
+}
+
+.off-follow {
+  color: #c8c8c8;
+}

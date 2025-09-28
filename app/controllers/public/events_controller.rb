@@ -58,7 +58,7 @@ class Public::EventsController < ApplicationController
   end
 
   def favorite
-    @events = current_user.favorite_events.where(is_active: true)
+    @events = current_user.favorite_events.where(is_active: true).asc_datetime_order
     @events = Kaminari.paginate_array(@events).page(params[:page]).per(@events_per)
   end
 
