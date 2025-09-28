@@ -33,6 +33,9 @@ Rails.application.routes.draw do
     end
 
     resources :events do
+      collection do
+        get :favorite
+      end
       resources :participants, only: [:create, :destroy]
       resources :favorites, only: [:create, :destroy]
       resources :comments, only: [:create, :destroy]
