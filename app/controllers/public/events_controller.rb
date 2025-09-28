@@ -57,6 +57,11 @@ class Public::EventsController < ApplicationController
     redirect_to events_path, notice: "削除しました"
   end
 
+  def favorite
+    @events = current_user.favorite_events.where(is_active: true)
+    @events = Kaminari.paginate_array(@events).page(params[:page]).per(@events_per)
+  end
+
   private
 
   def event_params
