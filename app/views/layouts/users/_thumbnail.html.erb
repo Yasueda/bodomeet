@@ -3,6 +3,10 @@
     <object id="user<%= user.id %>_active_switch" class="text-center left-top">
       <%= render "admin/users/is_active", user: user %>
     </object>
+  <% elsif user_signed_in? %>
+    <object id="user<%= user.id %>_follow" class="left-top">
+      <%= render "layouts/users/follow", user: user %>
+    </object>
   <% end %>
   <div class="bg-light p-1">
     <%= image_tag user.get_user_image(50, 50),size: "50x50", class: "d-block bg-white mx-auto rounded-circle border border-dark cover-image", alt: "ユーザーアイコン" %>

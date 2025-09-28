@@ -21,6 +21,11 @@ class User < ApplicationRecord
   has_many :members, dependent: :destroy
   has_many :member_groups, through: :members, source: :group
 
+  has_many :followeds, class_name: "Follow", foreign_key: "followed_id", dependent: :destroy
+  has_many :followers, class_name: "Follow", foreign_key: "follower_id" , dependent: :destroy
+  has_many :followed_users, through: :followeds, source: :follower
+  has_many :follower_users, through: :followers, source: :followed
+
   has_one_attached :user_image
   validates :user_image, content_type: {in:[:jpg, :jpeg], message: "はjpg, jpegいずれかの形式にして下さい"},
   size: { between: 1.kilobyte..4.megabytes , message: '画像容量が大きすぎます、4MB以下にして下さい' }

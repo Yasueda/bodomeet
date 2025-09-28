@@ -66,6 +66,16 @@ class Public::UsersController < ApplicationController
   def not_active
   end
 
+  def followeds
+    @users = User.find(params[:id]).followed_users.where(is_active: true).order(name: :asc)
+    @users = Kaminari.paginate_array(@users).page(params[:page]).per(@users_per)
+  end
+
+  def followers
+    @users = User.find(params[:id]).follower_users.where(is_active: true).order(name: :asc)
+    @users = Kaminari.paginate_array(@users).page(params[:page]).per(@users_per)
+  end
+
   private
 
   def user_params
