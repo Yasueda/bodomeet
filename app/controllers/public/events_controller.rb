@@ -38,7 +38,7 @@ class Public::EventsController < ApplicationController
   def edit
     @event = Event.find(params[:id])
     unless @event.since_event?
-      redirect_to request.referer, alert: "過去のイベントは編集できません"
+      redirect_to events_path(month: Time.current), alert: "過去のイベントは編集できません"
     end
   end
 
@@ -54,7 +54,7 @@ class Public::EventsController < ApplicationController
   def destroy
     event = Event.find(params[:id])
     event.update(is_active: false)
-    redirect_to events_path, notice: "削除しました"
+    redirect_to events_path(month: Time.current), notice: "削除しました"
   end
 
   def favorite
@@ -71,14 +71,14 @@ class Public::EventsController < ApplicationController
   def ensure_correct_user
     user = Event.find(params[:id]).user
     unless user == current_user
-      redirect_to events_path, alert: "このユーザーはその操作を行えません"
+      redirect_to events_path(month: Time.current), alert: "このユーザーはその操作を行えません"
     end
   end
 
   def ensure_is_active
     event = Event.find(params[:id])
     unless event.is_active
-      redirect_to events_path, alert: "そのイベントは削除されています"
+      redirect_to events_path(month: Time.current), alert: "そのイベントは削除されています"
     end
   end
 

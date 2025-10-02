@@ -130,7 +130,13 @@
             </td>
             <td class="col-9">
               <div class="small text-secondary"><%= comment.created_at.strftime("%Y/%m/%d %H:%m") %></div>
-              <div><%= comment.content %></div>
+              <% if admin_signed_in? %>
+                <div class="change-color" data-score="<%= comment.score %>">
+                  <%= comment.content %>
+                </div>
+              <% elsif user_signed_in? %>
+                <div><%= comment.content %></div>
+              <% end %>
             </td>
             <td class="col-2">
               <% if admin_signed_in? %>
