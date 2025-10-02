@@ -18,7 +18,11 @@ class Public::UsersController < ApplicationController
     @ago_events = @events.get_ago.desc_datetime_order.first(@user_show_events_per)
     @since_participated_events = @participated_events.get_since.asc_datetime_order.first(@user_show_events_per)
     @ago_participated_events = @participated_events.get_ago.desc_datetime_order.first(@user_show_events_per)
-
+    # @since_events = @events.get_since.asc_datetime_order
+    # @ago_events = @events.get_ago.desc_datetime_order
+    # @since_participated_events = @participated_events.get_since.asc_datetime_order
+    # @ago_participated_events = @participated_events.get_ago.desc_datetime_order
+    
     @calendar_events = @events + @participated_events
 
     # @since_events = Kaminari.paginate_array(@since_events).page(params[:page]).per(@user_show_events_per)

@@ -33,7 +33,7 @@ class Public::SessionsController < Devise::SessionsController
   # end
 
   def after_sign_in_path_for(resource)
-    events_path
+    events_path(month: Time.current)
   end
 
   def after_sign_out_path_for(resource)

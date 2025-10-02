@@ -458,7 +458,7 @@ comments = [
     user_id:    User.find_by(name: "Suzuki").id,
     event_id:   Event.find_by(name: event_01).id,
     content:    "初プレイですが参加できますか？",
-    created_at: "2025-8-2 16:28:16 +0900".to_datetime
+    created_at: "2025-8-2 16:28:16 +0900".to_datetime,
   },
   {
     user_id:    User.find_by(name: "つむぎ").id,
@@ -542,14 +542,21 @@ comments = [
   {
     user_id:    User.find_by(name: "NAGISA").id,
     event_id:   Event.find_by(name: event_21).id,
-    content:    "草",
+    content:    "これは間違いなく幸福な市民ですね",
     created_at: "2025-9-20 18:35:36 +0900".to_datetime
-  }
+  },
+  {
+    user_id:    User.find_by(name: "木木").id,
+    event_id:   Event.find_by(name: event_21).id,
+    content:    "死",
+    created_at: "2025-9-20 20:40:32 +0900".to_datetime
+  },
 ]
 
 comments.each do |comment|
   unless Comment.find_by(user_id: comment[:user_id], event_id: comment[:event_id], content: comment[:content])
     comment = Comment.new(comment)
+    comment.score = Language.get_data(comment.content)
     comment.save(touch: false)
   end
 end

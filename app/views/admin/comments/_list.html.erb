@@ -22,7 +22,12 @@
                 <%= comment.user.name %>
               <% end %>
             </td>
-            <td><%= comment.content %></td>
+            <td>
+              <div class="change-color" data-score="<%= comment.score %>">
+                <div>score: <%= comment.score%></div>
+                <%= comment.content %>
+              </div>
+            </td>
             <td>
               <span id="comment<%= comment.id %>_active_switch">
                 <%= render "admin/comments/is_active", comment: comment %>
