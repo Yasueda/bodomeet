@@ -4,6 +4,7 @@ class Public::CommentsController < ApplicationController
   def create
     @comment = current_user.comments.new(comment_params)
     @comment.event_id = params[:event_id]
+    @comment.score = Language.get_data(@comment.content)
     if @comment.save
       redirect_to event_path(params[:event_id])
     else

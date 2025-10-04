@@ -43,6 +43,16 @@ class Admin::UsersController < ApplicationController
     end
   end
 
+  def followeds
+    @users = User.find(params[:id]).followed_users.order(name: :asc)
+    @users = Kaminari.paginate_array(@users).page(params[:page]).per(@users_per)
+  end
+
+  def followers
+    @users = User.find(params[:id]).follower_users.order(name: :asc)
+    @users = Kaminari.paginate_array(@users).page(params[:page]).per(@users_per)
+  end
+
   def destroy
     user = User.find(params[:id])
     user.destroy

@@ -1,0 +1,11 @@
+<% unless current_id?(user.id) %>
+  <% unless followed_user?(user.id) %>
+    <%= link_to user_follows_path(user), method: :post, remote: true do %>
+      <i class="fas fa-lg fa-heart mx-auto off-follow"></i>
+    <% end %>
+  <% else %>
+    <%= link_to user_follow_path(user_id: user.id, id: current_user.id ), method: :delete, remote: true do %>
+      <i class="fas fa-lg fa-heart mx-auto on-follow"></i>
+    <% end %>
+  <% end %>
+<% end %>

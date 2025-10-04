@@ -19,8 +19,15 @@ class Public::UsersController < ApplicationController
     @since_participated_events = @participated_events.get_since.asc_datetime_order.first(@user_show_events_per)
     @ago_participated_events = @participated_events.get_ago.desc_datetime_order.first(@user_show_events_per)
 
+    # Kaminari-paginate用
+    # @since_events = @events.get_since.asc_datetime_order
+    # @ago_events = @events.get_ago.desc_datetime_order
+    # @since_participated_events = @participated_events.get_since.asc_datetime_order
+    # @ago_participated_events = @participated_events.get_ago.desc_datetime_order
+    
     @calendar_events = @events + @participated_events
 
+    # Kaminari-paginate用
     # @since_events = Kaminari.paginate_array(@since_events).page(params[:page]).per(@user_show_events_per)
     # @ago_events = Kaminari.paginate_array(@ago_events).page(params[:page]).per(@user_show_events_per)
     # @since_participated_events = Kaminari.paginate_array(@since_participated_events).page(params[:page]).per(@user_show_events_per)
@@ -64,6 +71,16 @@ class Public::UsersController < ApplicationController
   end
 
   def not_active
+  end
+
+  def followeds
+    @users = User.find(params[:id]).followed_users.where(is_active: true).order(name: :asc)
+    @users = Kaminari.paginate_array(@users).page(params[:page]).per(@users_per)
+  end
+
+  def followers
+    @users = User.find(params[:id]).follower_users.where(is_active: true).order(name: :asc)
+    @users = Kaminari.paginate_array(@users).page(params[:page]).per(@users_per)
   end
 
   private

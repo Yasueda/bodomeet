@@ -1,4 +1,9 @@
 <div class="col-md-4 col-sm-10 mx-2 mb-auto mx-sm-auto text-center shadow-lg rounded p-4">
+  <% if user_signed_in? %>
+    <div id="user<%= user.id %>_follow" class="left-top h1">
+      <%= render "layouts/users/follow", user: user %>
+    </div>
+  <% end %>
   <div class="test-dark py-1 mb-0">
     <%= image_tag user.get_user_image(100, 100), size: "100x100", class: "rounded-circle bg-white border border-dark cover-image", alt: "ユーザーアイコン" %>
   </div>
@@ -8,7 +13,32 @@
       <%= user.name %>
     </div>
 
-    <div class="text-left">
+    <div class="d-flex justify-content-around">
+      <% if admin_signed_in? %>
+        <%= link_to followeds_admin_user_path(user) do %>
+          <div>フォロー：<%= user.followed_users.count %></div>
+        <% end %>
+        <%= link_to followers_admin_user_path(user) do %>
+          <div>フォロワー：<%= user.follower_users.count %></div>
+        <% end %>
+      <% elsif user_signed_in? %>
+        <%= link_to followeds_user_path(user) do %>
+          <div>フォロー：<%= user.followed_users.where(is_active: true).count %></div>
+        <% end %>
+        <%= link_to followers_user_path(user) do %>
+          <div>フォロワー：<%= user.follower_users.where(is_active: true).count %></div>
+        <% end %>
+      <% end %>
+    </div>
+    <% if user_signed_in? && current_id?(user.id) %>
+      <div>
+        <%= link_to favorite_events_path, class: "btn btn-sm border border-secondary rounded mt-3" do %>
+          <i class="fas fa-lg fa-star mx-auto on-favorite"></i>お気に入りイベント
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="text-left mt-3">
       <%= simple_format(user.introduction, sanitize: true) %>
     </div>
   </div>
