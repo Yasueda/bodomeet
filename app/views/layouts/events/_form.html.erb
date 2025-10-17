@@ -12,15 +12,12 @@
   <% end %>
 
   <%= form_with model: event, url: url_path, local: true do |f| %>
+
     <div class="input-group">
       <div class="input-group-prepend col-2 p-0">
         <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-image mx-auto"></i></span>
       </div>
-      <% unless event.errors[:event_image].any? %>
-        <%= f.file_field :event_image, class: "form-control p-1 align-items-center", accept: "image/*" %>
-      <% else %>
-        <%= f.file_field :event_image, class: "form-control p-1 align-items-center is-invalid", accept: "image/*" %>
-      <% end %>
+      <%= f.file_field :event_image, class: "form-control p-1 align-items-center", errors: event.errors[:event_image].any?, accept: "image/*" %>
     </div>
     <% if event.errors[:event_image].any? %>
       <%= render "layouts/error_message", object: f.object, attribute: :event_image %>
@@ -32,24 +29,15 @@
       <div class="input-group-prepend col-2 p-0">
         <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-dice-five mx-auto"></i></span>
       </div>
-      <% unless event.errors[:name].any? %>
-        <%= f.text_field :name, autofocus: true, class: "form-control", placeholder: "イベント名" %>
-      <% else %>
-        <%= f.text_field :name, autofocus: true, class: "form-control is-invalid", placeholder: "イベント名" %>
-      <% end %>
+      <%= f.text_field :name, autofocus: true, class: "form-control", errors: event.errors[:name].any?, placeholder: "イベント名" %>
     </div>
     <%= render "layouts/error_message", object: f.object, attribute: :name %>
-
 
     <div class="input-group mt-3">
       <div class="input-group-prepend col-2 p-0">
       <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-circle-info mx-auto"></i></span>
       </div>
-      <% unless event.errors[:introduction].any? %>
-        <%= f.text_area :introduction, class: "form-control", placeholder: "説明", size: "40x5" %>
-      <% else %>
-        <%= f.text_area :introduction, class: "form-control is-invalid", placeholder: "説明", size: "40x5" %>
-      <% end %>
+      <%= f.text_area :introduction, class: "form-control", errors: event.errors[:introduction].any?, placeholder: "説明", size: "40x5" %>
     </div>
     <%= render "layouts/error_message", object: f.object, attribute: :introduction %>
 
@@ -57,17 +45,10 @@
       <div class="input-group-prepend col-2 p-0">
         <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-calendar mx-auto"></i></span>
       </div>
-      <% unless event.errors[:date].any? || event.errors[:start_time].any? || event.errors[:end_time].any? || event.errors[:check_since_date].any? || event.errors[:check_time].any? %>
-        <%= f.date_field :date, class: "form-control" %>
-        <%= f.time_field :start_time, step: 1800, class: "form-control" %>
+        <%= f.date_field :date, class: "form-control", errors: (event.errors[:date].any? || event.errors[:check_since_date].any?) %>
+        <%= f.time_field :start_time, step: 1800, class: "form-control", errors: (event.errors[:start_time].any? || event.errors[:check_time].any?) %>
         <span class="d-flex align-items-center">&nbsp;～&nbsp;</span>
-        <%= f.time_field :end_time, step: 1800, class: "form-control" %>
-      <% else %>
-        <%= f.date_field :date, class: "form-control is-invalid" %>
-        <%= f.time_field :start_time, step: 1800, class: "form-control is-invalid" %>
-        <span class="d-flex align-items-center">&nbsp;～&nbsp;</span>
-        <%= f.time_field :end_time, step: 1800, class: "form-control is-invalid" %>
-      <% end %>
+        <%= f.time_field :end_time, step: 1800, class: "form-control", errors: (event.errors[:end_time].any? || event.errors[:check_time].any?) %>
     </div>
     <%= render "layouts/error_message", object: f.object, attribute: :date %>
     <%= render "layouts/error_message", object: f.object, attribute: :start_time %>
@@ -79,11 +60,7 @@
       <div class="input-group-prepend col-2 p-0">
         <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-location-dot mx-auto"></i></span>
       </div>
-      <% unless event.errors[:venue].any? %>
-        <%= f.text_field :venue, autofocus: true, class: "form-control", placeholder: "開催場所" %>
-      <% else %>
-        <%= f.text_field :venue, autofocus: true, class: "form-control is-invalid", placeholder: "開催場所" %>
-      <% end %>
+      <%= f.text_field :venue, autofocus: true, class: "form-control", errors: event.errors[:venue].any?, placeholder: "開催場所" %>
     </div>
     <%= render "layouts/error_message", object: f.object, attribute: :venue %>
 
@@ -91,11 +68,7 @@
       <div class="input-group-prepend col-2 p-0">
         <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-user-minus mx-auto"></i></span>
       </div>
-      <% unless event.errors[:min_people].any? || event.errors[:check_people].any? %>
-        <%= f.select :min_people, *[2..20], {prompt: "最低人数"}, {class: "form-control"} %>
-      <% else %>
-        <%= f.select :min_people, *[2..20], {prompt: "最低人数"}, {class: "form-control is-invalid"} %>
-      <% end %>
+      <%= f.select :min_people, *[2..20], {prompt: "最低人数"}, {class: "form-control", errors: (event.errors[:min_people].any? || event.errors[:check_people].any?)} %>
       <div class="input-group-append">
         <span class="input-group-text">人</span>
       </div>
@@ -107,11 +80,7 @@
       <div class="input-group-prepend col-2 p-0">
         <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-user-plus mx-auto"></i></span>
       </div>
-      <% unless event.errors[:max_people].any? || event.errors[:check_people].any? %>
-        <%= f.select :max_people, *[2..20], {prompt: "最大人数"}, {class: "form-control"} %>
-      <% else %>
-        <%= f.select :max_people, *[2..20], {prompt: "最大人数"}, {class: "form-control is-invalid"} %>
-      <% end %>
+      <%= f.select :max_people, *[2..20], {prompt: "最大人数"}, {class: "form-control", errors: (event.errors[:max_people].any? || event.errors[:check_people].any?)} %>
       <div class="input-group-append">
         <span class="input-group-text">人</span>
       </div>
