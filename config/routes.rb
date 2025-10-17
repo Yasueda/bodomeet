@@ -28,7 +28,7 @@ Rails.application.routes.draw do
         get :not_active
       end
       member do
-        get :calender_json, to: "users#show", defaults: { format: 'json' }
+        get :calender_json, to: "users#calender", defaults: { format: 'json' }
         get :followeds
         get :followers
       end

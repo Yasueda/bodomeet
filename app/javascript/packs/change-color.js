@@ -1,8 +1,8 @@
 document.addEventListener('turbolinks:load', function(){
-  var changeColorEls = document.querySelectorAll('.change-color');
+  const changeColorEls = document.querySelectorAll('.change-color');
   if (!changeColorEls) return;
   changeColorEls.forEach(function(element) {
-    var score = element.getAttribute('data-score');
+    let score = element.getAttribute('data-score');
 
     let color = "#000000";
     if(score > 0){

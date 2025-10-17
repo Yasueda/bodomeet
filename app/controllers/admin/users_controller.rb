@@ -10,10 +10,15 @@ class Admin::UsersController < ApplicationController
     @events = @user.events
     @participated_events = @user.participated_events
 
-    @since_events = @events.get_since.asc_datetime_order.first(@user_show_events_per)
-    @ago_events = @events.get_ago.desc_datetime_order.first(@user_show_events_per)
-    @since_participated_events = @participated_events.get_since.asc_datetime_order.first(@user_show_events_per)
-    @ago_participated_events = @participated_events.get_ago.desc_datetime_order.first(@user_show_events_per)
+    @since_events = @events.get_since.asc_datetime_order
+    @ago_events = @events.get_ago.desc_datetime_order
+    @since_participated_events = @participated_events.get_since.asc_datetime_order
+    @ago_participated_events = @participated_events.get_ago.desc_datetime_order
+    
+    @since_events = Kaminari.paginate_array(@since_events).page(params[:since_events_page]).per(@user_show_events_per)
+    @ago_events = Kaminari.paginate_array(@ago_events).page(params[:ago_events_page]).per(@user_show_events_per)
+    @since_participated_events = Kaminari.paginate_array(@since_participated_events).page(params[:since_participated_events_page]).per(@user_show_events_per)
+    @ago_participated_events = Kaminari.paginate_array(@ago_participated_events).page(params[:ago_participated_events_page]).per(@user_show_events_per)
   end
 
   def edit

@@ -17,11 +17,7 @@
       <div class="input-group-prepend col-2 p-0">
         <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-people-group mx-auto"></i></span>
       </div>
-      <% unless group.errors[:name].any? %>
-        <%= f.text_field :name, autofocus: true, class: "form-control", placeholder: "グループ名" %>
-      <% else %>
-        <%= f.text_field :name, autofocus: true, class: "form-control is-invalid", placeholder: "グループ名" %>
-      <% end %>
+      <%= f.text_field :name, autofocus: true, class: "form-control", errors: group.errors[:name].any?, placeholder: "グループ名" %>
     </div>
     <%= render "layouts/error_message", object: f.object, attribute: :name %>
 
@@ -29,11 +25,7 @@
       <div class="input-group-prepend col-2 p-0">
       <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-circle-info mx-auto"></i></span>
       </div>
-      <% unless group.errors[:introduction].any? %>
-        <%= f.text_area :introduction, class: "form-control", placeholder: "説明", size: "40x5" %>
-      <% else %>
-        <%= f.text_area :introduction, class: "form-control is-invalid", placeholder: "説明", size: "40x5" %>
-      <% end %>
+      <%= f.text_area :introduction, class: "form-control", errors: group.errors[:introduction].any?, placeholder: "説明", size: "40x5" %>
     </div>
     <%= render "layouts/error_message", object: f.object, attribute: :introduction %>
 

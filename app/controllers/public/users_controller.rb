@@ -14,27 +14,24 @@ class Public::UsersController < ApplicationController
     @events = @user.events.where(is_active: true)
     @participated_events = @user.participated_events.where(is_active: true)
 
-    @since_events = @events.get_since.asc_datetime_order.first(@user_show_events_per)
-    @ago_events = @events.get_ago.desc_datetime_order.first(@user_show_events_per)
-    @since_participated_events = @participated_events.get_since.asc_datetime_order.first(@user_show_events_per)
-    @ago_participated_events = @participated_events.get_ago.desc_datetime_order.first(@user_show_events_per)
-
-    # Kaminari-paginate用
-    # @since_events = @events.get_since.asc_datetime_order
-    # @ago_events = @events.get_ago.desc_datetime_order
-    # @since_participated_events = @participated_events.get_since.asc_datetime_order
-    # @ago_participated_events = @participated_events.get_ago.desc_datetime_order
+    @since_events = @events.get_since.asc_datetime_order
+    @ago_events = @events.get_ago.desc_datetime_order
+    @since_participated_events = @participated_events.get_since.asc_datetime_order
+    @ago_participated_events = @participated_events.get_ago.desc_datetime_order
     
+    @since_events = Kaminari.paginate_array(@since_events).page(params[:since_events_page]).per(@user_show_events_per)
+    @ago_events = Kaminari.paginate_array(@ago_events).page(params[:ago_events_page]).per(@user_show_events_per)
+    @since_participated_events = Kaminari.paginate_array(@since_participated_events).page(params[:since_participated_events_page]).per(@user_show_events_per)
+    @ago_participated_events = Kaminari.paginate_array(@ago_participated_events).page(params[:ago_participated_events_page]).per(@user_show_events_per)
+  end
+
+  # showアクションに実装するとpaginateとjsonが競合するためcalenderアクションを分割
+  def calender
+    @user = User.find(params[:id])
+    @events = @user.events.where(is_active: true)
+    @participated_events = @user.participated_events.where(is_active: true)
     @calendar_events = @events + @participated_events
-
-    # Kaminari-paginate用
-    # @since_events = Kaminari.paginate_array(@since_events).page(params[:page]).per(@user_show_events_per)
-    # @ago_events = Kaminari.paginate_array(@ago_events).page(params[:page]).per(@user_show_events_per)
-    # @since_participated_events = Kaminari.paginate_array(@since_participated_events).page(params[:page]).per(@user_show_events_per)
-    # @ago_participated_events = Kaminari.paginate_array(@ago_participated_events).page(params[:page]).per(@user_show_events_per)
-
     respond_to do |format|
-      format.html
       format.json { render 'calendar' }
     end
   end
@@ -90,9 +87,8 @@ class Public::UsersController < ApplicationController
   end
 
   # ユーザーアクセス制限用
-  # edit, update, withdraw, などでcurrent_userを指定しており、
+  # edit, update, withdraw, などでcurrent_userを指定しており
   # routesでも:idを含まない指定をしているので現状では不要
-  #
   # def ensure_correct_user
   #   user = User.find(params[:id])
   #   unless user == current_user
