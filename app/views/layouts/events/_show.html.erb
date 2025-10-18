@@ -45,7 +45,13 @@
         </tr>
         <tr> 
           <td class="text-center"><i class="fas fa-lg fa-location-dot mx-auto"></i></td>
-          <td><%= event.venue %></td>
+          <td>
+            <%= event.venue %>
+            <details>
+              <summary>Google Map</summary>
+              <div id="map" data-venue="<%= event.venue %>"></div>
+            </detalis>
+          </td>
         </tr>
         <tr>
           <td class="text-center"><i class="fas fa-lg fa-circle-user mx-auto"></i></td>

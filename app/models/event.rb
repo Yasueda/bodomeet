@@ -26,6 +26,9 @@ class Event < ApplicationRecord
   validate  :check_since_date
   validate  :check_time
 
+  geocoded_by :venue
+  after_validation :geocode
+
   scope :asc_date_order, -> { order(date: :asc)}
   scope :desc_date_order, -> { order(date: :desc) }
 
