@@ -13,23 +13,36 @@
       <%= user.name %>
     </div>
 
-    <div class="d-flex justify-content-around">
-      <% if admin_signed_in? %>
+    <% if admin_signed_in? %>
+      <div class="d-flex justify-content-around">
         <%= link_to followeds_admin_user_path(user) do %>
           <div>フォロー：<%= user.followed_users.count %></div>
         <% end %>
         <%= link_to followers_admin_user_path(user) do %>
           <div>フォロワー：<%= user.follower_users.count %></div>
         <% end %>
-      <% elsif user_signed_in? %>
+      </div>
+      <div>
+        <%= link_to groups_admin_user_path(user.id), class: "btn btn-sm border border-secondary rounded mt-3" do %>
+          <i class="fas fa-lg fa-user-group"></i>参加グループ
+        <% end %>
+      </div>
+    <% elsif user_signed_in? %>
+      <div class="d-flex justify-content-around">
         <%= link_to followeds_user_path(user) do %>
           <div>フォロー：<%= user.followed_users.where(is_active: true).count %></div>
         <% end %>
         <%= link_to followers_user_path(user) do %>
           <div>フォロワー：<%= user.follower_users.where(is_active: true).count %></div>
         <% end %>
-      <% end %>
-    </div>
+      </div>
+      <div>
+        <%= link_to groups_user_path(user.id), class: "btn btn-sm border border-secondary rounded mt-3" do %>
+          <i class="fas fa-lg fa-user-group"></i>参加グループ
+        <% end %>
+      </div>
+    <% end %>
+
     <% if user_signed_in? && current_id?(user.id) %>
       <div>
         <%= link_to favorite_events_path, class: "btn btn-sm border border-secondary rounded mt-3" do %>
