@@ -20,3 +20,4 @@ import "./calender.js";
 import "./change-color.js";
 import "./validate.js"
 import "./flash.js";
+import "./map.js";

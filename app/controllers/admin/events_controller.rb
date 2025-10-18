@@ -14,6 +14,7 @@ class Admin::EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    gon.geocodeing_api_key = ENV['Geocoding_API_Key']
   end
 
   def edit

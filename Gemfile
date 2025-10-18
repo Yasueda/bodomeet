@@ -59,6 +59,7 @@ gem 'active_storage_validations'
 gem 'devise'
 gem 'jquery-rails'
 gem 'dotenv-rails'
+gem 'gon'
 gem 'kaminari','~> 1.2.1'
 gem 'bootstrap4-kaminari-views'
 gem 'faker'
@@ -71,3 +72,5 @@ end
 gem "net-smtp"
 gem "net-pop"
 gem "net-imap"
+
+gem "geocoder"

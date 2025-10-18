@@ -23,6 +23,7 @@ class Public::EventsController < ApplicationController
     @event = Event.find(params[:id])
     @comment = Comment.new
     @comments = @event.comments.where(is_active: true)
+    gon.geocodeing_api_key = ENV['Geocoding_API_Key']
   end
 
   def create
