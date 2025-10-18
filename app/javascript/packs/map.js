@@ -31,7 +31,8 @@ $(document).on('turbolinks:load', function () {
         map: map
       });
     } else {
-      console.log('Error fetching or processing event.venue');
+      mapEls.textContent = "※場所情報からマップを取得できませんでした";
+      $(mapEls).addClass('d-flex align-items-center justify-content-center text-danger bg-light');
     };
   }
 

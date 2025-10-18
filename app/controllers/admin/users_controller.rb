@@ -58,6 +58,14 @@ class Admin::UsersController < ApplicationController
     @users = Kaminari.paginate_array(@users).page(params[:page]).per(@users_per)
   end
 
+  def groups
+    @user = User.find(params[:id])
+    @owner_groups = User.find(params[:id]).groups
+    @owner_groups = Kaminari.paginate_array(@owner_groups).page(params[:owner_groups_page]).per(@user_groups_per)
+    @member_groups = User.find(params[:id]).member_groups
+    @member_groups = Kaminari.paginate_array(@member_groups).page(params[:member_groups_page]).per(@user_groups_per)
+  end
+
   def destroy
     user = User.find(params[:id])
     user.destroy

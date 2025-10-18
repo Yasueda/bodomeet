@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(version: 2025_09_28_135422) do
   create_table "members", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "group_id", null: false
+    t.boolean "is_approval", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["group_id"], name: "index_members_on_group_id"
