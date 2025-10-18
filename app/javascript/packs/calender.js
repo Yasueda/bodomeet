@@ -3,10 +3,10 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from "@fullcalendar/list";
 
 document.addEventListener('turbolinks:load', function() {
-  var calendarEl = document.getElementById('calendar');
-  if (!calendarEl) return;
-  const userId = calendarEl.dataset.userId;
-  var calendar = new Calendar(calendarEl, {
+  var calendarEls = document.getElementById('calendar');
+  if (!calendarEls) return;
+  const userId = calendarEls.dataset.userId;
+  var calendar = new Calendar(calendarEls, {
     plugins: [dayGridPlugin, listPlugin],
     initialView: 'dayGridMonth',
     locale: "jp",

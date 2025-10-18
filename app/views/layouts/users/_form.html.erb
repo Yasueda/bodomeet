@@ -3,11 +3,7 @@
     <div class="input-group-prepend col-2 p-0">
       <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-image mx-auto"></i></span>
     </div>
-    <% unless user.errors[:user_image].any? %>
-      <%= f.file_field :user_image, class: "form-control p-1 align-items-center", accept: "image/*" %>
-    <% else %>
-      <%= f.file_field :user_image, class: "form-control p-1 align-items-center is-invalid", accept: "image/*" %>
-    <% end %>
+    <%= f.file_field :user_image, class: "form-control p-1 align-items-center", errors: user.errors[:user_image].any?, accept: "image/*" %>
   </div>
   <% if user.errors[:user_image].any? %>
     <%= render "layouts/error_message", object: f.object, attribute: :user_image %>
@@ -19,11 +15,7 @@
     <div class="input-group-prepend col-2 p-0">
       <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-user mx-auto"></i></span>
     </div>
-    <% unless user.errors[:name].any? %>
-      <%= f.text_field :name, autofocus: true, class: "form-control", placeholder: "ユーザー名" %>
-    <% else %>
-      <%= f.text_field :name, autofocus: true, class: "form-control is-invalid", placeholder: "ユーザー名" %>
-    <% end %>
+    <%= f.text_field :name, autofocus: true, class: "form-control", errors: user.errors[:name].any?, placeholder: "ユーザー名" %>
   </div>
   <%= render "layouts/error_message", object: f.object, attribute: :name %>
 
@@ -31,11 +23,7 @@
     <div class="input-group-prepend col-2 p-0">
       <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-envelope mx-auto"></i></span>
     </div>
-    <% unless user.errors[:email].any? %>
-      <%= f.text_field :email, autofocus: true, class: "form-control", placeholder: "メールアドレス" %>
-    <% else %>
-      <%= f.text_field :email, autofocus: true, class: "form-control is-invalid", placeholder: "メールアドレス" %>
-    <% end %>
+    <%= f.text_field :email, autofocus: true, class: "form-control", errors: user.errors[:email].any?, placeholder: "メールアドレス" %>
   </div>
   <%= render "layouts/error_message", object: f.object, attribute: :email %>
 
@@ -43,11 +31,7 @@
     <div class="input-group-prepend col-2 p-0">
       <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-circle-info mx-auto"></i></span>
     </div>
-    <% unless user.errors[:introduction].any? %>
-      <%= f.text_area :introduction, class: "form-control", placeholder: "自己紹介", size: "40x5" %>
-    <% else %>
-      <%= f.text_area :introduction, class: "form-control is-invalid", placeholder: "自己紹介", size: "40x5" %>
-    <% end %>
+    <%= f.text_area :introduction, class: "form-control", errors: user.errors[:introduction].any?, placeholder: "自己紹介", size: "40x5" %>
   </div>
   <%= render "layouts/error_message", object: f.object, attribute: :introduction %>
 

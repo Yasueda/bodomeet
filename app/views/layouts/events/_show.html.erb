@@ -45,7 +45,13 @@
         </tr>
         <tr> 
           <td class="text-center"><i class="fas fa-lg fa-location-dot mx-auto"></i></td>
-          <td><%= event.venue %></td>
+          <td>
+            <%= event.venue %>
+            <details>
+              <summary>Google Map</summary>
+              <div id="map" data-venue="<%= event.venue %>"></div>
+            </detalis>
+          </td>
         </tr>
         <tr>
           <td class="text-center"><i class="fas fa-lg fa-circle-user mx-auto"></i></td>
@@ -97,11 +103,7 @@
   <% if user_signed_in? %>
     <%= form_with model: [event, comment], local: true, class: "px-1" do |f| %>
       <div class="input-group ">
-        <% unless comment.errors[:content].any? %>
-          <%= f.text_field :content, class: "form-control", placeholder: "※コメントは100文字以内" %>
-        <% else %>
-          <%= f.text_field :content, class: "form-control is-invalid", placeholder: "※コメントは100文字以内" %>
-        <% end %>
+        <%= f.text_field :content, class: "form-control", errors: comment.errors[:content].any?, placeholder: "※コメントは100文字以内" %>
         <div class="input-group-append" aria-hidden="true">
           <%= button_tag type: "submit", class: "btn btn-success" do %>
             <i class="fas fa-lg fa-pen"></i>

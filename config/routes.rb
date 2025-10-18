@@ -28,9 +28,10 @@ Rails.application.routes.draw do
         get :not_active
       end
       member do
-        get :calender_json, to: "users#show", defaults: { format: 'json' }
+        get :calender_json, to: "users#calender", defaults: { format: 'json' }
         get :followeds
         get :followers
+        get :groups
       end
       resources :follows, only: [:create, :destroy]
     end
@@ -57,6 +58,7 @@ Rails.application.routes.draw do
         patch :active_switch
         get :followeds
         get :followers
+        get :groups
       end
       collection do
         delete :destroy_all

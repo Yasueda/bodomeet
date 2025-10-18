@@ -17,4 +17,7 @@ import "popper.js";
 import "bootstrap";
 import "../stylesheets/application";
 import "./calender.js";
-import "./change-color";
+import "./change-color.js";
+import "./validate.js"
+import "./flash.js";
+import "./map.js";

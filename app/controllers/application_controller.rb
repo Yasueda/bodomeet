@@ -7,5 +7,6 @@ class ApplicationController < ActionController::Base
     @comments_per = 10
     @groups_per = 8
     @user_show_events_per = 5
+    @user_groups_per = 5
   end
 end
