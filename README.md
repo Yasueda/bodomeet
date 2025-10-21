@@ -28,8 +28,8 @@
 ​
 ## 設計書
 ### [各種設計書](./app/assets/design_document/)
- - [UIFrows](./app/assets/design_document/UIFlows)
- - [ER図](./app/assets/design_document/Entity_Relationship_Diagram)
+ - [UIFrows](./app/assets/design_document/UIFlows)　【[.jpg](./app/assets/design_document/UIFlows.jpg)】
+ - [ER図](./app/assets/design_document/Entity_Relationship_Diagram)　【[.jpg](./app/assets/design_document/Entity_Relationship_Diagram.jpg)】
  - [テーブル定義書](./app/assets/design_document/Database_Schema_Document.xlsx)
  - [アプリケーション詳細設計書](./app/assets/design_document/Application_Detail_Design.xlsx)
 
