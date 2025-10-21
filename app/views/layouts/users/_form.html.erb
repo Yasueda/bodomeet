@@ -15,7 +15,7 @@
     <div class="input-group-prepend col-2 p-0">
       <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-user mx-auto"></i></span>
     </div>
-    <%= f.text_field :name, autofocus: true, class: "form-control", errors: user.errors[:name].any?, placeholder: "ユーザー名" %>
+    <%= f.text_field :name, autofocus: true, class: "form-control", errors: user.errors[:name].any?, placeholder: "ユーザー名（2~20文字）" %>
   </div>
   <%= render "layouts/error_message", object: f.object, attribute: :name %>
 
@@ -31,7 +31,7 @@
     <div class="input-group-prepend col-2 p-0">
       <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-circle-info mx-auto"></i></span>
     </div>
-    <%= f.text_area :introduction, class: "form-control", errors: user.errors[:introduction].any?, placeholder: "自己紹介", size: "40x5" %>
+    <%= f.text_area :introduction, class: "form-control", errors: user.errors[:introduction].any?, placeholder: "自己紹介（100文字以内）", size: "40x5" %>
   </div>
   <%= render "layouts/error_message", object: f.object, attribute: :introduction %>
 

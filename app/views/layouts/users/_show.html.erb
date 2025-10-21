@@ -17,7 +17,7 @@
   <% elsif user_signed_in? && current_id?(user.id) %>
     <div class="ml-auto p-2 m-1">
       <%= link_to "編集", edit_users_path, class:"btn btn-sm btn-info m-1" %>
-      <%= link_to "退会", unsubcribe_users_path, class: "btn btn-sm btn-danger m-1" %>
+      <%= link_to "退会", unsubscribe_users_path, class: "btn btn-sm btn-danger m-1" %>
     </div>
   <% end %>
 </div>

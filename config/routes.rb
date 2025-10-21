@@ -23,12 +23,12 @@ Rails.application.routes.draw do
           get :edit
           patch "/", to: "users#update", as: "update"
         end
-        get :unsubcribe
+        get :unsubscribe
         patch :withdraw
         get :not_active
       end
       member do
-        get :calender_json, to: "users#calender", defaults: { format: 'json' }
+        get :calendar_json, to: "users#calendar", defaults: { format: 'json' }
         get :followeds
         get :followers
         get :groups

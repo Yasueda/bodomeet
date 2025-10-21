@@ -33,7 +33,7 @@
           <div>フォロー：<%= user.followed_users.where(is_active: true).count %></div>
         <% end %>
         <%= link_to followers_user_path(user) do %>
-          <div>フォロワー：<%= user.follower_users.where(is_active: true).count %></div>
+          <div>フォロワー：<span id="follower-num"><%= user.follower_users.where(is_active: true).count %></span></div>
         <% end %>
       </div>
       <div>
