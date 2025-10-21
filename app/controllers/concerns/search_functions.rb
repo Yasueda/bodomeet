@@ -21,17 +21,14 @@ module SearchFunctions
     unless searches.empty?
       case table
       when User.name
-        searches = searches.order(name: :asc)
-        searches = Kaminari.paginate_array(searches).page(params[:page]).per(@users_per)
+        searches = searches.order(name: :asc).page(params[:page]).per(@users_per)
       when Event.name
         searches = searches.asc_datetime_order
         searches = Kaminari.paginate_array(searches).page(params[:page]).per(@events_per)
       when Comment.name
-        searches.order(create_at: :desc)
-        searches = Kaminari.paginate_array(searches).page(params[:page]).per(@comments_per)
+        searches.order(create_at: :desc).page(params[:page]).per(@comments_per)
       when Group.name
-        searches.order(name: :asc)
-        searches = Kaminari.paginate_array(searches).page(params[:page]).per(@groups_per)
+        searches.order(name: :asc).page(params[:page]).per(@groups_per)
       end
     end
 

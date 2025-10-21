@@ -1,1 +1,7 @@
-$("#user<%= @user.id %>_follow").html("<%= j(render "layouts/users/follow", user: @user) %>");
+$(function(){
+  $("#user<%= @user.id %>_follow").html("<%= j(render "layouts/users/follow", user: @user) %>");
+
+  const followerNumEls = document.getElementById('follower-num');
+  if(!followerNumEls) return;
+  followerNumEls.innerText = '<%= @user.follower_users.where(is_active: true).count %>';
+});
