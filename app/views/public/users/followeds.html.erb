@@ -1,7 +1,6 @@
 <div class="d-flex align-items-center">
   <h2 class="heading col-lg-8 col-md-6">
-    <%= User.find(params[:id]).name %> さんの
-    フォロー（<%= @users.present? ? @users.total_count : 0 %>）
+    <%= User.find(params[:id]).name %> さんのフォロー（<%= @users.present? ? @users.total_count : 0 %>）
   </h2>
 </div>
 
