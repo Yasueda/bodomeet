@@ -1,8 +1,7 @@
 class Admin::UsersController < ApplicationController
   before_action :authenticate_admin!
   def index
-    @users = User.all.order(name: :asc)
-    @users = Kaminari.paginate_array(@users).page(params[:page]).per(@users_per)
+    @users = User.all.order(name: :asc).page(params[:page]).per(@users_per)
   end
 
   def show
@@ -49,21 +48,17 @@ class Admin::UsersController < ApplicationController
   end
 
   def followeds
-    @users = User.find(params[:id]).followed_users.order(name: :asc)
-    @users = Kaminari.paginate_array(@users).page(params[:page]).per(@users_per)
+    @users = User.find(params[:id]).followed_users.order(name: :asc).page(params[:page]).per(@users_per)
   end
 
   def followers
-    @users = User.find(params[:id]).follower_users.order(name: :asc)
-    @users = Kaminari.paginate_array(@users).page(params[:page]).per(@users_per)
+    @users = User.find(params[:id]).follower_users.order(name: :asc).page(params[:page]).per(@users_per)
   end
 
   def groups
     @user = User.find(params[:id])
-    @owner_groups = User.find(params[:id]).groups
-    @owner_groups = Kaminari.paginate_array(@owner_groups).page(params[:owner_groups_page]).per(@user_groups_per)
-    @member_groups = User.find(params[:id]).member_groups
-    @member_groups = Kaminari.paginate_array(@member_groups).page(params[:member_groups_page]).per(@user_groups_per)
+    @owner_groups = User.find(params[:id]).groups.order(name: :asc).page(params[:owner_groups_page]).per(@user_groups_per)
+    @member_groups = User.find(params[:id]).member_groups.order(name: :asc).page(params[:member_groups_page]).per(@user_groups_per)
   end
 
   def destroy

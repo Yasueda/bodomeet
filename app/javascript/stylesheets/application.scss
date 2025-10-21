@@ -1,7 +1,12 @@
 @use '~bootstrap/scss/bootstrap';
 
 .cover-image {
-  object-fit: cover;
+  object-fit: contain;
+}
+
+.card-img-top {
+  width: 100%;
+  aspect-ratio: 5 / 3;
 }
 
 .heading::after {

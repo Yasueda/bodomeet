@@ -29,7 +29,7 @@
       <div class="input-group-prepend col-2 p-0">
         <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-dice-five mx-auto"></i></span>
       </div>
-      <%= f.text_field :name, autofocus: true, class: "form-control", errors: event.errors[:name].any?, placeholder: "イベント名" %>
+      <%= f.text_field :name, autofocus: true, class: "form-control", errors: event.errors[:name].any?, placeholder: "イベント名（30文字以内）" %>
     </div>
     <%= render "layouts/error_message", object: f.object, attribute: :name %>
 
@@ -37,7 +37,7 @@
       <div class="input-group-prepend col-2 p-0">
       <span class="input-group-text w-100" aria-hidden="true"><i class="fas fa-lg fa-circle-info mx-auto"></i></span>
       </div>
-      <%= f.text_area :introduction, class: "form-control", errors: event.errors[:introduction].any?, placeholder: "説明", size: "40x5" %>
+      <%= f.text_area :introduction, class: "form-control", errors: event.errors[:introduction].any?, placeholder: "説明（200文字以内）", size: "40x5" %>
     </div>
     <%= render "layouts/error_message", object: f.object, attribute: :introduction %>
 
