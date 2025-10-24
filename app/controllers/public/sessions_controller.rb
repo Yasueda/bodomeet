@@ -37,7 +37,7 @@ class Public::SessionsController < Devise::SessionsController
   end
 
   def after_sign_out_path_for(resource)
-    about_path
+    root_path
   end
 
   def is_active?

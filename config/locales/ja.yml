@@ -209,7 +209,7 @@ ja:
     venue: 場所
     min_people: 最小人数
     max_people: 最大人数
-    check_since_date: 24時間後以降
+    check_since_date: 翌日以降
     check_time: 開始時間と終了時間
     check_people: 最小人数と最大人数
     event_image: 画像

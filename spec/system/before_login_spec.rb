@@ -3,7 +3,7 @@ describe 'ログインしていない場合' do
     visit root_path
   end
 
-  context '表示内容の確認' do
+  context 'ヘッダー表示内容の確認' do
     it 'ぼどみぃとリンクが表示される: 左上から1番目のリンクが「ぼどみぃと」である（サイトタイトル）' do
       home_link = find_all('a')[0].text
       expect(home_link).to match("ぼどみぃと")
