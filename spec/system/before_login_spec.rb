@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe 'ログインしていない場合' do
   before do
     visit root_path

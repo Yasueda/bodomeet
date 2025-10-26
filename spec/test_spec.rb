@@ -3,12 +3,15 @@
 require 'rails_helper'
 
 describe 'トップ画面(root_path)のテスト' do
+  let(:user) { create(:user) }
   before do
     visit root_path
   end
 
   context '表示の確認' do
+
     it 'root_pathが"/"であるか' do
+      p user.name
       expect(current_path).to eq '/'
     end
     it 'rootのリンクが存在するか' do
