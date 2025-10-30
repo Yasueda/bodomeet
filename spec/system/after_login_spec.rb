@@ -168,6 +168,9 @@ describe 'ログインしている場合' do
       it 'URLが正しい' do
         expect(current_path).to eq '/events/' + event.id.to_s + '/edit'
       end
+      it '画像編集フォームが表示される' do
+        expect(page).to have_field 'event[event_image]'
+      end
       it 'name編集フォームが表示される' do
         expect(page).to have_field 'event[name]', with: event.name
       end
@@ -211,6 +214,129 @@ describe 'ログインしている場合' do
       end
       it 'リダイレクト先が、更新したイベントの詳細画面になっている' do
         expect(current_path).to eq '/events/' + event.id.to_s
+      end
+    end
+  end
+
+  describe 'ユーザー一覧画面のテスト' do
+    before do
+      visit users_path
+    end
+
+    context '表示内容の確認' do
+      it 'URLが正しい' do
+        expect(current_path).to eq '/users'
+      end
+      it '自分と他人の画像が表示される: 2つの画像が表示される' do
+        expect(all('img').size).to eq(2)
+      end
+      it '自分と他人の名前がそれぞれ表示される' do
+        expect(page).to have_content user.name
+        expect(page).to have_content other_user.name
+      end
+      it '自分と他人の詳細リンクがそれぞれ表示される' do
+        expect(page).to have_link user.name, href: user_path(user)
+        expect(page).to have_link other_user.name, href: user_path(other_user)
+      end
+    end
+  end
+
+  describe '自分のユーザー詳細画面のテスト' do
+    before do
+      visit user_path(user)
+    end
+
+    context '表示の確認' do
+      it 'URLが正しい' do
+        expect(current_path).to eq '/users/' + user.id.to_s
+      end
+    end
+
+    context '自身の紹介などの確認' do
+      it '自分の名前と紹介文が表示される' do
+        expect(page).to have_content user.name
+        expect(page).to have_content user.introduction
+      end
+      it '自分のユーザー編集画面へのリンクが存在する' do
+        expect(page).to have_link '編集', href: edit_users_path
+      end
+      it '自分の退会画面へのリンクが存在する' do
+        expect(page).to have_link '退会', href: unsubscribe_users_path
+      end
+      it '自分のフォローへのリンクが存在する' do
+        expect(page).to have_link 'フォロー', href: followeds_user_path(user)
+      end
+      it '自分のフォロワーへのリンクが存在する' do
+        expect(page).to have_link 'フォロワー', href: followers_user_path(user)
+      end
+      it '自分の参加グループへのリンクが存在する' do
+        expect(page).to have_link '参加グループ', href: groups_user_path(user)
+      end
+      it '自分のお気に入りイベントへのリンクが存在する' do
+        expect(page).to have_link 'お気に入りイベント', href: favorite_events_path
+      end
+    end
+
+    context 'イベント表示の確認' do
+      it '新規イベント作成へのリンクが存在する' do
+        expect(page).to have_link '新規作成', href: new_event_path
+      end
+      it '自分の投稿イベントのnameが表示され、リンクが正しい' do
+        expect(page).to have_link event.name, href: event_path(event)
+      end
+    end
+  end
+
+  describe '自分のユーザー情報編集画面のテスト' do
+    before do
+      visit edit_users_path
+    end
+
+    context '表示の確認' do
+      it 'URLが正しい' do
+        expect(current_path).to eq '/users/information/edit'
+      end
+      it '画像編集フォームが表示される' do
+        expect(page).to have_field 'user[user_image]'
+      end
+      it '名前編集フォームに自分の名前が表示される' do
+        expect(page).to have_field 'user[name]', with: user.name
+      end
+      it 'メールアドレス編集フォームに自分のメールアドレスが表示される' do
+        expect(page).to have_field 'user[email]', with: user.email
+      end
+      it '自己紹介編集フォームに自分の自己紹介が表示される' do
+        expect(page).to have_field 'user[introduction]', with: user.introduction
+      end
+      it '更新ボタンが存在する' do
+        expect(page).to have_button '更新'
+      end
+    end
+
+    context '更新成功のテスト' do
+      before do
+        @user_old_name = user.name
+        @user_old_email = user.email
+        @user_old_introduction = user.introduction
+        fill_in 'user[name]', with: Faker::Lorem.characters(number: 10)
+        fill_in 'user[email]', with: Faker::Internet.email
+        fill_in 'user[introduction]', with: Faker::Lorem.characters(number: 20)
+        expect(user.user_image).to be_attached
+        click_button '更新'
+        save_page
+      end
+
+      it 'nameが正しく更新される' do
+        expect(user.reload.name).not_to eq @user_old_name
+      end
+      it 'emailが正しく更新される' do
+        expect(user.reload.email).not_to eq @user_old_email
+      end
+      it 'introductionが正しく更新される' do
+        expect(user.reload.introduction).not_to eq @user_old_introduction
+      end
+      it 'リダイレクト先が、自分のユーザー詳細画面になっている' do
+        expect(current_path).to eq '/users/' + user.id.to_s
       end
     end
   end
