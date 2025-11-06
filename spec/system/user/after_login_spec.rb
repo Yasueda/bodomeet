@@ -50,7 +50,7 @@ describe 'ログインしている場合' do
         click_link users_link
         is_expected.to eq '/users'
       end
-      it 'イベントを押すと、投稿一覧画面に遷移する' do
+      it 'イベントを押すと、イベント一覧画面に遷移する' do
         events_link = find_all('a')[3].text
         events_link = events_link.gsub(/\n/, '').gsub(/\A\s*/, '').gsub(/\s*\Z/, '')
         click_link events_link
