@@ -201,8 +201,20 @@ describe 'ログインしている場合' do
       before do
         @event_old_name = event.name
         @evnet_old_introduction = event.introduction
+        @event_old_date = event.date
+        @event_old_start_time = event.start_time
+        @event_old_end_time = event.end_time
+        @event_old_venue = event.venue
+        @event_old_min_people = event.min_people
+        @event_old_max_people = event.max_people
         fill_in 'event[name]', with: Faker::Lorem.characters(number: 10)
         fill_in 'event[introduction]', with: Faker::Lorem.characters(number: 20)
+        fill_in 'event[date]', with: Faker::Date.in_date_period(month: (Time.current.month + 1))
+        fill_in 'event[start_time]', with: '12:00'
+        fill_in 'event[end_time]', with: '17:00'
+        fill_in 'event[venue]', with: 'YY県YY市YY町YY-YY-YY'
+        select 2, from: 'event[min_people]'
+        select 6, from: 'event[max_people]'
         click_button '決定'
       end
 
@@ -211,6 +223,24 @@ describe 'ログインしている場合' do
       end
       it 'introductionが正しく更新される' do
         expect(event.reload.introduction).not_to eq @evnet_old_introduction
+      end
+      it 'dateが正しく更新される' do
+        expect(event.reload.date).not_to eq @event_old_date
+      end
+      it 'start_timeが正しく更新される' do
+        expect(event.reload.start_time).not_to eq @event_old_start_time
+      end
+      it 'end_timeが正しく更新される' do
+        expect(event.reload.end_time).not_to eq @event_old_end_time
+      end
+      it 'venueが正しく更新される' do
+        expect(event.reload.venue).not_to eq @event_old_venue
+      end
+      it 'min_peopleが正しく更新される' do
+        expect(event.reload.min_people).not_to eq @event_old_min_people
+      end
+      it 'max_peopleが正しく更新される' do
+        expect(event.reload.max_people).not_to eq @event_old_max_people
       end
       it 'リダイレクト先が、更新したイベントの詳細画面になっている' do
         expect(current_path).to eq '/events/' + event.id.to_s
