@@ -78,11 +78,18 @@ describe '管理者ログインしている場合' do
       it 'URLが正しい' do
         expect(current_path).to eq '/admin/events'
       end
-      it 'イベントの名前のリンク先が正しい' do
+      it 'イベントの画像が表示される: 2つの画像が表示される' do
+        expect(all('img').size).to eq(2)
+      end
+      it 'イベントの名前がそれぞれ表示される' do
+        expect(page).to have_content event.name
+        expect(page).to have_content other_event.name
+      end
+      it 'イベントの詳細リンク先がそれぞれ表示される' do
         expect(page).to have_link event.name, href: admin_event_path(event)
         expect(page).to have_link other_event.name, href: admin_event_path(other_event)
       end
-      it 'イベントの有効/無効リンクが存在する' do
+      it 'イベントの有効/無効リンクがそれぞれ存在する' do
         expect(page).to have_link '', href: active_switch_admin_event_path(event)
         expect(page).to have_link '', href: active_switch_admin_event_path(other_event)
       end
@@ -284,6 +291,163 @@ describe '管理者ログインしている場合' do
     end
   end
 
+  describe 'ユーザー一覧画面のテスト' do
+    before do
+      visit admin_users_path
+    end
+
+    context '表示内容の確認' do
+      it 'URLが正しい' do
+        expect(current_path).to eq '/admin/users'
+      end
+      it 'ユーザーの画像が表示される: 2つの画像が表示される' do
+        expect(all('img').size).to eq(2)
+      end
+      it 'ユーザーの名前がそれぞれ表示される' do
+        expect(page).to have_content user.name
+        expect(page).to have_content other_user.name
+      end
+      it 'ユーザーの詳細リンクがそれぞれ表示される' do
+        expect(page).to have_link user.name, href: admin_user_path(user)
+        expect(page).to have_link other_user.name, href: admin_user_path(other_user)
+      end
+      it 'ユーザーの有効/無効リンクがそれぞれ存在する' do
+        expect(page).to have_link '', href: active_switch_admin_user_path(user)
+        expect(page).to have_link '', href: active_switch_admin_user_path(other_user)
+      end
+      it 'ユーザーの全削除リンクが存在する' do
+        expect(page).to have_link '全削除', href: destroy_all_admin_users_path
+      end
+    end
+  end
+
+  describe 'ユーザー詳細画面のテスト' do
+    before do
+      visit admin_user_path(user)
+    end
+
+    context '表示の確認' do
+      it 'URLが正しい' do
+        expect(current_path).to eq '/admin/users/' + user.id.to_s
+      end
+    end
+
+    context 'ユーザー情報の確認' do
+      it 'ユーザーの名前と紹介文が表示される' do
+        expect(page).to have_content user.name
+        expect(page).to have_content user.introduction
+      end
+      it 'ユーザー編集画面へのリンクが存在する' do
+        expect(page).to have_link '編集', href: edit_admin_user_path(user)
+      end
+      it 'ユーザーのフォローへのリンクが存在する' do
+        expect(page).to have_link 'フォロー', href: followeds_admin_user_path(user)
+      end
+      it 'ユーザーのフォロワーへのリンクが存在する' do
+        expect(page).to have_link 'フォロワー', href: followers_admin_user_path(user)
+      end
+      it 'ユーザーの参加グループへのリンクが存在する' do
+        expect(page).to have_link '参加グループ', href: groups_admin_user_path(user)
+      end
+      it 'ユーザーの有効/退会リンクが存在する' do
+        expect(page).to have_link '', href: active_switch_admin_user_path(user)
+      end
+    end
+
+    context 'ユーザー情報編集画面のテスト' do
+      before do
+        visit edit_admin_user_path(user)
+      end
+
+      context '表示の確認' do
+        it 'URLが正しい' do
+          expect(current_path).to eq '/admin/users/' + user.id.to_s + '/edit'
+        end
+        it '画像編集フォームが表示される' do
+          expect(page).to have_field 'user[user_image]'
+        end
+        it '名前編集フォームにユーザーの名前が表示される' do
+          expect(page).to have_field 'user[name]', with: user.name
+        end
+        it 'メールアドレス編集フォームにユーザーのメールアドレスが表示される' do
+          expect(page).to have_field 'user[email]', with: user.email
+        end
+        it '自己紹介編集フォームにユーザーの自己紹介が表示される' do
+          expect(page).to have_field 'user[introduction]', with: user.introduction
+        end
+        context '有効/無効ラジオボタンが表示される' do
+          it '有効ボタンがセレクトされている（デフォルト）' do
+            expect(page).to have_checked_field '有効'
+          end
+          it '退会ボタンがセレクトされていない（デフォルト）' do
+            expect(page).to have_unchecked_field '退会'
+          end
+        end
+        it '更新ボタンが存在する' do
+          expect(page).to have_button '更新'
+        end
+      end
+
+      context '更新成功のテスト' do
+        before do
+          @user_old_name = user.name
+          @user_old_email = user.email
+          @user_old_introduction = user.introduction
+          fill_in 'user[name]', with: Faker::Lorem.characters(number: 10)
+          fill_in 'user[email]', with: Faker::Internet.email
+          fill_in 'user[introduction]', with: Faker::Lorem.characters(number: 20)
+          expect(user.user_image).to be_attached
+          click_button '更新'
+          save_page
+        end
+  
+        it 'nameが正しく更新される' do
+          expect(user.reload.name).not_to eq @user_old_name
+        end
+        it 'emailが正しく更新される' do
+          expect(user.reload.email).not_to eq @user_old_email
+        end
+        it 'introductionが正しく更新される' do
+          expect(user.reload.introduction).not_to eq @user_old_introduction
+        end
+        it 'リダイレクト先が、ユーザー詳細画面になっている' do
+          expect(current_path).to eq '/admin/users/' + user.id.to_s
+        end
+      end
+
+      context 'ユーザー無効化のテスト' do
+        before do
+          choose '退会'
+          click_button '更新'
+        end
+  
+        it '有効なユーザーは存在しない' do
+          expect(User.where(id: user.id, is_active: true).count).to eq 0
+        end
+        it '無効なユーザーは存在する' do
+          expect(User.where(id: user.id, is_active: false).count).to eq 1
+        end
+      end
+  
+      context 'ユーザー有効化のテスト' do
+        before do
+          choose '退会'
+          click_button '更新'
+          visit edit_admin_user_path(user)
+          choose '有効'
+          click_button '更新'
+        end
+  
+        it '有効なユーザーは存在する' do
+          expect(User.where(id: user.id, is_active: true).count).to eq 1
+        end
+        it '無効なユーザーは存在しない' do
+          expect(User.where(id: user.id, is_active: false).count).to eq 0
+        end
+      end
+
+    end
+  end
 end
 
 describe '管理者ログアウトのテスト' do

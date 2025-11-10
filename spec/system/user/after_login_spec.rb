@@ -67,9 +67,16 @@ describe 'ログインしている場合' do
       it 'URLが正しい' do
         expect(current_path).to eq '/events'
       end
-      it 'イベントの名前のリンク先が正しい' do
-        expect(page).to have_link event.name, href: event_path(event)
-        expect(page).to have_link other_event.name, href: event_path(other_event)
+      it 'イベントの画像が表示される: 2つの画像が表示される' do
+        expect(all('img').size).to eq(2)
+      end
+      it 'イベントの名前がそれぞれ表示される' do
+        expect(page).to have_content event.name
+        expect(page).to have_content other_event.name
+      end
+      it 'イベントの詳細リンク先がそれぞれ表示される' do
+        expect(page).to have_link event.name, href: admin_event_path(event)
+        expect(page).to have_link other_event.name, href: admin_event_path(other_event)
       end
     end
   end
@@ -282,7 +289,7 @@ describe 'ログインしている場合' do
       end
     end
 
-    context '自身の紹介などの確認' do
+    context '自分のユーザー情報の確認' do
       it '自分の名前と紹介文が表示される' do
         expect(page).to have_content user.name
         expect(page).to have_content user.introduction
