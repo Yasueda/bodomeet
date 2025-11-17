@@ -8,14 +8,14 @@
       <% if event.since_event? %>
         <%= link_to "編集", edit_admin_event_path(event.id), class: "btn btn-sm btn-info m-1" %>
       <% end %>
-      <%= link_to "削除", admin_event_path(event.id), method: :delete, class: "btn btn-sm btn-danger m-1", data: { confirm: '本当に削除しますか？' } %>
+      <%= link_to "削除", admin_event_path(event.id), method: :delete, id: "del-event#{event.id}" , class: "btn btn-sm btn-danger m-1", data: { confirm: '本当に削除しますか？' } %>
     </div>
   <% elsif current_id?(event.user_id) %>
     <div class="ml-auto p-2">
       <% if event.since_event? %>
         <%= link_to "編集", edit_event_path(event.id), class: "btn btn-sm btn-info m-1" %>
       <% end %>
-      <%= link_to "削除", event_path(event.id), method: :delete, class: "btn btn-sm btn-danger m-1", data: { confirm: '本当に削除しますか？' } %>
+      <%= link_to "削除", event_path(event.id), method: :delete, id: "del-event#{event.id}" ,class: "btn btn-sm btn-danger m-1", data: { confirm: '本当に削除しますか？' } %>
     </div>
   <% end %>
 </div>
@@ -145,7 +145,7 @@
                 <span id="comment<%= comment.id %>_active_switch">
                   <%= render "admin/comments/is_active", comment: comment %>
                 </span>
-                <%= link_to "削除", admin_comment_path(comment), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-sm m-1 btn-danger", id: "del-comment#{comment.id}" %>
+                <%= link_to "削除", admin_comment_path(comment, event_id: comment.event.id), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-sm m-1 btn-danger", id: "del-comment#{comment.id}" %>
               <% elsif user_signed_in? && current_id?(comment.user_id) %>
                 <%= link_to "削除", event_comment_path(event, comment), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger", id: "del-comment#{comment.id}" %>
               <% end %>

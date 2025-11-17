@@ -11,8 +11,13 @@ class Admin::CommentsController < ApplicationController
 
   def destroy
     comment = Comment.find(params[:id])
+    event_id = params[:event_id] ? params[:event_id] : nil
     comment.destroy
-    redirect_to admin_comments_path, notice: "コメントを削除しました"
+    if event_id == nil
+      redirect_to admin_comments_path, notice: "コメントを削除しました"
+    else
+      redirect_to admin_event_path(event_id), notice: "コメントを削除しました"
+    end
   end
 
   def destroy_all

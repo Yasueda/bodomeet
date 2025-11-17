@@ -32,7 +32,7 @@
               <span id="comment<%= comment.id %>_active_switch">
                 <%= render "admin/comments/is_active", comment: comment %>
               </span>
-              <%= link_to "削除", admin_comment_path(comment), method: :delete, class: "btn btn-sm m-1 btn-danger", data: { confirm: "本当に削除しますか？" } %>
+              <%= link_to "削除", admin_comment_path(comment), method: :delete, id: "del-comment#{comment.id}", class: "btn btn-sm m-1 btn-danger", data: { confirm: "本当に削除しますか？" } %>
             </td>
           </tr>
         <% end %>
