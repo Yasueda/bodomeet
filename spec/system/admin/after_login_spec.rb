@@ -6,6 +6,8 @@ describe '管理者ログインしている場合' do
   let!(:other_user) { create(:user) }
   let!(:event) { create(:event, user: user) }
   let!(:other_event) { create(:event, user: other_user) }
+  let!(:comment) { create(:comment, user: user, event: event)}
+  let!(:other_comment) { create(:comment, user: other_user, event: event)}
 
   before do
     visit new_admin_session_path
@@ -152,13 +154,48 @@ describe '管理者ログインしている場合' do
 
     context '削除リンクのテスト' do
       before do
-        click_link '削除'
+        find('#del-event' + event.id.to_s).click
       end
       it '正しく削除される' do
         expect(Event.where(id: event.id).count).to eq 0
       end
       it 'リダイレクト先が、イベント一覧になっている' do
         expect(current_path).to eq '/admin/events'
+      end
+    end
+
+    context 'コメントのテスト' do
+      it '正しく表示される' do
+        expect(page).to have_content comment.content
+        expect(page).to have_content other_comment.content
+      end
+      it 'コメント入力フォームが表示されない' do
+        expect(page).not_to have_field 'comment[content]'
+      end
+      it 'コメントボタンが存在しない' do
+        expect(page).not_to have_css '#comment-button'
+      end
+      it 'コメントの有効/無効リンクが存在する' do
+        expect(page).to have_link '', href: active_switch_admin_comment_path(comment)
+        expect(page).to have_link '', href: active_switch_admin_comment_path(other_comment)
+      end
+      it 'コメント削除ボタンが存在する' do
+        expect(page).to have_css '#del-comment' + comment.id.to_s
+        expect(page).to have_css '#del-comment' + other_comment.id.to_s
+      end
+
+      context 'コメントの削除' do
+        before do
+          @comment_id = comment.id.to_s
+          @event_id = comment.event.id.to_s
+          find('#del-comment' + @comment_id).click
+        end
+        it '正しく削除される（物理削除）' do
+          expect(Comment.where(id: @comment_id).count).to eq 0
+        end
+        it 'リダイレクト先が、コメントを削除した投稿の詳細画面になっている' do
+          expect(current_path).to eq '/admin/events/' + @event_id
+        end
       end
     end
   end
@@ -287,6 +324,62 @@ describe '管理者ログインしている場合' do
       end
       it '無効なイベントは存在しない' do
         expect(Event.where(id: event.id, is_active: false).count).to eq 0
+      end
+    end
+  end
+
+  describe 'コメント一覧画面のテスト' do
+    before do
+      visit admin_comments_path
+    end
+
+    context '表示内容の確認' do
+      it 'URLが正しい' do
+        expect(current_path).to eq '/admin/comments'
+      end
+      it 'コメントのイベント名がそれぞれ表示される' do
+        expect(page).to have_content comment.event.name
+        expect(page).to have_content other_comment.event.name
+      end
+      it 'コメントのイベント詳細リンクがそれぞれ存在する' do
+        expect(page).to have_link comment.event.name, href: admin_event_path(comment.event)
+        expect(page).to have_link other_comment.event.name, href: admin_event_path(other_comment.event)
+      end
+      it 'コメントの投稿者名がそれぞれ表示される' do
+        expect(page).to have_content comment.user.name
+        expect(page).to have_content other_comment.user.name
+      end
+      it 'コメントの投稿者詳細リンクがそれぞれ存在する' do
+        expect(page).to have_link comment.user.name, href: admin_user_path(comment.user)
+        expect(page).to have_link other_comment.user.name, href: admin_user_path(other_comment.user)
+      end
+      it 'コメントの内容がそれぞれ表示される' do
+        expect(page).to have_content comment.content
+        expect(page).to have_content other_comment.content
+      end
+      it 'コメントの有効/無効リンクがそれぞれ存在する' do
+        expect(page).to have_link '', href: active_switch_admin_comment_path(comment)
+        expect(page).to have_link '', href: active_switch_admin_comment_path(other_comment)
+      end
+      it 'コメントの削除リンクがそれぞれ存在する' do
+        expect(page).to have_link '', href: admin_comment_path(comment)
+        expect(page).to have_link '', href: admin_comment_path(other_comment)
+      end
+      it 'コメントの全削除リンクが存在する' do
+        expect(page).to have_link '全削除', href: destroy_all_admin_comments_path
+      end
+    end
+
+    context 'コメントの削除' do
+      before do
+        @comment_id = comment.id.to_s
+        find('#del-comment' + @comment_id).click
+      end
+      it '削除されたコメントは存在しない' do
+        expect(Comment.where(id: @comment_id).count).to eq 0
+      end
+      it 'リダイレクト先が、コメント一覧画面になっている' do
+        expect(current_path).to eq '/admin/comments/'
       end
     end
   end

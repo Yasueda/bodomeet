@@ -157,9 +157,9 @@ describe 'ログインしている場合' do
 
     context '削除リンクのテスト' do
       before do
-        all('a', text: '削除').first.click
+        find('#del-event' + event.id.to_s).click
       end
-      it '正しく削除される' do
+      it '正しく削除される（論理削除）' do
         expect(Event.where(id: event.id, is_active: true).count).to eq 0
       end
       it 'リダイレクト先が、イベント一覧になっている' do
@@ -168,12 +168,12 @@ describe 'ログインしている場合' do
     end
 
     context 'コメントのテスト' do
-      it 'コメント入力フォームが表示される' do
-        expect(page).to have_field 'comment[content]'
-      end
       it '正しく表示される' do
         expect(page).to have_content comment.content
         expect(page).to have_content other_comment.content
+      end
+      it 'コメント入力フォームが表示される' do
+        expect(page).to have_field 'comment[content]'
       end
       it 'コメントボタンが存在する' do
         expect(page).to have_css '#comment-button'
@@ -206,7 +206,7 @@ describe 'ログインしている場合' do
           @event_id = comment.event.id.to_s
           find('#del-comment' + @comment_id).click
         end
-        it '正しく削除される' do
+        it '正しく削除される（論理削除）' do
           expect(Comment.where(id: @comment_id, is_active: true).count).to eq 0
         end
         it 'リダイレクト先が、コメントを削除した投稿の詳細画面になっている' do
