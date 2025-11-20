@@ -9,10 +9,10 @@
         <%= render "admin/groups/is_active", group: group %>
       </span>
       <%= link_to "編集", edit_admin_group_path(group.id), class: "btn btn-sm btn-info m-1" %>
-      <%= link_to "削除", admin_group_path(group.id), method: :delete, class: "btn btn-sm btn-danger m-1", data: { confirm: "本当に削除しますか？" } %>
+      <%= link_to "削除", admin_group_path(group.id), method: :delete, id: "del-group#{group.id}", class: "btn btn-sm btn-danger m-1", data: { confirm: "本当に削除しますか？" } %>
     <% elsif user_signed_in? && current_id?(group.user_id) %>
-      <%= link_to "編集", edit_group_path, class:"btn btn-sm btn-info m-1" %>
-      <%= link_to "削除", group_path(group.id), method: :delete, class: "btn btn-sm btn-danger m-1", data: { confirm: "本当に削除しますか？" } %>
+      <%= link_to "編集", edit_group_path(group.id), class:"btn btn-sm btn-info m-1" %>
+      <%= link_to "削除", group_path(group.id), method: :delete, id: "del-group#{group.id}", class: "btn btn-sm btn-danger m-1", data: { confirm: "本当に削除しますか？" } %>
     <% else %>
       <%= render "layouts/groups/be_member", group: group %>
     <% end %>
