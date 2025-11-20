@@ -6,8 +6,8 @@ describe '管理者ログインしている場合' do
   let!(:other_user) { create(:user) }
   let!(:event) { create(:event, user: user) }
   let!(:other_event) { create(:event, user: other_user) }
-  let!(:comment) { create(:comment, user: user, event: event)}
-  let!(:other_comment) { create(:comment, user: other_user, event: event)}
+  let!(:comment) { create(:comment, user: user, event: event) }
+  let!(:other_comment) { create(:comment, user: other_user, event: event) }
 
   before do
     visit new_admin_session_path

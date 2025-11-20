@@ -9,6 +9,8 @@ describe 'ログインしている場合' do
   let!(:other_event) { create(:event, user: other_user) }
   let!(:comment) { create(:comment, user: user, event: event)}
   let!(:other_comment) { create(:comment, user: other_user, event: event)}
+  let!(:group) { create(:group, user: user)}
+  let!(:other_group) { create(:group, user: other_user) }
 
   before do
     visit new_user_session_path

@@ -5,8 +5,10 @@ describe 'ログインしている場合' do
   let!(:other_user) { create(:user) }
   let!(:event) { create(:event, user: user) }
   let!(:other_event) { create(:event, user: other_user) }
-  let!(:comment) { create(:comment, user: user, event: event)}
-  let!(:other_comment) { create(:comment, user: other_user, event: event)}
+  let!(:comment) { create(:comment, user: user, event: event) }
+  let!(:other_comment) { create(:comment, user: other_user, event: event) }
+  let!(:group) { create(:group, user: user)}
+  let!(:other_group) { create(:group, user: other_user) }
 
   before do
     visit new_user_session_path
@@ -86,8 +88,6 @@ describe 'ログインしている場合' do
   describe 'イベント投稿' do
     before do
       visit new_event_path
-    end
-    before do
       fill_in 'event[name]', with: Faker::Lorem.characters(number: 10)
       fill_in 'event[date]', with: Faker::Date.in_date_period(month: (Time.current.month + 1))
       fill_in 'event[introduction]', with: Faker::Lorem.characters(number: 20)
@@ -98,6 +98,9 @@ describe 'ログインしている場合' do
       select 8, from: 'event[max_people]'
     end
 
+    it 'URLが正しい' do
+      expect(current_path).to eq '/events/new'
+    end
     it '自分の新しい投稿が正しく保存される' do
       expect { click_button '決定' }.to change(user.events, :count).by(1)
     end
@@ -424,6 +427,125 @@ describe 'ログインしている場合' do
       end
       it 'リダイレクト先が、自分のユーザー詳細画面になっている' do
         expect(current_path).to eq '/users/' + user.id.to_s
+      end
+    end
+  end
+
+  describe 'グループ一覧画面のテスト' do
+    before do
+      visit groups_path
+    end
+    context '表示内容の確認' do
+      it 'URLが正しい' do
+        expect(current_path).to eq '/groups'
+      end
+      it 'グループの名前がそれぞれ表示される' do
+        expect(page).to have_content group.name
+        expect(page).to have_content other_group.name
+      end
+      it 'グループの詳細リンク先がそれぞれ表示される' do
+        expect(page).to have_link group.name, href: group_path(group)
+        expect(page).to have_link other_group.name, href: group_path(other_group)
+      end
+    end
+  end
+
+  describe 'グループ作成' do
+    before do
+      visit new_group_path
+      fill_in 'group[name]', with: Faker::Lorem.characters(number: 10)
+      fill_in 'group[introduction]', with: Faker::Lorem.characters(number: 20)
+    end
+
+    it 'URLが正しい' do
+      expect(current_path).to eq '/groups/new'
+    end
+    it 'グループの名前入力フォームが表示される' do
+      expect(page).to have_field 'group[name]'
+    end
+    it 'グループの説明入力フォームが表示される' do
+      expect(page).to have_field 'group[introduction]'
+    end
+    it '自分の新しいグループが正しく保存される' do
+      expect { click_button '登録する' }.to change(user.groups, :count).by(1)
+    end
+    it 'リダイレクト先が、保存できたグループの詳細画面になっている' do
+      click_button '登録する'
+      expect(current_path).to eq '/groups/' + Group.last.id.to_s
+    end
+  end
+
+  describe '自身が作成したグループの詳細画面' do
+    before do
+      visit group_path(group)
+    end
+
+    context '表示内容の確認' do
+      it 'URLが正しい' do
+        expect(current_path).to eq '/groups/' + group.id.to_s
+      end
+      it 'グループの名前が表示されている' do
+        expect(page).to have_content group.name
+      end
+      it 'グループの説明が表示されている' do
+        expect(page).to have_content group.introduction
+      end
+      it 'グループ作成者の名前が表示されている' do
+        expect(page).to have_content group.user.name
+      end
+      it '編集リンクが存在する' do
+        expect(page).to have_link '編集', href: edit_group_path(group)
+      end
+      it '編集画面に遷移する' do
+        click_link '編集'
+        expect(current_path).to eq edit_group_path(group)
+      end
+    end
+
+    describe '自身が作成したグループの編集画面のテスト' do
+      before do
+        visit edit_group_path(group)
+      end
+
+      context '表示の確認' do
+        it 'URLが正しい' do
+          expect(current_path).to eq '/groups/' + group.id.to_s + '/edit'
+        end
+        it 'name編集フォームが表示される' do
+          expect(page).to have_field 'group[name]'
+        end
+        it 'introduction編集フォームが表示される' do
+          expect(page).to have_field 'group[introduction]'
+        end
+      end
+
+      context '編集成功のテスト' do
+        before do
+          @group_old_name = group.name
+          @group_old_introduction = group.introduction
+          fill_in 'group[name]', with: Faker::Lorem.characters(number: 10)
+          fill_in 'group[introduction]', with: Faker::Lorem.characters(number: 20)
+          click_button '更新する'
+        end
+
+        it 'nameが正しく更新される' do
+          expect(group.reload.name).not_to eq @group_old_name
+        end
+        it 'introductionが正しく更新される' do
+          expect(group.reload.introduction).not_to eq @group_old_introduction
+        end
+      end
+    end
+
+    context '削除リンクのテスト' do
+      before do
+        find('#del-group' + group.id.to_s).click
+      end
+      it '正しく削除される（論理削除）' do
+        expect(Group.where(id: group.id, is_active: true).count).to eq 0
+      end
+      it 'リダイレクト先が、グループ一覧になっている' do
+        expect(current_path).to eq '/groups'
       end
     end
   end
