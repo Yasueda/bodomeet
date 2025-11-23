@@ -3,7 +3,6 @@
     <%= group.name %>
   </h2>
   <div class="ml-auto p-2 m-1">
-    <%= link_to "グループ一覧", groups_path, class: "btn btn-sm btn-success" %>
     <% if admin_signed_in? %>
       <span id="group<%= group.id %>_active_switch">
         <%= render "admin/groups/is_active", group: group %>

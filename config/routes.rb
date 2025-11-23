@@ -85,7 +85,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :groups, only: [:index, :show, :destroy] do
+    resources :groups, only: [:index, :show, :edit, :update, :destroy] do
       member do
         patch :active_switch
       end
