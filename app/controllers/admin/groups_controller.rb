@@ -9,6 +9,19 @@ class Admin::GroupsController < ApplicationController
     @group = Group.find(params[:id])
   end
 
+  def edit
+    @group = Group.find(params[:id])
+  end
+
+  def update
+    @group = Group.find(params[:id])
+    if @group.update(group_params)
+      redirect_to admin_group_path(@group), notice: "更新しました"
+    else
+      render :edit
+    end
+  end
+
   def active_switch
     @group = Group.find(params[:id])
     @group.update(is_active: !@group.is_active)
@@ -24,5 +37,11 @@ class Admin::GroupsController < ApplicationController
     groups = Group.where(is_active: false)
     groups.destroy_all
     redirect_to admin_groups_path, notice: "無効グループを全て削除しました"
+  end
+
+  private
+
+  def group_params
+    params.require(:group).permit(:name, :introduction)
   end
 end

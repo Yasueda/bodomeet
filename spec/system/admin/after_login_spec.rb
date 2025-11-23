@@ -8,6 +8,8 @@ describe '管理者ログインしている場合' do
   let!(:other_event) { create(:event, user: other_user) }
   let!(:comment) { create(:comment, user: user, event: event) }
   let!(:other_comment) { create(:comment, user: other_user, event: event) }
+  let!(:group) { create(:group, user: user)}
+  let!(:other_group) { create(:group, user: other_user) }
 
   before do
     visit new_admin_session_path
@@ -379,7 +381,126 @@ describe '管理者ログインしている場合' do
         expect(Comment.where(id: @comment_id).count).to eq 0
       end
       it 'リダイレクト先が、コメント一覧画面になっている' do
-        expect(current_path).to eq '/admin/comments/'
+        expect(current_path).to eq '/admin/comments'
+      end
+    end
+  end
+
+  describe 'グループ一覧画面のテスト' do
+    before do
+      visit admin_groups_path
+    end
+    context '表示内容の確認' do
+      it 'URLが正しい' do
+        expect(current_path).to eq '/admin/groups'
+      end
+      it 'グループの名前がそれぞれ表示される' do
+        expect(page).to have_content group.name
+        expect(page).to have_content other_group.name
+      end
+      it 'グループの詳細リンクがそれぞれ表示される' do
+        expect(page).to have_link group.name, href: admin_group_path(group)
+        expect(page).to have_link other_group.name, href: admin_group_path(other_group)
+      end
+      it 'グループの有効/無効リンクがそれぞれ表示される' do
+        expect(page).to have_link '', href: active_switch_admin_group_path(group)
+        expect(page).to have_link '', href: active_switch_admin_group_path(other_group)
+      end
+      it 'グループの削除リンクがそれぞれ存在する' do
+        expect(page).to have_link '削除', href: admin_group_path(group)
+        expect(page).to have_link '削除', href: admin_group_path(other_group)
+      end
+      it 'グループの全削除リンクが存在する' do
+        expect(page).to have_link '全削除', href: destroy_all_admin_groups_path
+      end
+    end
+
+    context 'グループの削除' do
+      before do
+        @group_id = group.id.to_s
+        find('#del-group' + @group_id).click
+      end
+      it '削除されたグループは存在しない' do
+        expect(Group.where(id: @group_id).count).to eq 0
+      end
+      it 'リダイレクト先が、グループ一覧画面になっている' do
+        expect(current_path).to eq '/admin/groups'
+      end
+    end
+  end
+
+  describe 'グループ詳細画面のテスト' do
+    before do
+      visit admin_group_path(group)
+    end
+
+    context '表示の確認' do
+      it 'URLが正しい' do
+        expect(current_path).to eq '/admin/groups/' + group.id.to_s
+      end
+      it 'グループの名前と紹介文が表示される' do
+        expect(page).to have_content group.name
+        expect(page).to have_content group.introduction
+      end
+      it 'グループの有効/無効リンクが存在する' do
+        expect(page).to have_link '', href: active_switch_admin_group_path(group)
+      end
+      it 'グループの編集リンクが存在する' do
+        expect(page).to have_link '編集', href: edit_admin_group_path(group)
+      end
+      it 'グループの編集画面に遷移する' do
+        click_link '編集'
+        expect(current_path).to eq edit_admin_group_path(group)
+      end
+      it 'グループの削除リンクが存在する' do
+        expect(page).to have_link '削除', href: admin_group_path(group)
+      end
+    end
+
+    describe 'グループの編集画面のテスト' do
+      before do
+        visit edit_admin_group_path(group)
+      end
+
+      context '表示の確認' do
+        it 'URLが正しい' do
+          expect(current_path).to eq '/admin/groups/' + group.id.to_s + '/edit'
+        end
+        it 'name編集フォームが表示される' do
+          expect(page).to have_field 'group[name]'
+        end
+        it 'introduction編集フォームが表示される' do
+          expect(page).to have_field 'group[introduction]'
+        end
+      end
+
+      context '編集成功のテスト' do
+        before do
+          @group_old_name = group.name
+          @group_old_introduction = group.introduction
+          fill_in 'group[name]', with: Faker::Lorem.characters(number: 10)
+          fill_in 'group[introduction]', with: Faker::Lorem.characters(number: 20)
+          click_button '更新する'
+        end
+
+        it 'nameが正しく更新される' do
+          expect(group.reload.name).not_to eq @group_old_name
+        end
+        it 'introductionが正しく更新される' do
+          expect(group.reload.introduction).not_to eq @group_old_introduction
+        end
+      end
+    end
+
+    context '削除リンクのテスト' do
+      before do
+        find('#del-group' + group.id.to_s).click
+      end
+      it '正しく削除される（論理削除）' do
+        expect(Group.where(id: group.id, is_active: true).count).to eq 0
+      end
+      it 'リダイレクト先が、グループ一覧になっている' do
+        expect(current_path).to eq '/admin/groups'
       end
     end
   end
@@ -538,7 +659,6 @@ describe '管理者ログインしている場合' do
           expect(User.where(id: user.id, is_active: false).count).to eq 0
         end
       end
-
     end
   end
 end
