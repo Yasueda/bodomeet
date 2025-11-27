@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :event do
     name { Faker::Lorem.characters(number: 10) }
     introduction { Faker::Lorem.characters(number: 20) }
-    date { Faker::Date.in_date_period(month: (Time.current.month + 1)) }
+    date { Faker::Date.in_date_period(year: (Time.current.year + 1)) }
     start_time { '13:00' }
     end_time { '18:00' }
     venue { 'XX県XX市XX町XX-XX-XX' }
