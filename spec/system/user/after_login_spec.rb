@@ -89,7 +89,7 @@ describe 'ログインしている場合' do
     before do
       visit new_event_path
       fill_in 'event[name]', with: Faker::Lorem.characters(number: 10)
-      fill_in 'event[date]', with: Faker::Date.in_date_period(month: (Time.current.month + 1))
+      fill_in 'event[date]', with: Faker::Date.in_date_period(year: (Time.current.year + 1))
       fill_in 'event[introduction]', with: Faker::Lorem.characters(number: 20)
       fill_in 'event[start_time]', with: '13:00'
       fill_in 'event[end_time]', with: '18:00'
@@ -269,7 +269,7 @@ describe 'ログインしている場合' do
         @event_old_max_people = event.max_people
         fill_in 'event[name]', with: Faker::Lorem.characters(number: 10)
         fill_in 'event[introduction]', with: Faker::Lorem.characters(number: 20)
-        fill_in 'event[date]', with: Faker::Date.in_date_period(month: (Time.current.month + 1))
+        fill_in 'event[date]', with: Faker::Date.in_date_period(year: (Time.current.year + 1))
         fill_in 'event[start_time]', with: '12:00'
         fill_in 'event[end_time]', with: '17:00'
         fill_in 'event[venue]', with: 'YY県YY市YY町YY-YY-YY'
