@@ -30,7 +30,7 @@ class User < ApplicationRecord
   validates :user_image, content_type: {in:[:jpg, :jpeg], message: "はjpg, jpegいずれかの形式にして下さい"},
   size: { between: 1.kilobyte..4.megabytes , message: '画像容量が大きすぎます、4MB以下にして下さい' }
 
-  validates :name, presence: true, length: {minimun: 2, maximum: 20}, uniqueness: true
+  validates :name, presence: true, length: {minimum: 2, maximum: 20}, uniqueness: true
   validates :introduction, length: {maximum: 100}
 
   def get_user_image(width, height)

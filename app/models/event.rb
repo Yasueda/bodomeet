@@ -70,11 +70,11 @@ class Event < ApplicationRecord
 
   def check_since_date
     return if date.nil?
-    errors.add(:check_since_date, "の日時を入力してください") if date < Time.current.since(1.days)
+    errors.add(:check_since_date, "の日時を入力してください") if date < Time.current.since(1.days).beginning_of_day
   end
 
   def check_time
     return if start_time.nil? || end_time.nil?
-    errors.add(:check_time, "を正しく入力してください") if start_time.seconds_since_midnight > end_time.seconds_since_midnight
+    errors.add(:check_time, "を正しく入力してください") if start_time.seconds_since_midnight >= end_time.seconds_since_midnight
   end
 end

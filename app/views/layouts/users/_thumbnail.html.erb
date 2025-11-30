@@ -3,7 +3,7 @@
     <object id="user<%= user.id %>_active_switch" class="text-center left-top">
       <%= render "admin/users/is_active", user: user %>
     </object>
-  <% elsif user_signed_in? %>
+  <% elsif user_signed_in? && !current_id?(user.id) %>
     <object id="user<%= user.id %>_follow" class="left-top">
       <%= render "layouts/users/follow", user: user %>
     </object>

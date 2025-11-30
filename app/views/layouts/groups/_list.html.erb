@@ -48,7 +48,7 @@
                 <span id="group<%= group.id %>_active_switch">
                   <%= render "admin/groups/is_active", group: group %>
                 </span>
-                <%= link_to "削除", admin_group_path(group.id), method: :delete, class: "btn btn-sm btn-danger m-1" , data: { confirm: "本当に削除しますか？" } %>
+                <%= link_to "削除", admin_group_path(group.id), method: :delete, id: "del-group#{group.id}", class: "btn btn-sm btn-danger m-1" , data: { confirm: "本当に削除しますか？" } %>
               <% elsif user_signed_in? %>
                 <% if current_id?(group.user_id) %>
                   <%= link_to "編集", edit_group_path(group.id), class: "btn btn-sm btn-success m-1" %>
